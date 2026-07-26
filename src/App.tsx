@@ -1,94 +1,174 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 import rksLogo from '../images/RKSSTGM text maroon.png';
+import rksLogoWhite from '../images/RKSSTGM text white.png';
 import vitthalTilak from '../images/Vitthal tilak.png';
 import warkariFoot from '../images/splash foot.png';
+import rksLogoClean from '../images/RKsstgm logo.png';
+import vkImage from '../images/vk1.png';
+import kidsLeft from '../images/kids left.png';
+import templeRight from '../images/temple right.png';
+import phoneMockup from '../images/mob mockup.jpg';
+import generalPalkhiHero from '../images/palkhi.jpg';
 
-// ================================================================= //
-// ABHANGA CARD SUB-COMPONENT                                        //
-// ================================================================= //
-interface AbhangaProps {
+import rawPalkhiData from '../palkhis.json';
+import rawPlaylistData from '../playlists.json';
+
+type Playlist = {
   title: string;
-  lyrics: React.ReactNode;
-  meaning: string;
-  singer: string;
+  description?: string;
+  youtubeUrl: string;
+  coverImage?: string;
+};
+
+const PLAYLIST_DATA = rawPlaylistData as Playlist[];
+
+type Palkhi = {
+  id: number;
+  slug: string;
+  name: string;
+  marathiName: string;
+  saint: string;
+  origin: string;
+  district: string;
+  destination: string;
+  distanceKm: number;
+  durationDays: string;
+  category: string;
+  traditionalDeparture: string;
+  historicalNote: string;
+  indicativeRoute: string;
+  palkhiImage: string;
+  saintImage: string;
+};
+
+const PALKHI_DATA = rawPalkhiData as Palkhi[];
+
+const DESTINATION = "Pandharpur";
+
+// Strip honorific prefixes from a name for compact card display.
+// e.g. "Shri Sant Dnyaneshwar Maharaj Palkhi" -> "Sant Dnyaneshwar Maharaj Palkhi"
+function compactPalkhiName(name: string) {
+  return name
+    .replace(/^Shri\s+/i, '')
+    .replace(/^Jagadguru\s+Shri\s+/i, '')
+    .replace(/^Jagadguru\s+/i, '')
+    .trim();
 }
 
-const AbhangaCard: React.FC<AbhangaProps> = ({ title, lyrics, meaning, singer }) => {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const intervalRef = useRef<number | null>(null);
+// Extracts up to 3 stylised initials to display inside a saint placeholder avatar.
+// "Sant Dnyaneshwar Maharaj" -> "SD" (first two "words" after stripping Sant)
+function saintInitials(saint: string) {
+  const tokens = saint
+    .replace(/^(Shri|Sant|Sri|Swami|Samarth|Maharaj|Guru|Jagadguru)\s+/i, '')
+    .replace(/\s+(Maharaj|Swami|Samarth|Guru)$/i, '')
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2);
+  if (tokens.length === 0) return 'ॐ';
+  return tokens.map(t => t[0]?.toUpperCase() ?? '').join('');
+}
 
-  const handlePlayPause = () => {
-    // If we click play on this card, first find if other players are active in the document 
-    // and stop them, or manage locally. In React, a simple local toggle works beautifully.
-    if (isPlaying) {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
-      setIsPlaying(false);
-    } else {
-      setIsPlaying(true);
-      // Simulate playback progress bar filling
-      intervalRef.current = window.setInterval(() => {
-        setProgress((prev) => {
-          if (prev >= 100) {
-            if (intervalRef.current) clearInterval(intervalRef.current);
-            setIsPlaying(false);
-            return 0;
-          }
-          return prev + 1.25; // progresses smoothly
-        });
-      }, 100);
-    }
-  };
-
-  useEffect(() => {
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
-  }, []);
-
+// Circular stylised portrait placeholder — used when the saint photograph is missing.
+// Has a thin gold border, heritage cream+maroon palette, saint's initials centered.
+function SaintAvatarPlaceholder({ saint, large = false }: { saint: string; large?: boolean }) {
+  const initials = saintInitials(saint);
   return (
-    <div className="abhanga-card-item reveal">
-      <div className="card-top-icon"><i className="fa-solid fa-music"></i></div>
-      <h3>{title}</h3>
-      <div className="abhanga-lyric">{lyrics}</div>
-      <div className="abhanga-meaning">
-        <strong>Meaning:</strong> {meaning}
-      </div>
-      
-      {/* Interactive Player */}
-      <div className="audio-player-sim">
-        <button className="play-btn" onClick={handlePlayPause} aria-label={isPlaying ? "Pause" : "Play"}>
-          <i className={isPlaying ? "fa-solid fa-pause" : "fa-solid fa-play"}></i>
-        </button>
-        <div className="track-info">
-          <span className="track-title">{title} - {singer}</span>
-          <div className="progress-bar-sim">
-            <div className="progress-fill-sim" style={{ width: `${progress}%` }}></div>
-          </div>
-        </div>
-      </div>
+    <div className={`saint-avatar saint-avatar-placeholder${large ? ' large' : ''}`}>
+      <span className="saint-avatar-initials">{initials}</span>
     </div>
   );
-};
+}
 
 // ================================================================= //
 // MAIN APP COMPONENT                                                //
 // ================================================================= //
 export default function App() {
-  const [isSplashActive, setIsSplashActive] = useState(true);
+  const [currentPath, setCurrentPath] = useState(window.location.pathname);
+  const [isSplashActive, setIsSplashActive] = useState(window.location.pathname !== '/palkhis');
   const [isSplashFadingOut, setIsSplashFadingOut] = useState(false);
-  const [isLandingActive, setIsLandingActive] = useState(false);
+  const [isLandingActive, setIsLandingActive] = useState(window.location.pathname === '/palkhis');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const [isAboutIntersected, setIsAboutIntersected] = useState(false);
+  const aboutRef = useRef<HTMLDivElement>(null);
 
-  // Lock scroll during splash screen and run timers
+  // ---- Palkhi Directory / Modal state ----
+  const featuredPalkhis = PALKHI_DATA.slice(0, 10);
+  const [selectedPalkhi, setSelectedPalkhi] = useState<Palkhi | null>(null);
+  const [failedImages, setFailedImages] = useState<Record<string, boolean>>({});
+
+  // Directory filter & sort states
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [selectedDistrict, setSelectedDistrict] = useState('All');
+  const [selectedDuration, setSelectedDuration] = useState('All');
+  const [sortOption, setSortOption] = useState('Default');
+
+  // popstate routing listener
+  useEffect(() => {
+    const onPopState = () => {
+      setCurrentPath(window.location.pathname);
+      if (window.location.pathname === '/palkhis') {
+        setIsSplashActive(false);
+        setIsLandingActive(true);
+      }
+    };
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
+  }, []);
+
+  const navigateTo = (path: string) => {
+    window.history.pushState({}, '', path);
+    setCurrentPath(path);
+    window.scrollTo(0, 0);
+    if (path === '/palkhis') {
+      setIsSplashActive(false);
+      setIsLandingActive(true);
+    }
+  };
+
+  // Modal: body scroll lock + ESC to close
+  useEffect(() => {
+    if (!selectedPalkhi) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setSelectedPalkhi(null);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => {
+      document.body.style.overflow = prev;
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [selectedPalkhi]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setIsAboutIntersected(true);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    const currentRef = aboutRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, []);
+
+  // Splash Screen Logic
   useEffect(() => {
     document.body.style.overflow = 'hidden';
 
-    // Timer to trigger fadeout after loading sequence (6.2 seconds)
     const fadeOutTimer = setTimeout(() => {
       setIsSplashFadingOut(true);
     }, 6200);
@@ -128,7 +208,7 @@ export default function App() {
       sections.forEach(section => {
         const sectionTop = section.offsetTop;
         const sectionHeight = section.clientHeight;
-        if (window.pageYOffset >= (sectionTop - sectionHeight / 3)) {
+        if (window.scrollY >= (sectionTop - sectionHeight / 3)) {
           current = section.getAttribute('id') || 'home';
         }
       });
@@ -144,6 +224,16 @@ export default function App() {
           (el as HTMLElement).style.transform = 'translateY(0)';
         }
       });
+
+      // Toggle back to top button visibility
+      const backToTopBtn = document.querySelector('.btn-back-to-top-float') as HTMLElement;
+      if (backToTopBtn) {
+        if (window.scrollY > 300) {
+          backToTopBtn.classList.add('visible');
+        } else {
+          backToTopBtn.classList.remove('visible');
+        }
+      }
     };
 
     // Set initial values for reveal animation nodes
@@ -160,18 +250,114 @@ export default function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isLandingActive]);
 
+  // Helper to parse duration days from string ranges
+  const parseDurationDays = (durationStr: string): number => {
+    const normalized = durationStr.replace('+', '').replace('–', '-').replace('-', '-').trim();
+    if (normalized.includes('-')) {
+      const parts = normalized.split('-').map(p => parseInt(p.trim(), 10));
+      const maxVal = parts[1];
+      return isNaN(maxVal) ? (parts[0] || 0) : maxVal;
+    }
+    const val = parseInt(normalized, 10);
+    return isNaN(val) ? 0 : val;
+  };
+
   // Helper function to smooth scroll to anchors
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
     e.preventDefault();
     setIsMobileMenuOpen(false);
-    const target = document.getElementById(targetId);
-    if (target) {
-      window.scrollTo({
-        top: target.offsetTop - 70, // offset for fixed header
-        behavior: 'smooth'
-      });
+
+    if (window.location.pathname !== '/') {
+      window.history.pushState({}, '', '/');
+      setCurrentPath('/');
+      setTimeout(() => {
+        const target = document.getElementById(targetId);
+        if (target) {
+          window.scrollTo({
+            top: target.offsetTop - 70,
+            behavior: 'smooth'
+          });
+        }
+      }, 100);
+    } else {
+      const target = document.getElementById(targetId);
+      if (target) {
+        window.scrollTo({
+          top: target.offsetTop - 70, // offset for fixed header
+          behavior: 'smooth'
+        });
+      }
     }
   };
+
+  // --- Filter and Sort Logic for all Palkhis ---
+  const parsedPalkhis = PALKHI_DATA.map(palkhi => ({
+    ...palkhi,
+    _parsedDuration: parseDurationDays(palkhi.durationDays)
+  }));
+
+  const filteredPalkhis = parsedPalkhis.filter(palkhi => {
+    // 1. Search Query
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      const nameMatch = palkhi.name.toLowerCase().includes(q);
+      const marathiMatch = palkhi.marathiName?.toLowerCase().includes(q);
+      const saintMatch = palkhi.saint.toLowerCase().includes(q);
+      const originMatch = palkhi.origin.toLowerCase().includes(q);
+      const districtMatch = palkhi.district.toLowerCase().includes(q);
+      const categoryMatch = palkhi.category.toLowerCase().includes(q);
+      if (!(nameMatch || marathiMatch || saintMatch || originMatch || districtMatch || categoryMatch)) {
+        return false;
+      }
+    }
+
+    // 2. Category
+    if (selectedCategory !== 'All') {
+      const isMajor = palkhi.category.toLowerCase().includes('major') || palkhi.category.toLowerCase().includes('manachi');
+      if (selectedCategory === 'Major / Manachi' && !isMajor) return false;
+      if (selectedCategory === 'Other Palkhis' && isMajor) return false;
+    }
+
+    // 3. District
+    if (selectedDistrict !== 'All') {
+      if (selectedDistrict === 'Other') {
+        const majorDistricts = ['pune', 'satara', 'solapur', 'ahmednagar', 'nashik', 'kolhapur', 'sangli'];
+        if (majorDistricts.includes(palkhi.district.toLowerCase())) return false;
+      } else {
+        if (palkhi.district.toLowerCase() !== selectedDistrict.toLowerCase()) return false;
+      }
+    }
+
+    // 4. Duration
+    if (selectedDuration !== 'All') {
+      const days = palkhi._parsedDuration;
+      if (selectedDuration === 'Under 10 Days' && days >= 10) return false;
+      if (selectedDuration === '10–15 Days' && (days < 10 || days > 15)) return false;
+      if (selectedDuration === '15–20 Days' && (days < 15 || days > 20)) return false;
+      if (selectedDuration === 'Above 20 Days' && days <= 20) return false;
+    }
+
+    return true;
+  });
+
+  const sortedPalkhis = [...filteredPalkhis].sort((a, b) => {
+    switch (sortOption) {
+      case 'Alphabetical (A–Z)':
+        return a.name.localeCompare(b.name);
+      case 'Alphabetical (Z–A)':
+        return b.name.localeCompare(a.name);
+      case 'Distance (Shortest First)':
+        return a.distanceKm - b.distanceKm;
+      case 'Distance (Longest First)':
+        return b.distanceKm - a.distanceKm;
+      case 'Duration (Shortest First)':
+        return a._parsedDuration - b._parsedDuration;
+      case 'Duration (Longest First)':
+        return b._parsedDuration - a._parsedDuration;
+      default:
+        return 0; // JSON default order
+    }
+  });
 
   return (
     <>
@@ -195,20 +381,6 @@ export default function App() {
               <div className="glow-bg"></div>
               <div className="center-loader-group">
                 <div className="vitthal-icon-container">
-                  {/* Circle Loader */}
-                  <svg className="progress-ring-svg" viewBox="0 0 120 120">
-                    <defs>
-                      <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#FFE082" />
-                        <stop offset="50%" stopColor="#D4AF37" />
-                        <stop offset="100%" stopColor="#AA7C11" />
-                      </linearGradient>
-                    </defs>
-                    <circle cx="60" cy="60" r="54" fill="none" stroke="rgba(212, 175, 55, 0.15)" strokeWidth="1.5" />
-                    <circle cx="60" cy="60" r="54" fill="none" stroke="url(#gold-grad)" strokeWidth="2.5" 
-                            className="progress-circle" strokeLinecap="round" />
-                  </svg>
-
                   {/* Vitthal Forehead Tilak PNG */}
                   <img src={vitthalTilak} alt="Vitthal Tilak" className="vitthal-icon" />
                 </div>
@@ -244,22 +416,25 @@ export default function App() {
         {/* Navigation Header */}
         <header className="main-header">
           <div className="header-container">
-            <div className="header-logo">
-              <img src={rksLogo} alt="RadhaKrishna Satsangam" className="header-logo-img" />
+            <div className="header-logo load-delay-0">
+              <img src={rksLogoClean} alt="Radhakrishna Satsangam Logo" className="header-logo-img" />
+              <div className="header-brand-text load-delay-100">
+                <span className="brand-title">Palkhi Sohala</span>
+                <span className="brand-subtitle">by Radhekrishna Satsangam</span>
+              </div>
             </div>
             
-            <nav className="main-nav">
+            <nav className="main-nav load-delay-200">
               <ul>
                 <li><a href="#home" className={`nav-link ${activeSection === 'home' ? 'active' : ''}`} onClick={(e) => handleNavClick(e, 'home')}>Home</a></li>
-                <li><a href="#about-wari" className={`nav-link ${activeSection === 'about-wari' ? 'active' : ''}`} onClick={(e) => handleNavClick(e, 'about-wari')}>The Wari</a></li>
-                <li><a href="#saints" className={`nav-link ${activeSection === 'saints' ? 'active' : ''}`} onClick={(e) => handleNavClick(e, 'saints')}>Saints</a></li>
-                <li><a href="#palkhi-route" className={`nav-link ${activeSection === 'palkhi-route' ? 'active' : ''}`} onClick={(e) => handleNavClick(e, 'palkhi-route')}>Palkhi Route</a></li>
-                <li><a href="#abhangas" className={`nav-link ${activeSection === 'abhangas' ? 'active' : ''}`} onClick={(e) => handleNavClick(e, 'abhangas')}>Abhangas</a></li>
+                <li><a href="#about-wari" className={`nav-link ${activeSection === 'about-wari' ? 'active' : ''}`} onClick={(e) => handleNavClick(e, 'about-wari')}>Ashadi Ekadashi</a></li>
+                <li><a href="#palkhi-route" className={`nav-link ${activeSection === 'palkhi-route' ? 'active' : ''}`} onClick={(e) => handleNavClick(e, 'palkhi-route')}>Palkhis</a></li>
+                <li><a href="#gallery" className={`nav-link ${activeSection === 'gallery' ? 'active' : ''}`} onClick={(e) => handleNavClick(e, 'gallery')}>Archives</a></li>
               </ul>
             </nav>
 
-            <div className="header-cta">
-              <a href="#join-us" className="btn btn-primary" onClick={(e) => handleNavClick(e, 'join-us')}>Join Satsang</a>
+            <div className="header-cta load-delay-300">
+              <a href="https://radhekrishnasatsangam.com/" target="_blank" rel="noopener noreferrer" className="btn btn-join-us">Visit Us</a>
             </div>
 
             <button className="mobile-menu-btn" onClick={() => setIsMobileMenuOpen(true)} aria-label="Open Navigation">
@@ -276,314 +451,747 @@ export default function App() {
           <nav className="mobile-nav">
             <ul>
               <li><a href="#home" className="mobile-link" onClick={(e) => handleNavClick(e, 'home')}>Home</a></li>
-              <li><a href="#about-wari" className="mobile-link" onClick={(e) => handleNavClick(e, 'about-wari')}>The Wari</a></li>
-              <li><a href="#saints" className="mobile-link" onClick={(e) => handleNavClick(e, 'saints')}>Saints</a></li>
-              <li><a href="#palkhi-route" className="mobile-link" onClick={(e) => handleNavClick(e, 'palkhi-route')}>Palkhi Route</a></li>
-              <li><a href="#abhangas" className="mobile-link" onClick={(e) => handleNavClick(e, 'abhangas')}>Abhangas</a></li>
-              <li><a href="#join-us" className="mobile-link btn-mobile-cta" onClick={(e) => handleNavClick(e, 'join-us')}>Join Satsang</a></li>
+              <li><a href="#about-wari" className="mobile-link" onClick={(e) => handleNavClick(e, 'about-wari')}>Ashadi Ekadashi</a></li>
+              <li><a href="#palkhi-route" className="mobile-link" onClick={(e) => handleNavClick(e, 'palkhi-route')}>Palkhis</a></li>
+              <li><a href="#gallery" className="mobile-link" onClick={(e) => handleNavClick(e, 'gallery')}>Archives</a></li>
+              <li><a href="https://radhekrishnasatsangam.com/" target="_blank" rel="noopener noreferrer" className="mobile-link btn-mobile-cta">Visit Us</a></li>
             </ul>
           </nav>
         </div>
 
-        {/* Hero Section */}
-        <section id="home" className="hero-section">
-          <div className="hero-bg-overlay"></div>
-          <div className="hero-container">
-            <div className="hero-content">
-              <span className="hero-tagline">जय जय राम कृष्ण हरी</span>
-              <h1 className="hero-title">Ashadhi Ekadashi</h1>
-              <p className="hero-subtitle">Celebrating the Devotional Ecstasy of the Warkari Sampradaya</p>
+        {/* Dedicated Palkhis Directory Page */}
+        {currentPath === '/palkhis' && (
+          <section className="palkhis-directory-page-section">
+            {/* Immersive Hero Banner */}
+            <div className="directory-hero-banner" style={{ backgroundImage: `url(${generalPalkhiHero})` }}>
+              <div className="hero-gradient-overlay"></div>
               
-              <div className="quote-container">
-                <p className="abhanga-quote">"आनंदाचे डोही आनंद तरंग । आनंदची अंग आनंदाचे ॥"</p>
-                <p className="quote-author">— संत तुकाराम महाराज</p>
-              </div>
+              <button className="btn-back-home-hero" onClick={() => navigateTo('/')}>
+                <i className="fa-solid fa-arrow-left-long"></i> Back to Home
+              </button>
               
-              <div className="hero-buttons">
-                <a href="#about-wari" className="btn btn-secondary" onClick={(e) => handleNavClick(e, 'about-wari')}>Explore the Wari</a>
-                <a href="#palkhi-route" className="btn btn-outline" onClick={(e) => handleNavClick(e, 'palkhi-route')}>Palkhi Schedule</a>
-              </div>
-            </div>
-          </div>
-          <div className="hero-wave">
-            <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M0,64L80,69.3C160,75,320,85,480,80C640,75,800,53,960,48C1120,43,1280,53,1360,58.7L1440,64L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z" fill="#FAF6EE"/>
-            </svg>
-          </div>
-        </section>
-
-        {/* About Wari Section */}
-        <section id="about-wari" className="about-section">
-          <div className="section-container">
-            <div className="about-grid">
-              <div className="about-text-content">
-                <span className="section-tag reveal">The Sacred Pilgrimage</span>
-                <h2 className="section-title reveal">What is the Pandharpur Wari?</h2>
-                <div className="divider reveal"></div>
-                <p className="lead-text reveal">For over 800 years, devotees of Maharashtra have undertaken a walking pilgrimage (Wari) to the holy town of Pandharpur to meet their beloved deity, Lord Vitthal.</p>
-                <p className="reveal">Walking barefeet, singing the glories of Lord Hari, carrying saffron flags (*Patakas*), and carrying the *Palkhis* (palanquins) containing the padukas of revered saints, this journey represents the ultimate merging of individual souls with the divine.</p>
-                <p className="reveal">It is not merely a walk; it is an equalizer where distinctions of caste, creed, gender, and wealth dissolve into the soil of devotion. Millions march together, driven by pure love and surrender, symbolizing the spiritual democracy established by the Warkari saints.</p>
+              <div className="hero-centered-content">
+                <h1 className="directory-hero-title">Explore All Palkhis</h1>
+                <p className="directory-hero-subtitle">
+                  Discover the sacred journeys of Maharashtra's revered saints on their path to Pandharpur.
+                </p>
                 
-                <div className="stat-boxes">
-                  <div className="stat-box reveal">
-                    <span className="stat-num">21+</span>
-                    <span className="stat-lbl">Days of Walking</span>
-                  </div>
-                  <div className="stat-box reveal">
-                    <span className="stat-num">250+</span>
-                    <span className="stat-lbl">Kilometers Covered</span>
-                  </div>
-                  <div className="stat-box reveal">
-                    <span className="stat-num">2M+</span>
-                    <span className="stat-lbl">Devotees (Warkaris)</span>
-                  </div>
+                {/* Centered Search Bar */}
+                <div className="directory-hero-search-box-wrap">
+                  <i className="fa-solid fa-magnifying-glass search-box-icon"></i>
+                  <input
+                    type="text"
+                    className="directory-hero-search-input"
+                    placeholder="Search by Palkhi, saint, origin, district, category..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                  {searchQuery && (
+                    <button className="btn-clear-search" onClick={() => setSearchQuery('')}>
+                      <i className="fa-solid fa-xmark"></i>
+                    </button>
+                  )}
                 </div>
+              </div>
+            </div>
+
+            {/* Compact Filter Bar */}
+            <div className="directory-filter-bar">
+              <div className="directory-dropdowns-row">
+                {/* Category Dropdown */}
+                <div className="directory-dropdown-select-wrap">
+                  <select
+                    className="directory-dropdown-select"
+                    value={selectedCategory}
+                    onChange={(e) => setSelectedCategory(e.target.value)}
+                  >
+                    <option value="All">Category: All</option>
+                    <option value="Major / Manachi">Major / Manachi</option>
+                    <option value="Other Palkhis">Other Palkhis</option>
+                  </select>
+                </div>
+
+                {/* District Dropdown */}
+                <div className="directory-dropdown-select-wrap">
+                  <select
+                    className="directory-dropdown-select"
+                    value={selectedDistrict}
+                    onChange={(e) => setSelectedDistrict(e.target.value)}
+                  >
+                    <option value="All">District: All</option>
+                    <option value="Pune">Pune</option>
+                    <option value="Satara">Satara</option>
+                    <option value="Solapur">Solapur</option>
+                    <option value="Ahmednagar">Ahmednagar</option>
+                    <option value="Nashik">Nashik</option>
+                    <option value="Kolhapur">Kolhapur</option>
+                    <option value="Sangli">Sangli</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+
+                {/* Duration Dropdown */}
+                <div className="directory-dropdown-select-wrap">
+                  <select
+                    className="directory-dropdown-select"
+                    value={selectedDuration}
+                    onChange={(e) => setSelectedDuration(e.target.value)}
+                  >
+                    <option value="All">Duration: All</option>
+                    <option value="Under 10 Days">Under 10 Days</option>
+                    <option value="10–15 Days">10–15 Days</option>
+                    <option value="15–20 Days">15–20 Days</option>
+                    <option value="Above 20 Days">Above 20 Days</option>
+                  </select>
+                </div>
+
+                {/* Sort By Dropdown */}
+                <div className="directory-dropdown-select-wrap">
+                  <select
+                    className="directory-dropdown-select"
+                    value={sortOption}
+                    onChange={(e) => setSortOption(e.target.value)}
+                  >
+                    <option value="Default">Sort By: Default</option>
+                    <option value="Alphabetical (A–Z)">Alphabetical (A–Z)</option>
+                    <option value="Alphabetical (Z–A)">Alphabetical (Z–A)</option>
+                    <option value="Distance (Shortest First)">Distance (Shortest First)</option>
+                    <option value="Distance (Longest First)">Distance (Longest First)</option>
+                    <option value="Duration (Shortest First)">Duration (Shortest First)</option>
+                    <option value="Duration (Longest First)">Duration (Longest First)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            {/* Grid Container */}
+            <div className="directory-grid-container">
+              {sortedPalkhis.length === 0 ? (
+                <div className="palkhi-empty-state">
+                  <div className="empty-state-icon">
+                    <i className="fa-solid fa-route"></i>
+                  </div>
+                  <h3>No Palkhis Found</h3>
+                  <p>No Palkhis found. Try changing your search or filters.</p>
+                  <button
+                    className="btn btn-reset-filters"
+                    onClick={() => {
+                      setSearchQuery('');
+                      setSelectedCategory('All');
+                      setSelectedDistrict('All');
+                      setSelectedDuration('All');
+                      setSortOption('Default');
+                    }}
+                  >
+                    Reset All Filters
+                  </button>
+                </div>
+              ) : (
+                <div className="palkhis-directory-grid">
+                  {sortedPalkhis.map((palkhi) => {
+                    const hasPalkhiPhoto = palkhi.palkhiImage && !failedImages[palkhi.palkhiImage];
+                    const hasSaintPhoto = palkhi.saintImage && !failedImages[palkhi.saintImage];
+                    return (
+                      <article
+                        key={palkhi.id}
+                        className={`palkhi-card ${hasPalkhiPhoto ? 'has-real-photo' : ''} ${hasSaintPhoto ? 'has-real-saint' : ''}`}
+                        onClick={() => setSelectedPalkhi(palkhi)}
+                      >
+                        {/* 16:9 Image / Media */}
+                        <div className="palkhi-card-media">
+                          <div className="palkhi-media-frame">
+                            {hasPalkhiPhoto && (
+                              <img
+                                src={palkhi.palkhiImage}
+                                alt={`${compactPalkhiName(palkhi.name)} — ${palkhi.origin}`}
+                                className="palkhi-media-photo"
+                                loading="lazy"
+                                onError={() => setFailedImages(prev => ({ ...prev, [palkhi.palkhiImage]: true }))}
+                              />
+                            )}
+                            <div className="palkhi-media-inner">
+                              <div className="palkhi-media-ornament">
+                                <span className="palkhi-media-chip">
+                                  <i className="fa-solid fa-location-dot"></i>
+                                  {palkhi.origin}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="saint-portrait saint-portrait-card">
+                            {hasSaintPhoto ? (
+                              <img
+                                src={palkhi.saintImage}
+                                alt={palkhi.saint}
+                                className="saint-portrait-img"
+                                loading="lazy"
+                                onError={() => setFailedImages(prev => ({ ...prev, [palkhi.saintImage]: true }))}
+                              />
+                            ) : (
+                              <SaintAvatarPlaceholder saint={palkhi.saint} />
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Content */}
+                        <div className="palkhi-card-content">
+                          <h3 className="palkhi-card-title">{compactPalkhiName(palkhi.name)}</h3>
+
+                          <div className="palkhi-card-line card-line-route">
+                            <i className="fa-solid fa-route"></i>
+                            <span>{palkhi.origin} <em className="arrow">→</em> {palkhi.destination}</span>
+                          </div>
+
+                          <div className="palkhi-card-line card-line-duration">
+                            <i className="fa-solid fa-clock"></i>
+                            <span>{palkhi.durationDays} Days</span>
+                          </div>
+
+                          <span className="palkhi-card-divider" aria-hidden="true"></span>
+
+                          <button
+                            className="btn-view-details"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSelectedPalkhi(palkhi);
+                            }}
+                          >
+                            View Details
+                            <i className="fa-solid fa-arrow-right"></i>
+                          </button>
+                        </div>
+                      </article>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          </section>
+        )}
+
+        {/* Homepage Sections */}
+        {currentPath !== '/palkhis' && (
+          <>
+            {/* Hero Section */}
+            <section id="home" className="hero-section">
+          {/* Incense floating particles */}
+          <div className="incense-particles">
+            <div className="incense-particle p1"></div>
+            <div className="incense-particle p2"></div>
+            <div className="incense-particle p3"></div>
+            <div className="incense-particle p4"></div>
+            <div className="incense-particle p5"></div>
+            <div className="incense-particle p6"></div>
+          </div>
+
+          <div className="hero-bg-overlay"></div>
+          
+          {/* Desktop-only HTML image to ensure 100% of the artwork is visible without cropping */}
+          <img src={vkImage} className="hero-image-render desktop-only" alt="Ashadhi Ekadashi" />
+          
+          <div className="hero-container">
+            {/* Left Side: Spacer so background deities in vk1.png are visible */}
+            <div className="hero-deity-spacer"></div>
+            
+            {/* Right Side: Devotional content */}
+            <div className="hero-content-column load-delay-500">
+              <div className="marathi-title-group">
+                <h1 className="marathi-title-main">आषाढी</h1>
+                <h1 className="marathi-title-sub">एकादशी</h1>
               </div>
               
-              <div className="about-media reveal">
-                <div className="image-stack">
-                  <div className="image-card img-main">
-                    <div className="vitthal-deity-card">
-                      <div className="deity-glow"></div>
-                      <div className="deity-symbol">विठ्ठल</div>
-                      <span className="deity-title">पुंडलिक वरदा हरी विठ्ठल</span>
-                    </div>
-                  </div>
-                  <div className="image-card img-sub">
-                    <div className="devotion-info-card">
-                      <h3>आषाढी एकादशी</h3>
-                      <p>The eleventh lunar day of Ashadha month, marking the culmination of the pilgrimage as Warkaris reach the Chandrabhaga River and offer their prayers at the Vitthal Mandir.</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Saints Section */}
-        <section id="saints" className="saints-section">
-          <div className="section-container">
-            <div className="section-header-center">
-              <span className="section-tag reveal">Pillars of Devotion</span>
-              <h2 className="section-title reveal">The Great Warkari Saints</h2>
-              <div className="divider center reveal"></div>
-              <p className="section-subtitle reveal">Whose teachings, verses, and songs continue to light the path of Bhakti across Maharashtra.</p>
-            </div>
-
-            <div className="saints-grid">
-              <div className="saint-card reveal">
-                <div className="saint-badge"><i className="fa-solid fa-feather-pointed"></i></div>
-                <h3 className="saint-name">Sant Dnyaneshwar</h3>
-                <span className="saint-era">13th Century (Alandi)</span>
-                <p className="saint-desc">The intellectual foundation of the Sampradaya. At a tender age, he translated the Bhagavad Gita into Marathi (the Dnyaneshwari), opening the doors of spiritual knowledge to the common person.</p>
-                <blockquote className="saint-quote">"विश्वात्मके देवे येणे वाग्यज्ञे तोषावे..."</blockquote>
-              </div>
-
-              <div className="saint-card reveal">
-                <div className="saint-badge"><i className="fa-solid fa-om"></i></div>
-                <h3 className="saint-name">Sant Tukaram</h3>
-                <span className="saint-era">17th Century (Dehu)</span>
-                <p className="saint-desc">The voice of ecstasy and practical devotion. His thousands of Abhangas are revered for their honesty, simplicity, and deep spiritual experience, making Vitthal a close companion of every devotee.</p>
-                <blockquote className="saint-quote">"तीर्थी धोंडापाणी | देव आहे अंतःकरणी..."</blockquote>
-              </div>
-
-              <div className="saint-card reveal">
-                <div className="saint-badge"><i className="fa-solid fa-guitar"></i></div>
-                <h3 className="saint-name">Sant Namdev</h3>
-                <span className="saint-era">13th-14th Century (Narsi)</span>
-                <p className="saint-desc">The pioneer of Kirtan. He traveled extensively across India, including Punjab (where his verses are included in the Guru Granth Sahib), spreading the message of Naam Smaran (chanting the Name).</p>
-                <blockquote className="saint-quote">"नामा म्हणे विठोबाच्या चरणी... "</blockquote>
-              </div>
-
-              <div className="saint-card reveal">
-                <div className="saint-badge"><i className="fa-solid fa-hands-praying"></i></div>
-                <h3 className="saint-name">Sant Eknath</h3>
-                <span className="saint-era">16th Century (Paithan)</span>
-                <p className="saint-desc">The saint of compassion and equality. He worked tirelessly to remove social barriers, treated all living beings with equal respect, and compiled the first critical edition of the Dnyaneshwari.</p>
-                <blockquote className="saint-quote">"काया ही पंढरी, आत्मा हा विठ्ठल..."</blockquote>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Timeline Route Section */}
-        <section id="palkhi-route" className="timeline-section">
-          <div className="section-container">
-            <div className="section-header-center">
-              <span className="section-tag reveal">The Sacred Path</span>
-              <h2 className="section-title reveal">The Palkhi Sohala Route</h2>
-              <div className="divider center reveal"></div>
-              <p className="section-subtitle reveal">Tracing the main stops of the Sant Dnyaneshwar Maharaj Palkhi as it marches from Alandi to Pandharpur.</p>
-            </div>
-
-            <div className="timeline">
-              <div className="timeline-line"></div>
-
-              <div className="timeline-item left reveal">
-                <div className="timeline-dot">1</div>
-                <div className="timeline-content">
-                  <span className="timeline-day">Day 1 - 2</span>
-                  <h3>Alandi Prasthan</h3>
-                  <p>The journey begins at the Samadhi Mandir in Alandi. Devotees gather in the temple courtyard as the silver chariot carrying the Padukas of Sant Dnyaneshwar is prepared for departure.</p>
-                </div>
-              </div>
-
-              <div className="timeline-item right reveal">
-                <div className="timeline-dot">2</div>
-                <div className="timeline-content">
-                  <span className="timeline-day">Day 3 - 4</span>
-                  <h3>Pune & Saswad</h3>
-                  <p>Passing through the city of Pune, the Palkhi halts at the historical temples before climbing the steep Dive Ghat. Warkaris singing in harmony climb the ghat in a spectacular display of devotion.</p>
-                </div>
-              </div>
-
-              <div className="timeline-item left reveal">
-                <div className="timeline-dot">3</div>
-                <div className="timeline-content">
-                  <span className="timeline-day">Day 7</span>
-                  <h3>Jejuri (Gold Dust Halt)</h3>
-                  <p>The Palkhi visits the hill town of Jejuri, dedicated to Lord Khandoba. Warkaris are welcomed with showers of golden turmeric (*Bhandara*), coating the entire procession in brilliant yellow.</p>
-                </div>
-              </div>
-
-              <div className="timeline-item right reveal">
-                <div className="timeline-dot">4</div>
-                <div className="timeline-content">
-                  <span className="timeline-day">Day 12</span>
-                  <h3>Phaltan</h3>
-                  <p>Entering the heart of rural Maharashtra, the Wari is greeted by local villagers with water, food, and absolute warmth. This represents a period of rest and community satsangs.</p>
-                </div>
-              </div>
-
-              <div className="timeline-item left reveal">
-                <div className="timeline-dot">5</div>
-                <div className="timeline-content">
-                  <span className="timeline-day">Day 17</span>
-                  <h3>The Rings (Gol Ringan)</h3>
-                  <p>At locations like Natepute, the spectacular *Gol Ringan* is held. Warkaris form a giant human ring, and the sacred horse (*Maulincha Ashwa*) runs around the inner track at full gallop, blessed by the crowd.</p>
-                </div>
-              </div>
-
-              <div className="timeline-item right reveal">
-                <div className="timeline-dot">6</div>
-                <div className="timeline-content">
-                  <span className="timeline-day">Day 20 - 21</span>
-                  <h3>Wakhri to Pandharpur</h3>
-                  <p>The various Palkhis merge at Wakhri. Warkaris run the last few miles in absolute ecstasy. Upon reaching Pandharpur, they bathe in the Chandrabhaga River and proceed for the final darshan of Vitoba.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Abhangas Section */}
-        <section id="abhangas" className="abhanga-section">
-          <div className="section-container">
-            <div className="section-header-center">
-              <span className="section-tag reveal">Musical Nectar</span>
-              <h2 className="section-title reveal">Nectar of Abhangas</h2>
-              <div className="divider center reveal"></div>
-              <p className="section-subtitle reveal">Listen to and contemplate the devotional poems composed by the saints of Pandharpur.</p>
-            </div>
-
-            <div className="abhanga-cards">
-              <AbhangaCard 
-                title="सुंदर ते ध्यान"
-                lyrics={
-                  <>
-                    सुंदर ते ध्यान उभे विटेवरी ।<br />
-                    कर कटावरी ठेवोनिया ॥ १ ॥<br /><br />
-                    तुळसीहार गळा कासे पीतांबर ।<br />
-                    आवडे निरंतर हेचि रूप ॥ २ ॥
-                  </>
-                }
-                meaning="Beautiful is the form of Lord Vitthal standing on a brick, with His hands resting on His hips. Wearing a garland of Tulsi leaves and yellow silks, this is the form I wish to contemplate forever."
-                singer="Traditional"
-              />
-
-              <AbhangaCard 
-                title="माझे माहेर पंढरी"
-                lyrics={
-                  <>
-                    माझे माहेर पंढरी । आहे भीवरेच्या तीरी ॥ १ ॥<br />
-                    बाप रखुमादेवीवर । विठ्ठल सोयरा सज्जण ॥ २ ॥<br /><br />
-                    संत सर्वही मिळोनी । येती माहेरच्या गुणी ॥ ३ ॥
-                  </>
-                }
-                meaning="Pandharpur, situated on the banks of the Bhima (Chandrabhaga) river, is my mother's home (Maher). Lord Vitthal is my father, Rakhumai is my mother, and all the saints are my loving relatives."
-                singer="Pt. Bhimsen Joshi"
-              />
-            </div>
-          </div>
-        </section>
-
-        {/* Join Satsang Call-to-Action Section */}
-        <section id="join-us" className="join-section">
-          <div className="join-bg-image"></div>
-          <div className="join-overlay"></div>
-          <div className="section-container">
-            <div className="join-box">
-              <span className="join-tag">RadhaKrishna Satsangam</span>
-              <h2>Connect with the Warkari Wisdom</h2>
-              <p>Join our online and offline Satsangs to dive deep into the philosophy of the Warkari saints, study the Dnyaneshwari and Tukaram Gatha, and sing Abhangas in pure devotion. Let us keep the spirit of Wari alive in our hearts, every day.</p>
+              <div className="devotional-chant">|| राम कृष्ण हरी, वासुदेव हरी ||</div>
               
-              <form className="join-form" onSubmit={(e) => {
-                e.preventDefault();
-                alert('Radhe Radhe! Thank you for connecting. We will reach out to you soon.');
-              }}>
-                <div className="form-group">
-                  <input type="text" placeholder="Your Name" required />
+              <div className="hero-flourish-divider">
+                <span className="flourish-line"></span>
+                <span className="flourish-icon">✿</span>
+                <span className="flourish-line"></span>
+              </div>
+              
+              <p className="hero-subtext-palkhi">A Guide to all Palkhis of Pandharpur</p>
+            </div>
+          </div>
+
+          {/* Custom Mouse Scroll Down Indicator */}
+          <div className="hero-scroll-indicator">
+            <a href="#about-wari" className="scroll-link" onClick={(e) => handleNavClick(e, 'about-wari')}>
+              <div className="scroll-mouse-icon">
+                <span className="scroll-mouse-dot"></span>
+              </div>
+              <span className="scroll-text">Scroll Down</span>
+              <div className="scroll-flourish">
+                <span className="flourish-dot">✦</span>
+              </div>
+            </a>
+          </div>
+
+
+        </section>        {/* About Wari Section */}
+        <section id="about-wari" ref={aboutRef} className="about-section">
+          {/* Main Manuscript/Background Section */}
+          <div className="about-manuscript-wrapper">
+            {/* Background texture overlay */}
+            <div className="heritage-parchment-bg"></div>
+
+            <div className="section-container heritage-container-about">
+              <div className="about-two-column-layout">
+                {/* Left Column: Kids Artwork */}
+                <div className="about-left-column">
+                  <img src={kidsLeft} alt="Warkari Children" className="about-kids-artwork" />
                 </div>
-                <div className="form-group">
-                  <input type="email" placeholder="Your Email Address" required />
+                
+                {/* Right Column: Text Content */}
+                <div className={`about-right-column animate-trigger ${isAboutIntersected ? 'animate-active' : ''}`}>
+                  <h2 className="warkari-tradition-heading">What is the<br />Warkari Tradition?</h2>
+                  
+                  <p className="warkari-tradition-body">
+                    The Warkari tradition is one of Maharashtra's oldest and most cherished devotional movements, rooted in faith, humility, equality, and selfless service. Every year, millions of devotees undertake the sacred Wari pilgrimage on foot to Pandharpur, carrying the sacred Palkhis of Sant Dnyaneshwar Maharaj, Sant Tukaram Maharaj, and other saints.
+                  </p>
+                  
+                  <div className="warkari-highlight-quote">
+                    <span className="quote-symbol">“</span>
+                    <span className="marathi-quote-text">विठ्ठल विठ्ठल जय हरी विठ्ठल</span>
+                    <span className="quote-symbol">”</span>
+                  </div>
+                  
+                  <p className="warkari-tradition-body" style={{ marginTop: '24px' }}>
+                    Ashadhi Ekadashi marks the spiritual culmination of this divine journey. United by this timeless chant, the Warkaris walk together beyond differences of caste, wealth, or status, celebrating devotion, compassion, and the eternal bond between Lord Vitthal and His devotees.
+                  </p>
                 </div>
-                <div className="form-group">
-                  <input type="tel" placeholder="Your Phone Number" />
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+        {/* Palkhi Tradition Section */}
+        <section id="palkhi-tradition" className="about-section" style={{ borderTop: 'none', paddingTop: 0 }}>
+          {/* Main Manuscript/Background Section */}
+          <div className="about-manuscript-wrapper">
+            {/* Background texture overlay */}
+            <div className="heritage-parchment-bg"></div>
+
+            <div className="section-container heritage-container-about" style={{ paddingTop: '10px', paddingBottom: '75px' }}>
+              <div className="about-two-column-layout">
+                {/* Left Column: Text Content (55% width) */}
+                <div className="about-right-column reveal" style={{ flex: '0 0 55%', width: '55%' }}>
+                  <span className="section-tag" style={{ marginBottom: '12px', display: 'block' }}>The Sacred Palkhi Tradition</span>
+                  <h2 className="warkari-tradition-heading">What is the<br />Palkhi Tradition?</h2>
+                  
+                  <p className="warkari-tradition-body">
+                    The sacred Palkhi tradition is a unique, 700-year-old congregational pilgrimage that beautifully captures Maharashtra's rich spiritual heritage. Initiated by Sant Dnyaneshwar Maharaj's devotees and later refined by Sant Tukaram Maharaj's son, it involves carrying the padukas (sacred sandals) of the saints in decorated palanquins (Palkhis) from their resting shrines to Pandharpur.
+                  </p>
+                  
+                  <div className="warkari-highlight-quote">
+                    <span className="quote-symbol">“</span>
+                    <span className="marathi-quote-text">सुंदर ते ध्यान उभे विटेवरी</span>
+                    <span className="quote-symbol">”</span>
+                  </div>
+                  
+                  <p className="warkari-tradition-body" style={{ marginTop: '24px' }}>
+                    Each Palkhi is accompanied by thousands of devotees, organized into disciplined groups called Dindis. Along the journey, pilgrims sing abhangas, play traditional instruments, and perform dances of joy, creating a moving tapestry of absolute devotion and community spirit.
+                  </p>
                 </div>
-                <button type="submit" className="btn btn-primary btn-submit">Receive Satsang Updates</button>
-              </form>
+
+                {/* Right Column: Temple Artwork (45% width) */}
+                <div className="about-left-column" style={{ flex: '0 0 45%', width: '45%' }}>
+                  <img src={templeRight} alt="Pandharpur Vitthal Temple" className="about-kids-artwork" />
+                </div>
+              </div>
             </div>
           </div>
         </section>
+
+        {/* Explore All Palkhis Section */}
+        <section id="palkhi-route" className="palkhi-directory-section">
+          <div className="section-container directory-tight-container">
+            <div className="section-header-center directory-header-center">
+              <span className="section-tag reveal">Divine Journeys</span>
+              <h2 className="section-title reveal">Explore All Palkhis</h2>
+              <div className="divider center reveal"></div>
+            </div>
+
+            {/* Palkhi Card Grid - 10 Featured */}
+            <div className="palkhi-card-grid">
+              {featuredPalkhis.map((palkhi) => {
+                const hasPalkhiPhoto = palkhi.palkhiImage && !failedImages[palkhi.palkhiImage];
+                const hasSaintPhoto = palkhi.saintImage && !failedImages[palkhi.saintImage];
+                return (
+                  <article
+                    key={palkhi.id}
+                    className={`palkhi-card reveal${hasPalkhiPhoto ? ' has-real-photo' : ''}${hasSaintPhoto ? ' has-real-saint' : ''}`}
+                    onClick={() => setSelectedPalkhi(palkhi)}
+                  >
+                    {/* 16:9 Image / Media */}
+                    <div className="palkhi-card-media">
+                      {/* Clipped frame — photo + engraving + chip all get rounded top corners;
+                          portrait lives OUTSIDE the frame so it can escape the clip path. */}
+                      <div className="palkhi-media-frame">
+                        {/* Real photo (when available) */}
+                        {hasPalkhiPhoto && (
+                          <img
+                            src={palkhi.palkhiImage}
+                            alt={`${compactPalkhiName(palkhi.name)} — ${palkhi.origin}`}
+                            className="palkhi-media-photo"
+                            loading="lazy"
+                            onError={() => setFailedImages(prev => ({ ...prev, [palkhi.palkhiImage]: true }))}
+                          />
+                        )}
+                        {/* Gradient + illustration placeholder */}
+                        <div className="palkhi-media-inner">
+                          <div className="palkhi-media-ornament">
+                            <span className="palkhi-media-chip">
+                              <i className="fa-solid fa-location-dot"></i>
+                              {palkhi.origin}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Saint portrait — sits ON the exact seam between
+                          hero image (top) + ivory content body (bottom).
+                          bottom: 0 anchors it to media bottom edge, so 50% translate
+                          puts the circle's centre exactly on the boundary. */}
+                      <div className="saint-portrait saint-portrait-card">
+                        {hasSaintPhoto ? (
+                          <img
+                            src={palkhi.saintImage}
+                            alt={palkhi.saint}
+                            className="saint-portrait-img"
+                            loading="lazy"
+                            onError={() => setFailedImages(prev => ({ ...prev, [palkhi.saintImage]: true }))}
+                          />
+                        ) : (
+                          <SaintAvatarPlaceholder saint={palkhi.saint} />
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Content: Name + Route + Duration + Divider + CTA */}
+                    <div className="palkhi-card-content">
+                      <h3 className="palkhi-card-title">{compactPalkhiName(palkhi.name)}</h3>
+
+                      <div className="palkhi-card-line card-line-route">
+                        <i className="fa-solid fa-route"></i>
+                        <span>{palkhi.origin} <em className="arrow">→</em> {DESTINATION}</span>
+                      </div>
+
+                      <div className="palkhi-card-line card-line-duration">
+                        <i className="fa-solid fa-clock"></i>
+                        <span>{palkhi.durationDays} Days</span>
+                      </div>
+
+                      <span className="palkhi-card-divider" aria-hidden="true"></span>
+
+                      <button
+                        className="btn-view-details"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedPalkhi(palkhi);
+                        }}
+                      >
+                        View Details
+                        <i className="fa-solid fa-arrow-right"></i>
+                      </button>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+
+             {/* View All 35 Palkhis CTA */}
+            <div className="view-all-palkhis-cta reveal">
+              <button className="btn-view-all-palkhis" onClick={() => navigateTo('/palkhis')}>
+                View All {PALKHI_DATA.length} Palkhis
+                <i className="fa-solid fa-arrow-right-long"></i>
+              </button>
+            </div>
+          </div>
+        </section>
+          </>
+        )}
+
+        {/* Premium Palkhi Details Modal */}
+        {selectedPalkhi && (
+          <div
+            className="palkhi-modal-overlay"
+            onClick={() => setSelectedPalkhi(null)}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="palkhi-modal-title"
+          >
+            <div
+              className="palkhi-modal-container"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                className="palkhi-modal-close"
+                onClick={() => setSelectedPalkhi(null)}
+                aria-label="Close modal"
+              >
+                <i className="fa-solid fa-xmark"></i>
+              </button>
+
+              <div className="palkhi-modal-inner">
+                {/* Left / Top: Hero Palkhi Procession Image + Saint portrait (overlapping) */}
+                <div className="palkhi-modal-image-col">
+                  <div className="palkhi-modal-hero-media">
+                    {/* Large Palkhi procession image at the top */}
+                    <div className="modal-palkhi-photo-wrap">
+                      {selectedPalkhi.palkhiImage && !failedImages[selectedPalkhi.palkhiImage] ? (
+                        <img
+                          src={selectedPalkhi.palkhiImage}
+                          alt={`${compactPalkhiName(selectedPalkhi.name)} procession`}
+                          className="modal-palkhi-photo"
+                          onError={() => setFailedImages(prev => ({ ...prev, [selectedPalkhi.palkhiImage]: true }))}
+                        />
+                      ) : (
+                        <div className="modal-palkhi-photo-placeholder">
+                          <i className="fa-solid fa-chariot"></i>
+                          <span>{compactPalkhiName(selectedPalkhi.name)}</span>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Saint portrait — overlaps bottom edge of procession image */}
+                    <div className="saint-portrait saint-portrait-modal">
+                      {selectedPalkhi.saintImage && !failedImages[selectedPalkhi.saintImage] ? (
+                        <img
+                          src={selectedPalkhi.saintImage}
+                          alt={selectedPalkhi.saint}
+                          className="saint-portrait-img"
+                          onError={() => setFailedImages(prev => ({ ...prev, [selectedPalkhi.saintImage]: true }))}
+                        />
+                      ) : (
+                        <SaintAvatarPlaceholder saint={selectedPalkhi.saint} large />
+                      )}
+                    </div>
+
+                    {/* Palkhi names below the saint portrait */}
+                    <div className="palkhi-modal-names">
+                      <h2 id="palkhi-modal-title" className="palkhi-modal-title-center">
+                        {compactPalkhiName(selectedPalkhi.name)}
+                      </h2>
+                      {selectedPalkhi.marathiName && (
+                        <p className="palkhi-modal-marathi-center">{selectedPalkhi.marathiName}</p>
+                      )}
+                      <div className="divider-split-gold tiny center"></div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right / Bottom: Information */}
+                <div className="palkhi-modal-info-col">
+                  <div className="palkhi-modal-fields">
+                    <div className="info-field">
+                      <span className="info-label"><i className="fa-solid fa-user-tie"></i> Saint</span>
+                      <span className="info-value">{selectedPalkhi.saint}</span>
+                    </div>
+                    <div className="info-field-row">
+                      <div className="info-field">
+                        <span className="info-label"><i className="fa-solid fa-location-dot"></i> Origin</span>
+                        <span className="info-value">{selectedPalkhi.origin}</span>
+                      </div>
+                      <div className="info-field">
+                        <span className="info-label"><i className="fa-solid fa-city"></i> District</span>
+                        <span className="info-value">{selectedPalkhi.district}</span>
+                      </div>
+                    </div>
+                    <div className="info-field-row">
+                      <div className="info-field">
+                        <span className="info-label"><i className="fa-solid fa-flag-checkered"></i> Destination</span>
+                        <span className="info-value">{selectedPalkhi.destination}</span>
+                      </div>
+                      <div className="info-field">
+                        <span className="info-label"><i className="fa-solid fa-route"></i> Distance</span>
+                        <span className="info-value">Approx. {selectedPalkhi.distanceKm} km</span>
+                      </div>
+                    </div>
+                    <div className="info-field-row">
+                      <div className="info-field">
+                        <span className="info-label"><i className="fa-solid fa-clock"></i> Duration</span>
+                        <span className="info-value">{selectedPalkhi.durationDays} Days</span>
+                      </div>
+                      <div className="info-field">
+                        <span className="info-label"><i className="fa-solid fa-layer-group"></i> Category</span>
+                        <span className="info-value">{selectedPalkhi.category}</span>
+                      </div>
+                    </div>
+                    <div className="info-field">
+                      <span className="info-label"><i className="fa-solid fa-calendar-days"></i> Traditional Departure</span>
+                      <span className="info-value">{selectedPalkhi.traditionalDeparture}</span>
+                    </div>
+                    <div className="info-field">
+                      <span className="info-label"><i className="fa-solid fa-route"></i> Indicative Route</span>
+                      <span className="info-value route-text">{selectedPalkhi.indicativeRoute}</span>
+                    </div>
+                    {selectedPalkhi.historicalNote && (
+                      <div className="info-field historical-note">
+                        <span className="info-label"><i className="fa-solid fa-book-open"></i> Historical &amp; Cultural Note</span>
+                        <p className="info-note-text">{selectedPalkhi.historicalNote}</p>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="palkhi-modal-footer">
+                    <button
+                      className="btn-modal-close"
+                      onClick={() => setSelectedPalkhi(null)}
+                    >
+                      <i className="fa-solid fa-xmark"></i> Close
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Gallery Section - RadhaKrishna Satsangam Archives (Split Layout) */}
+        {currentPath !== '/palkhis' && (
+          <section id="gallery" className="gallery-section archives-split-section">
+          <div className="section-container archives-split-container">
+            <div className="archives-split-inner">
+              {/* ===== Left Column (70-75%) : Video Gallery ===== */}
+              <div className="archives-left-col">
+                <div className="section-header archives-split-header reveal">
+                  <span className="section-tag">From the Archives</span>
+                  <h2 className="section-title">
+                    Discover Pandharpur
+                    <br />
+                    Through Our Lens
+                  </h2>
+                  <div className="divider-split-gold center"></div>
+                  <p className="section-subtitle">
+                    From the sacred streets of Pandharpur to the divine presence of Lord Vitthal and Rukmini, explore a curated collection of devotional discourses, festivals, temple darshans, yatras, bhajans, and spiritual moments shared by RadhaKrishna Satsangam.
+                  </p>
+                </div>
+
+                <div className="video-grid archives-video-grid reveal">
+                  {PLAYLIST_DATA.map((playlist, index) => (
+                    <a
+                      key={index}
+                      href={playlist.youtubeUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="video-card archives-video-card"
+                      aria-label={`Watch ${playlist.title} playlist`}
+                    >
+                      <div className={`video-thumb ${playlist.coverImage ? 'has-cover' : 'video-thumb-themed'}`}>
+                        {playlist.coverImage ? (
+                          <>
+                            <img
+                              src={playlist.coverImage}
+                              alt={playlist.title}
+                              className="video-cover-img"
+                              loading="lazy"
+                            />
+                            <div className="video-cover-overlay"></div>
+                            <div className="video-youtube-badge">
+                              <i className="fa-brands fa-youtube"></i>
+                            </div>
+                          </>
+                        ) : (
+                          <>
+                            <div className="video-thumb-pattern"></div>
+                            <div className="video-thumb-overlay"></div>
+                            <div className="video-play-icon">
+                              <i className="fa-brands fa-youtube"></i>
+                            </div>
+                          </>
+                        )}
+                      </div>
+                      <div className="video-meta">
+                        <h3 className="video-title">{playlist.title}</h3>
+                        {playlist.description && (
+                          <span className="video-year">{playlist.description}</span>
+                        )}
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              </div>
+
+              {/* ===== Decorative Divider ===== */}
+              <div className="archives-divider" aria-hidden="true">
+                <div className="divider-v-line"></div>
+                <div className="divider-v-ornament">◆</div>
+                <div className="divider-v-line"></div>
+              </div>
+
+              {/* ===== Right Column (25-30%) : Promotional Panel with Phone ===== */}
+              <aside className="archives-right-col reveal">
+                <div className="promo-panel">
+                  <div className="promo-temple-icon">
+                    <i className="fa-solid fa-gopuram"></i>
+                  </div>
+                  <div className="divider-split-gold small center"></div>
+                  <p className="promo-text">
+                    Relive the devotion, music, and timeless moments of the Wari through our video collection.
+                  </p>
+
+                  <div className="phone-showcase">
+                    <img
+                      src={phoneMockup}
+                      alt="Watch the Wari on YouTube"
+                      className="phone-mockup-img"
+                    />
+                    <div className="phone-shadow"></div>
+                  </div>
+
+                  <a
+                    href="https://www.youtube.com/@GurujeeGopalavallidasar"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-channel btn-channel-secondary"
+                  >
+                    <i className="fa-brands fa-youtube"></i>
+                    Visit YouTube Channel
+                  </a>
+                </div>
+              </aside>
+            </div>
+          </div>
+        </section>
+        )}
+
+        {/* Back to Top Floating Button */}
+        <button
+          className="btn-back-to-top-float"
+          onClick={(e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }}
+          aria-label="Go to Top"
+        >
+          <i className="fa-solid fa-arrow-up"></i>
+        </button>
 
         {/* Main Footer */}
         <footer className="main-footer">
           <div className="footer-container">
             <div className="footer-brand">
-              <img src={rksLogo} alt="RadhaKrishna Satsangam Logo" className="footer-logo" />
-              <p>Spiritual discourses, devotional singing, and community service rooted in the teachings of the Warkari saints.</p>
+              <img src={rksLogoWhite} alt="RadhaKrishna Satsangam Logo" className="footer-logo" />
               <div className="social-links">
-                <a href="#" aria-label="YouTube"><i className="fa-brands fa-youtube"></i></a>
-                <a href="#" aria-label="Facebook"><i className="fa-brands fa-facebook"></i></a>
-                <a href="#" aria-label="Instagram"><i className="fa-brands fa-instagram"></i></a>
-                <a href="#" aria-label="WhatsApp"><i className="fa-brands fa-whatsapp"></i></a>
+                <a href="https://www.youtube.com/@GurujeeGopalavallidasar" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i className="fa-brands fa-youtube"></i></a>
+                <a href="https://www.facebook.com/gopalavalli.dasan/#" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i className="fa-brands fa-facebook"></i></a>
+                <a href="https://www.instagram.com/gurujee_gopalavallidasar?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i className="fa-brands fa-instagram"></i></a>
+                <a href="https://api.whatsapp.com/send/?phone=917010888236&text&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i className="fa-brands fa-whatsapp"></i></a>
               </div>
             </div>
 
-            <div className="footer-links">
-              <h3>Quick Links</h3>
-              <ul>
-                <li><a href="#home" onClick={(e) => handleNavClick(e, 'home')}>Home</a></li>
-                <li><a href="#about-wari" onClick={(e) => handleNavClick(e, 'about-wari')}>The Wari Pilgrimage</a></li>
-                <li><a href="#saints" onClick={(e) => handleNavClick(e, 'saints')}>Warkari Saints</a></li>
-                <li><a href="#palkhi-route" onClick={(e) => handleNavClick(e, 'palkhi-route')}>Palkhi Route</a></li>
-                <li><a href="#abhangas" onClick={(e) => handleNavClick(e, 'abhangas')}>Abhangas</a></li>
-              </ul>
-            </div>
-
-            <div className="footer-contact">
-              <h3>Contact Us</h3>
-              <p><i className="fa-solid fa-envelope"></i> contact@radhakrishnasatsangam.org</p>
-              <p><i className="fa-solid fa-phone"></i> +91 98765 43210</p>
-              <p><i className="fa-solid fa-location-dot"></i> Alandi Devachi, Pune, Maharashtra, India</p>
+            <div className="footer-copy-block">
+              <p className="copy-line-1">&copy; 2026 RadhaKrishna Satsangam</p>
+              <p className="copy-line-2">All Rights Reserved.</p>
+              <p className="copy-line-3">Designed &amp; Developed by</p>
+              <p className="copy-line-name">Vedha Mahadevan</p>
             </div>
           </div>
           
           <div className="footer-bottom">
-            <p>&copy; 2026 RadhaKrishna Satsangam. All Rights Reserved. Dedicated to the lotus feet of Shri Rukmini Vitthal.</p>
+            <div className="footer-divider"></div>
           </div>
-          <div className="footer-silhouette-bg"></div>
         </footer>
 
       </div>
