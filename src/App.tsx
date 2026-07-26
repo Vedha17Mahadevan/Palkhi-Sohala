@@ -462,13 +462,16 @@ export default function App() {
         {/* Dedicated Palkhis Directory Page */}
         {currentPath === '/palkhis' && (
           <section className="palkhis-directory-page-section">
-            {/* Immersive Hero Banner */}
-            <div className="directory-hero-banner" style={{ backgroundImage: `url(${generalPalkhiHero})` }}>
-              <div className="hero-gradient-overlay"></div>
-              
+            {/* Back to Home — placed between navbar and hero so it never overlaps content */}
+            <div className="directory-back-wrap">
               <button className="btn-back-home-hero" onClick={() => navigateTo('/')}>
                 <i className="fa-solid fa-arrow-left-long"></i> Back to Home
               </button>
+            </div>
+
+            {/* Immersive Hero Banner */}
+            <div className="directory-hero-banner" style={{ backgroundImage: `url(${generalPalkhiHero})` }}>
+              <div className="hero-gradient-overlay"></div>
               
               <div className="hero-centered-content">
                 <h1 className="directory-hero-title">Explore All Palkhis</h1>

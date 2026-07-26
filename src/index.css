@@ -4938,3 +4938,653 @@ ul {
   }
 }
 
+/* ================================================================= */
+/* FIX #1 — Back to Home button: placed above hero, never overlaps   */
+/* ================================================================= */
+
+/* Wrapper lives BETWEEN navbar and hero banner — keeps button outside hero layout */
+.directory-back-wrap {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  background: var(--color-bg-parchment, #FFFDF9);
+  padding: 1.25rem 4rem 0.75rem 4rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+/* Rewrite button — NO absolute positioning. Simple in-flow pill button.
+   This block intentionally comes AFTER the earlier .btn-back-home-hero absolute
+   rules so these win via cascade. */
+.btn-back-home-hero {
+  position: static;
+  top: auto;
+  left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: rgba(253, 249, 241, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(128, 0, 32, 0.18);
+  color: var(--color-maroon, #5C0618);
+  padding: 0.6rem 1.25rem;
+  border-radius: 30px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  letter-spacing: 0.05em;
+  z-index: 1;
+  box-shadow: 0 2px 8px rgba(45, 2, 11, 0.06);
+}
+
+.btn-back-home-hero:hover {
+  background: rgba(128, 0, 32, 0.06);
+  border-color: rgba(212, 175, 55, 0.9);
+  color: var(--color-maroon, #5C0618);
+  box-shadow: 0 4px 14px rgba(45, 2, 11, 0.1);
+  transform: translateX(-3px);
+}
+
+.btn-back-home-hero i {
+  font-size: 0.9rem;
+  color: inherit;
+  transition: transform 0.3s ease;
+}
+
+.btn-back-home-hero:hover i {
+  transform: translateX(-2px);
+}
+
+/* Tablet: tighten wrapper padding */
+@media (max-width: 1200px) {
+  .directory-back-wrap {
+    padding: 1.1rem 2.5rem 0.6rem 2.5rem;
+  }
+}
+
+/* Mobile: reduce padding + smaller button, ensure safe left align with card */
+@media (max-width: 768px) {
+  .directory-back-wrap {
+    padding: 0.9rem 1.5rem 0.5rem 1.5rem;
+  }
+  .btn-back-home-hero {
+    padding: 0.48rem 1rem;
+    font-size: 0.82rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .directory-back-wrap {
+    padding: 0.8rem 1rem 0.4rem 1rem;
+  }
+  .btn-back-home-hero {
+    padding: 0.45rem 0.95rem;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 375px) {
+  .directory-back-wrap {
+    padding: 0.75rem 0.9rem 0.4rem 0.9rem;
+  }
+  .btn-back-home-hero {
+    padding: 0.42rem 0.9rem;
+    font-size: 0.78rem;
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .directory-back-wrap {
+    padding: 0.7rem 0.75rem 0.35rem 0.75rem;
+  }
+  .btn-back-home-hero {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.76rem;
+    gap: 0.45rem;
+  }
+}
+
+/* ================================================================= */
+/* FIX #2 — Splash Procession: NO CLIPPING, fully visible across all */
+/* Uses 300% track + 33.33% per-copy sizing so each copy exactly     */
+/* matches the visible footer width → seamless walkLoop + no crop    */
+/* ================================================================= */
+
+/* (Re-)define the base splash layout — later than L124 so these win */
+.splash-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: visible;
+  /* Top: logo area gets generous but balanced padding. Bottom stays close to safe area. */
+  padding: 4.5rem 1.25rem 0 1.25rem;
+  padding-bottom: max(0px, env(safe-area-inset-bottom, 0px));
+  /* Natural centering with gaps rather than space-between — lets us truly center the Tilak */
+  justify-content: flex-start;
+  gap: 0;
+}
+
+#splash-screen {
+  overflow: hidden;
+}
+
+.splash-bottom {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  margin-top: auto; /* pins procession to the very bottom */
+  padding-bottom: max(0px, env(safe-area-inset-bottom, 0px));
+}
+
+/* Footer container — responsive height proportional to viewport so the
+   wide procession silhouette always fits horizontally.
+   Base (desktop): ~120px tall. */
+.warkari-footer {
+  width: 100%;
+  height: clamp(72px, 11vw, 130px);
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+  border-bottom: 4px solid var(--color-maroon);
+  opacity: 0;
+  animation: fadeInWarkari 1.5s ease-out 2.2s forwards;
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-start;
+  padding: 0;
+}
+
+/* Track is exactly 3 visible widths. The 3 copies inside occupy 100% each of
+   the visible footer width → translate -33.33% resets seamlessly. */
+.warkari-track {
+  display: flex;
+  flex-wrap: nowrap;
+  width: 300%;
+  height: 100%;
+  align-items: flex-end;
+  animation: walkLoop 45s linear infinite;
+  will-change: transform;
+  flex-shrink: 0;
+}
+
+/* Each procession copy — exactly 1/3 of track = 1 visible footer width.
+   object-fit: contain + small scale-down guarantees the ENTIRE image
+   (leftmost warkari to rightmost flag) always fits. Padding-top leaves
+   vertical headroom so walkBob's 2.5px upward movement never crops heads. */
+.warkari-img {
+  flex: 0 0 33.3333%;
+  width: 33.3333%;
+  max-width: 33.3333%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 4px 0 0 0; /* tiny top headroom for bob */
+  display: block;
+  object-fit: contain;
+  object-position: 50% 100%; /* center horizontally, anchor to BOTTOM */
+  transform-origin: center bottom;
+  animation: walkBob 2.2s ease-in-out infinite;
+}
+
+/* Mobile breakpoints: reduce procession footer height proportionally
+   so the very-wide silhouette never exceeds the horizontal viewport.
+   Each clamp is tuned so 11vw of the viewport width keeps image fully inside. */
+@media (max-width: 768px) {
+  .warkari-footer {
+    /* 768px → ~84px, 430px → ~71px, 375px → ~66px, 320px → ~61px */
+    height: clamp(58px, 13.5vw, 88px);
+  }
+  .warkari-img {
+    padding-top: 3px;
+  }
+}
+
+@media (max-width: 430px) {
+  .warkari-footer {
+    height: clamp(54px, 14vw, 74px);
+  }
+}
+
+@media (max-width: 390px) {
+  .warkari-footer {
+    height: clamp(52px, 14vw, 68px);
+  }
+}
+
+@media (max-width: 375px) {
+  .warkari-footer {
+    height: clamp(50px, 14vw, 65px);
+  }
+}
+
+@media (max-width: 360px) {
+  .warkari-footer {
+    height: clamp(48px, 14vw, 62px);
+  }
+}
+
+@media (max-width: 320px) {
+  .warkari-footer {
+    height: clamp(44px, 14vw, 56px);
+  }
+  .warkari-img {
+    padding-top: 2px;
+  }
+}
+
+/* Also override the stale 768px footer height at L2325 (80px fixed) — ensure our
+   mobile heights win everywhere via higher specificity by doubling up: */
+@media (max-width: 768px) {
+  .splash-bottom .warkari-footer { height: clamp(58px, 13.5vw, 88px); }
+}
+@media (max-width: 430px) {
+  .splash-bottom .warkari-footer { height: clamp(54px, 14vw, 74px); }
+}
+@media (max-width: 390px) {
+  .splash-bottom .warkari-footer { height: clamp(52px, 14vw, 68px); }
+}
+@media (max-width: 375px) {
+  .splash-bottom .warkari-footer { height: clamp(50px, 14vw, 65px); }
+}
+@media (max-width: 360px) {
+  .splash-bottom .warkari-footer { height: clamp(48px, 14vw, 62px); }
+}
+@media (max-width: 320px) {
+  .splash-bottom .warkari-footer { height: clamp(44px, 14vw, 56px); }
+}
+
+/* ================================================================= */
+/* FIX #3 — Splash Vertical Rebalance: feel vertically centered      */
+/* ================================================================= */
+
+/* Top section: logo + "presents" — reduce gap and tune top spacing */
+.splash-top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* smaller gap between logo and presents text (was 1.5rem) */
+  gap: 0.65rem;
+  margin-top: 0;
+  margin-bottom: 0.25rem;
+}
+
+.rks-logo {
+  /* constrain logo max width so on very tall narrow phones it doesn't push tilak too far down */
+  max-width: min(520px, 78vw);
+  width: 100%;
+  height: auto;
+}
+
+.presents-text {
+  font-size: 0.82rem;
+  letter-spacing: 0.28em;
+  /* smaller gap between logo and presents */
+  margin-top: -0.1rem;
+}
+
+/* Center group — the TRUE visual anchor of the splash.
+   Instead of flex-grow:1 pushing it around, we give it a well-defined
+   top margin from the logo block and natural sizing, so Tilak rests near
+   the mathematical center of the full viewport. */
+.splash-center {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Disable old flex-grow centering that relied on space-between; instead use
+     a small flex grow so center fills the remaining space between top & bottom */
+  flex-grow: 1;
+  flex-shrink: 1;
+  width: 100%;
+  padding: 1rem 0 1rem 0;
+}
+
+/* Glow behind Tilak — keep, but scale a touch smaller on tight screens */
+.glow-bg {
+  width: 300px;
+  height: 300px;
+}
+
+/* Loader group: Tilak sits above progress bar, now with reduced gap (was 2.2rem) */
+.center-loader-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  z-index: 2;
+}
+
+.vitthal-icon-container {
+  width: 150px;
+  height: 150px;
+}
+
+.vitthal-icon {
+  width: 80px;
+  height: auto;
+}
+
+.progress-bar-container {
+  width: 180px;
+}
+
+/* ---- Desktop (> 1024px) refined vertical tuning ---- */
+@media (min-width: 1025px) {
+  .splash-content {
+    padding-top: 5rem;
+  }
+  .splash-top {
+    gap: 0.85rem;
+  }
+  .rks-logo {
+    max-width: 580px;
+  }
+  .center-loader-group {
+    gap: 1.5rem;
+  }
+  .glow-bg {
+    width: 320px;
+    height: 320px;
+  }
+}
+
+/* ---- Tablet & general mobile (≤ 1024px) ---- */
+@media (max-width: 1024px) {
+  .splash-content {
+    padding-top: 3.25rem;
+  }
+  .splash-top {
+    gap: 0.55rem;
+  }
+  .rks-logo {
+    max-width: min(460px, 78vw);
+  }
+}
+
+/* ---- Mobile (≤ 768px) ---- */
+@media (max-width: 768px) {
+  .splash-content {
+    padding-top: max(2.5rem, env(safe-area-inset-top, 0px));
+    padding-left: 0.9rem;
+    padding-right: 0.9rem;
+  }
+  .splash-top {
+    gap: 0.45rem;
+  }
+  .rks-logo {
+    max-width: min(360px, 82vw);
+  }
+  .presents-text {
+    font-size: 0.78rem;
+    letter-spacing: 0.24em;
+  }
+  .glow-bg {
+    width: 260px;
+    height: 260px;
+  }
+  .vitthal-icon-container,
+  .progress-ring-svg {
+    width: 120px;
+    height: 120px;
+  }
+  .vitthal-icon {
+    width: 66px;
+  }
+  .progress-circle {
+    stroke-dasharray: 273.319; /* 2*PI*43.5 */
+    stroke-dashoffset: 273.319;
+    cx: 50;
+    cy: 50;
+    r: 43.5;
+  }
+  .progress-ring-svg circle {
+    cx: 50;
+    cy: 50;
+    r: 43.5;
+  }
+  .progress-bar-container {
+    width: 170px;
+  }
+  .center-loader-group {
+    gap: 1rem;
+  }
+  .splash-center {
+    padding: 0.5rem 0;
+  }
+}
+
+/* ---- 430px and below (iPhone 14 Pro Max / Pixel 7) ---- */
+@media (max-width: 430px) {
+  .splash-content {
+    padding-top: max(2.15rem, env(safe-area-inset-top, 0px));
+    padding-left: 0.8rem;
+    padding-right: 0.8rem;
+  }
+  .splash-top {
+    gap: 0.4rem;
+  }
+  .rks-logo {
+    max-width: min(320px, 84vw);
+  }
+  .presents-text {
+    font-size: 0.74rem;
+    letter-spacing: 0.22em;
+  }
+  .glow-bg {
+    width: 240px;
+    height: 240px;
+  }
+  .vitthal-icon-container,
+  .progress-ring-svg {
+    width: 112px;
+    height: 112px;
+  }
+  .vitthal-icon {
+    width: 62px;
+  }
+  .progress-circle {
+    stroke-dasharray: 254.469; /* 2*PI*40.5 */
+    stroke-dashoffset: 254.469;
+    cx: 50;
+    cy: 50;
+    r: 40.5;
+  }
+  .progress-ring-svg circle {
+    cx: 50;
+    cy: 50;
+    r: 40.5;
+  }
+  .progress-bar-container {
+    width: 160px;
+  }
+  .center-loader-group {
+    gap: 0.9rem;
+  }
+}
+
+/* ---- 390px (iPhone 12/13/14) ---- */
+@media (max-width: 390px) {
+  .splash-content {
+    padding-top: max(2rem, env(safe-area-inset-top, 0px));
+  }
+  .rks-logo {
+    max-width: min(300px, 84vw);
+  }
+  .glow-bg {
+    width: 228px;
+    height: 228px;
+  }
+  .vitthal-icon-container,
+  .progress-ring-svg {
+    width: 108px;
+    height: 108px;
+  }
+  .vitthal-icon {
+    width: 60px;
+  }
+  .progress-circle {
+    stroke-dasharray: 245.044; /* 2*PI*39 */
+    stroke-dashoffset: 245.044;
+    cx: 50;
+    cy: 50;
+    r: 39;
+  }
+  .progress-ring-svg circle {
+    cx: 50;
+    cy: 50;
+    r: 39;
+  }
+  .progress-bar-container {
+    width: 156px;
+  }
+}
+
+/* ---- 375px (iPhone SE 2nd/3rd gen, iPhone X/11 Pro) ---- */
+@media (max-width: 375px) {
+  .splash-content {
+    padding-top: max(1.85rem, env(safe-area-inset-top, 0px));
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+  .splash-top {
+    gap: 0.35rem;
+  }
+  .rks-logo {
+    max-width: min(288px, 86vw);
+  }
+  .presents-text {
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+  }
+  .glow-bg {
+    width: 220px;
+    height: 220px;
+  }
+  .vitthal-icon-container,
+  .progress-ring-svg {
+    width: 104px;
+    height: 104px;
+  }
+  .vitthal-icon {
+    width: 58px;
+  }
+  .progress-circle {
+    stroke-dasharray: 235.619; /* 2*PI*37.5 */
+    stroke-dashoffset: 235.619;
+    cx: 50;
+    cy: 50;
+    r: 37.5;
+  }
+  .progress-ring-svg circle {
+    cx: 50;
+    cy: 50;
+    r: 37.5;
+  }
+  .progress-bar-container {
+    width: 150px;
+  }
+  .center-loader-group {
+    gap: 0.85rem;
+  }
+}
+
+/* ---- 360px (Galaxy S10e, older Androids) ---- */
+@media (max-width: 360px) {
+  .splash-content {
+    padding-top: max(1.75rem, env(safe-area-inset-top, 0px));
+    padding-left: 0.7rem;
+    padding-right: 0.7rem;
+  }
+  .rks-logo {
+    max-width: min(276px, 86vw);
+  }
+  .glow-bg {
+    width: 212px;
+    height: 212px;
+  }
+  .vitthal-icon-container,
+  .progress-ring-svg {
+    width: 100px;
+    height: 100px;
+  }
+  .vitthal-icon {
+    width: 56px;
+  }
+  .progress-circle {
+    stroke-dasharray: 226.195; /* 2*PI*36 */
+    stroke-dashoffset: 226.195;
+    cx: 50;
+    cy: 50;
+    r: 36;
+  }
+  .progress-ring-svg circle {
+    cx: 50;
+    cy: 50;
+    r: 36;
+  }
+  .progress-bar-container {
+    width: 146px;
+  }
+}
+
+/* ---- 320px (iPhone SE 1st gen / smallest Android) ---- */
+@media (max-width: 320px) {
+  .splash-content {
+    padding-top: max(1.5rem, env(safe-area-inset-top, 0px));
+    padding-left: 0.6rem;
+    padding-right: 0.6rem;
+  }
+  .splash-top {
+    gap: 0.3rem;
+  }
+  .rks-logo {
+    max-width: min(248px, 88vw);
+  }
+  .presents-text {
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+  }
+  .glow-bg {
+    width: 192px;
+    height: 192px;
+  }
+  .vitthal-icon-container,
+  .progress-ring-svg {
+    width: 92px;
+    height: 92px;
+  }
+  .vitthal-icon {
+    width: 52px;
+  }
+  .progress-circle {
+    stroke-dasharray: 207.345; /* 2*PI*33 */
+    stroke-dashoffset: 207.345;
+    cx: 50;
+    cy: 50;
+    r: 33;
+  }
+  .progress-ring-svg circle {
+    cx: 50;
+    cy: 50;
+    r: 33;
+  }
+  .progress-bar-container {
+    width: 136px;
+  }
+  .center-loader-group {
+    gap: 0.75rem;
+  }
+}
+
+
