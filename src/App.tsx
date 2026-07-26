@@ -743,6 +743,7 @@ export default function App() {
                 
                 {/* Right Column: Text Content */}
                 <div className={`about-right-column animate-trigger ${isAboutIntersected ? 'animate-active' : ''}`}>
+                  <span className="section-tag" style={{ marginBottom: '12px', display: 'block' }}>The Sacred Warkari Tradition</span>
                   <h2 className="warkari-tradition-heading">What is the<br />Warkari Tradition?</h2>
                   
                   <p className="warkari-tradition-body">
@@ -766,16 +767,16 @@ export default function App() {
         </section>
 
         {/* Palkhi Tradition Section */}
-        <section id="palkhi-tradition" className="about-section" style={{ borderTop: 'none', paddingTop: 0 }}>
+        <section id="palkhi-tradition" className="about-section palkhi-tradition-section">
           {/* Main Manuscript/Background Section */}
           <div className="about-manuscript-wrapper">
             {/* Background texture overlay */}
             <div className="heritage-parchment-bg"></div>
 
-            <div className="section-container heritage-container-about" style={{ paddingTop: '10px', paddingBottom: '75px' }}>
-              <div className="about-two-column-layout">
-                {/* Left Column: Text Content (55% width) */}
-                <div className="about-right-column reveal" style={{ flex: '0 0 55%', width: '55%' }}>
+            <div className="section-container heritage-container-about">
+              <div className="about-two-column-layout palkhi-two-column-layout">
+                {/* Left Column: Text Content (mirrors Warkari's right-column text style but on the left) */}
+                <div className="palkhi-text-col reveal">
                   <span className="section-tag" style={{ marginBottom: '12px', display: 'block' }}>The Sacred Palkhi Tradition</span>
                   <h2 className="warkari-tradition-heading">What is the<br />Palkhi Tradition?</h2>
                   
@@ -794,8 +795,8 @@ export default function App() {
                   </p>
                 </div>
 
-                {/* Right Column: Temple Artwork (45% width) */}
-                <div className="about-left-column" style={{ flex: '0 0 45%', width: '45%' }}>
+                {/* Right Column: Temple Artwork */}
+                <div className="palkhi-image-col">
                   <img src={templeRight} alt="Pandharpur Vitthal Temple" className="about-kids-artwork" />
                 </div>
               </div>

@@ -4702,3 +4702,239 @@ ul {
     min-width: 100%;
   }
 }
+
+/* ================================================================= */
+/* RESPONSIVENESS FIXES: Warkari / Palkhi Sections + Splash Procession */
+/* ================================================================= */
+
+/* ----- Palkhi Tradition Section (Desktop) ----- */
+/* Mirrors Warkari layout but with image on right, text on left */
+.palkhi-tradition-section {
+  border-top: none;
+  padding-top: 0;
+}
+
+/* Reduced top padding for the container since it's right below Warkari section */
+.palkhi-tradition-section .heritage-container-about {
+  padding-top: 10px;
+}
+
+/* Left (text) column — same styling as Warkari's right column, but positioned left */
+.palkhi-two-column-layout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 3rem;
+  position: relative;
+  z-index: 3;
+}
+
+.palkhi-text-col {
+  flex: 0 0 55%;
+  width: 55%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.palkhi-image-col {
+  flex: 0 0 45%;
+  width: 45%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: -50px; /* mirror Warkari's about-left-column top offset for balance */
+}
+
+/* Tablet (~1200px) — mirror Warkari tablet proportions */
+@media (max-width: 1200px) {
+  .palkhi-two-column-layout {
+    gap: 2rem;
+  }
+  .palkhi-text-col {
+    flex: 0 0 64%;
+    width: 64%;
+  }
+  .palkhi-image-col {
+    flex: 0 0 32%;
+    width: 32%;
+    margin-top: 0;
+  }
+}
+
+/* Mobile (≤ 768px) — stack full-width, image FIRST then text (same order as Warkari visually) */
+@media (max-width: 768px) {
+  .palkhi-tradition-section .heritage-container-about {
+    padding-top: 60px; /* Match Warkari for consistent vertical rhythm on mobile */
+  }
+
+  .palkhi-two-column-layout {
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  /* Image column — order -1 so image appears ABOVE text (matching Warkari mobile layout) */
+  .palkhi-image-col {
+    flex: 0 0 100%;
+    width: 100%;
+    order: -1;
+    justify-content: center;
+    margin-top: 0;
+  }
+
+  .palkhi-text-col {
+    flex: 0 0 100%;
+    width: 100%;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+/* Extra mobile sizes (480/430/412/390/375/360/320) — consistent illustration sizing */
+@media (max-width: 480px) {
+  .about-kids-artwork,
+  .palkhi-image-col .about-kids-artwork {
+    width: 80%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 375px) {
+  .about-kids-artwork,
+  .palkhi-image-col .about-kids-artwork {
+    width: 85%;
+    max-width: 280px;
+  }
+
+  .warkari-tradition-heading {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 320px) {
+  .about-kids-artwork,
+  .palkhi-image-col .about-kids-artwork {
+    width: 90%;
+    max-width: 260px;
+  }
+
+  .warkari-tradition-heading {
+    font-size: 26px;
+  }
+}
+
+/* ----- Splash Screen Bottom Procession (Responsive Fixes) ----- */
+/* Ensure ENTIRE procession fits — no horizontal/vertical clipping across all aspect ratios */
+
+#splash-screen {
+  overflow: hidden; /* keep to hide page behind — the inner containers get overflow:visible below */
+}
+
+.splash-content {
+  padding: 4rem 2rem 0 2rem;
+  padding-bottom: max(0px, env(safe-area-inset-bottom, 0px));
+  box-sizing: border-box;
+  overflow: visible; /* no clipping of procession container */
+}
+
+.splash-bottom {
+  width: 100%;
+  max-width: 100vw;
+  box-sizing: border-box;
+  overflow: visible;
+  padding: 0;
+  margin: 0;
+  position: relative;
+  /* bottom padding safe area for iPhones with home indicator */
+  padding-bottom: max(0px, env(safe-area-inset-bottom, 0px));
+}
+
+/* Footer container that holds the moving procession track — responsive height */
+.warkari-footer {
+  /* Height scales with viewport width so the procession image never clips horizontally
+     At 1200px+ viewport: max 120px. At 320px viewport: ~ 57.6px (18vw) */
+  height: clamp(56px, 18vw, 120px);
+  width: 100%;
+  max-width: 100vw;
+  box-sizing: border-box;
+  overflow: hidden; /* inner overflow for the walk marquee — but the procession image itself is sized to FIT */
+  position: relative;
+  border-bottom: 4px solid var(--color-maroon);
+  opacity: 0;
+  animation: fadeInWarkari 1.5s ease-out 2.2s forwards;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.warkari-track {
+  display: flex;
+  width: max-content;
+  height: 100%;
+  align-items: flex-end;
+  animation: walkLoop 45s linear infinite;
+  will-change: transform;
+}
+
+/* Each procession image — ensure it ALWAYS FITS within the footer container,
+   from leftmost figure to rightmost flag: width = viewport width (so 1 full copy
+   fills exactly 1 screen width, seamless looping with 3 copies). */
+.warkari-img {
+  /* Each copy fills 100% viewport width, height auto to maintain aspect ratio */
+  width: 100vw;
+  max-width: 100vw;
+  height: 100%;
+  flex: 0 0 auto;
+  display: block;
+  object-fit: contain;
+  object-position: center bottom;
+  /* Small scale-down to guarantee no edge clipping from bob animation */
+  transform-origin: center bottom;
+  animation: walkBob 2.2s ease-in-out infinite;
+}
+
+/* Mobile — shrink procession slightly (<= 768px) */
+@media (max-width: 768px) {
+  .warkari-footer {
+    /* Reduce max height on mobile so the procession doesn't overwhelm splash layout
+       320px => 52px, 430px => ~70px, 768px => ~88px */
+    height: clamp(52px, 16vw, 88px);
+  }
+
+  .splash-content {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 2.5rem;
+  }
+}
+
+/* Smaller phones (≤ 430px) — extra responsive tightening */
+@media (max-width: 430px) {
+  .warkari-footer {
+    height: clamp(48px, 15vw, 72px);
+  }
+}
+
+/* Smallest phones (≤ 375px) — ensure everything still fits */
+@media (max-width: 375px) {
+  .warkari-footer {
+    height: clamp(44px, 14.5vw, 64px);
+  }
+}
+
+/* Very narrow phones (≤ 320px) — final safeguard */
+@media (max-width: 320px) {
+  .warkari-footer {
+    height: clamp(40px, 14vw, 56px);
+  }
+
+  .splash-content {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    padding-top: 2rem;
+  }
+}
+
