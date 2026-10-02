@@ -9,6 +9,7 @@ import PalkhiTradition from '../components/wari/PalkhiTradition';
 import PalkhiGrid from '../components/palkhi/PalkhiGrid';
 import PlaylistGrid from '../components/gallery/PlaylistGrid';
 import MuseumTraditionHero from '../components/home/MuseumTraditionHero';
+import { prefetchRoute } from '../utils/prefetchUtils';
 
 const PALKHI_DATA = rawPalkhiData as Palkhi[];
 

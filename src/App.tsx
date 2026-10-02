@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { NavigationProvider, useRouter } from './context/NavigationContext';
 import Splash from './components/common/Splash';
 import Header from './components/layout/Header';
