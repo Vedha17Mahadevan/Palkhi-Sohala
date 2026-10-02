@@ -108,6 +108,8 @@ export const NavigationProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     <NavigationContext.Provider value={{
       currentPath,
       navigateTo,
+      pendingScrollId,
+      clearPendingScroll,
       isSplashActive,
       isSplashFadingOut,
       isLandingActive,
