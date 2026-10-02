@@ -14,8 +14,8 @@
     "historicalNote": "Paduka from the samadhi shrine at Alandi; one of the two largest Wari processions.",
     "traditionalDeparture": "Jyeshtha Vadya Ashtami (traditional)",
     "indicativeRoute": "Alandi–Pune–Saswad–Jejuri–Lonand–Phaltan–Natepute–Malshiras–Velapur–Wakhari–Pandharpur",
-    "palkhiImage": "/images/palkhis/dnyaneshwar.jpg",
-    "saintImage": "/images/saints/dnyaneshwar.jpg"
+    "palkhiImage": "dnyaneshwar",
+    "saintImage": "dnyaneshwar"
   },
   {
     "id": 2,
@@ -32,8 +32,8 @@
     "historicalNote": "Paduka from Dehu; the other principal Wari procession.",
     "traditionalDeparture": "Jyeshtha Vadya Saptami (traditional)",
     "indicativeRoute": "Dehu–Akurdi–Pune–Loni Kalbhor–Yavat–Baramati–Indapur–Akluj–Wakhari–Pandharpur",
-    "palkhiImage": "/images/palkhis/tukaram.jpg",
-    "saintImage": "/images/saints/tukaram.jpeg"
+    "palkhiImage": "tukaram",
+    "saintImage": "tukaram"
   },
   {
     "id": 3,
@@ -50,8 +50,8 @@
     "historicalNote": "Starts from the Nivruttinath samadhi area at Trimbakeshwar.",
     "traditionalDeparture": "Jyeshtha Shuddha Pournima (traditional)",
     "indicativeRoute": "Trimbakeshwar towards Nashik–Ahmednagar belt and onward to Pandharpur; exact annual route requires sansthan confirmation.",
-    "palkhiImage": "/images/palkhis/nivruttinath.avif",
-    "saintImage": "/images/saints/nivruttinath.jpg"
+    "palkhiImage": "nivruttinath",
+    "saintImage": "nivruttinath"
   },
   {
     "id": 4,
@@ -68,8 +68,8 @@
     "historicalNote": "Starts from Saswad, associated with Sant Sopandev’s samadhi.",
     "traditionalDeparture": "Jyeshtha Vadya Dwadashi (traditional)",
     "indicativeRoute": "Saswad–Jejuri/Phaltan belt–Pandharpur; annual halt pattern to be verified.",
-    "palkhiImage": "/images/palkhis/sopankaka.webp",
-    "saintImage": "/images/saints/sopankaka.webp"
+    "palkhiImage": "sopankaka",
+    "saintImage": "sopankaka"
   },
   {
     "id": 5,
@@ -86,8 +86,8 @@
     "historicalNote": "One of two independently referenced Muktabai palkhi departures.",
     "traditionalDeparture": "Jyeshtha Shuddha Pratipada (traditional)",
     "indicativeRoute": "Mehun–Marathwada/western Maharashtra corridor–Pandharpur; confirm current official route.",
-    "palkhiImage": "/images/palkhis/muktabai.webp",
-    "saintImage": "/images/saints/muktabai.webp"
+    "palkhiImage": "muktabai",
+    "saintImage": "muktabai"
   },
   {
     "id": 6,
@@ -104,8 +104,8 @@
     "historicalNote": "Muktabai palkhi leaving from Kothali near Muktainagar.",
     "traditionalDeparture": "Around Jyeshtha Shuddha Panchami",
     "indicativeRoute": "Kothali/Muktainagar–Marathwada corridor–Pandharpur; exact annual route requires confirmation.",
-    "palkhiImage": "/images/palkhis/muktabai.webp",
-    "saintImage": "/images/saints/muktabai-k.jpg"
+    "palkhiImage": "muktabai",
+    "saintImage": "muktabai-k"
   },
   {
     "id": 7,
@@ -122,8 +122,8 @@
     "historicalNote": "Associated with the Eknath Maharaj shrine and Nath tradition at Paithan.",
     "traditionalDeparture": "Jyeshtha Vadya Saptami (traditional)",
     "indicativeRoute": "Paithan–Beed/Ahilyanagar–Solapur region–Pandharpur; exact halts require sansthan confirmation.",
-    "palkhiImage": "/images/palkhis/eknath.jpg",
-    "saintImage": "/images/saints/eknath.jpg"
+    "palkhiImage": "eknath",
+    "saintImage": "eknath"
   },
   {
     "id": 8,
@@ -141,7 +141,7 @@
     "traditionalDeparture": "Jyeshtha Vadya Ashtami (traditional)",
     "indicativeRoute": "Degav Rangari–Pandharpur; detailed annual halts require local trust confirmation.",
     "palkhiImage": "",
-    "saintImage": "/images/saints/bahinabai-degav-rangari.webp"
+    "saintImage": "bahinabai-degav-rangari"
   },
   {
     "id": 9,
@@ -159,7 +159,7 @@
     "traditionalDeparture": "Jyeshtha Vadya Ashtami (traditional)",
     "indicativeRoute": "Shiur–Pandharpur; detailed annual halts require local trust confirmation.",
     "palkhiImage": "",
-    "saintImage": "/images/saints/bahinabai-shiur.jpg"
+    "saintImage": "bahinabai-shiur"
   },
   {
     "id": 10,
@@ -177,7 +177,7 @@
     "traditionalDeparture": "Jyeshtha Vadya Dwadashi (traditional)",
     "indicativeRoute": "Pimpalner–Ahilyanagar/Pune-Solapur corridor–Pandharpur; exact halts need confirmation.",
     "palkhiImage": "",
-    "saintImage": "/images/saints/niloba.webp"
+    "saintImage": "niloba"
   },
   {
     "id": 11,
@@ -212,8 +212,8 @@
     "historicalNote": "Associated with Sant Namdev’s birthplace tradition at Narsi Namdev.",
     "traditionalDeparture": "Varies annually",
     "indicativeRoute": "Narsi Namdev–Marathwada–Pandharpur; exact palkhi identity and route should be confirmed with the local sansthan.",
-    "palkhiImage": "/images/palkhis/namdev.avif",
-    "saintImage": "/images/saints/namdev.webp"
+    "palkhiImage": "namdev",
+    "saintImage": "namdev"
   },
   {
     "id": 13,
@@ -231,7 +231,7 @@
     "traditionalDeparture": "Varies annually",
     "indicativeRoute": "Ter–Dharashiv/Solapur region–Pandharpur.",
     "palkhiImage": "",
-    "saintImage": "/images/saints/gora-kumbhar.jpg"
+    "saintImage": "gora-kumbhar"
   },
   {
     "id": 14,
@@ -249,7 +249,7 @@
     "traditionalDeparture": "Varies annually",
     "indicativeRoute": "Aran–Pandharpur.",
     "palkhiImage": "",
-    "saintImage": "/images/saints/savata-mali.jpeg"
+    "saintImage": "savata-mali"
   },
   {
     "id": 15,
@@ -267,7 +267,7 @@
     "traditionalDeparture": "Varies annually",
     "indicativeRoute": "Mangalwedha–Pandharpur.",
     "palkhiImage": "",
-    "saintImage": "/images/saints/chokhamela.webp"
+    "saintImage": "chokhamela"
   },
   {
     "id": 16,
@@ -285,7 +285,7 @@
     "traditionalDeparture": "Varies annually",
     "indicativeRoute": "Mangalwedha–Pandharpur.",
     "palkhiImage": "",
-    "saintImage": "/images/saints/damaji-pant.webp"
+    "saintImage": "damaji-pant"
   },
   {
     "id": 17,
@@ -303,7 +303,7 @@
     "traditionalDeparture": "Varies annually",
     "indicativeRoute": "Shrigonda–Solapur corridor–Pandharpur.",
     "palkhiImage": "",
-    "saintImage": "/images/saints/sheikh-muhammad.avif"
+    "saintImage": "sheikh-muhammad"
   },
   {
     "id": 18,
@@ -321,7 +321,7 @@
     "traditionalDeparture": "Varies annually",
     "indicativeRoute": "Sudumbare–Pune region–Pandharpur.",
     "palkhiImage": "",
-    "saintImage": "/images/saints/santaji-jagnade.webp"
+    "saintImage": "santaji-jagnade"
   },
   {
     "id": 19,
@@ -339,7 +339,7 @@
     "traditionalDeparture": "Varies annually",
     "indicativeRoute": "Gangakhed–Marathwada–Pandharpur",
     "palkhiImage": "",
-    "saintImage": "/images/saints/janabai.jpg"
+    "saintImage": "janabai"
   },
   {
     "id": 20,
@@ -357,7 +357,7 @@
     "traditionalDeparture": "Varies annually",
     "indicativeRoute": "Paithan–Pandharpur",
     "palkhiImage": "",
-    "saintImage": "/images/saints/bhanudas.jpeg"
+    "saintImage": "bhanudas"
   },
   {
     "id": 21,
@@ -375,7 +375,7 @@
     "traditionalDeparture": "Varies annually",
     "indicativeRoute": "Mangalwedha–Pandharpur",
     "palkhiImage": "",
-    "saintImage": "/images/saints/kanhopatra.webp"
+    "saintImage": "kanhopatra"
   },
   {
     "id": 22,
@@ -393,7 +393,7 @@
     "traditionalDeparture": "Varies annually",
     "indicativeRoute": "Buldhana/Marathwada corridor–Pandharpur",
     "palkhiImage": "",
-    "saintImage": "/images/saints/sena.webp"
+    "saintImage": "sena"
   },
   {
     "id": 23,
@@ -407,11 +407,11 @@
     "distanceKm": 380,
     "durationDays": "18–25",
     "category": "Regional saint tradition",
-    "historicalNote": "Associated with the guru of Sant Namdev and Aundha Nagnath tradition.",
+    "historicalNote": "Associated with the guru of Sant Niloba and Aundha Nagnath tradition.",
     "traditionalDeparture": "Varies annually",
     "indicativeRoute": "Aundha Nagnath–Pandharpur",
     "palkhiImage": "",
-    "saintImage": "/images/saints/visoba-khechar.jpg"
+    "saintImage": "visoba-khechar"
   },
   {
     "id": 24,
@@ -429,7 +429,7 @@
     "traditionalDeparture": "Varies annually",
     "indicativeRoute": "Sajjangad–Pandharpur",
     "palkhiImage": "",
-    "saintImage": "/images/saints/samarth-ramdas-swami.webp"
+    "saintImage": "samarth-ramdas-swami"
   },
   {
     "id": 25,
@@ -447,7 +447,7 @@
     "traditionalDeparture": "Varies annually",
     "indicativeRoute": "Mangalwedha–Pandharpur",
     "palkhiImage": "",
-    "saintImage": "/images/saints/banka.webp"
+    "saintImage": "banka"
   },
   {
     "id": 26,
@@ -483,7 +483,7 @@
     "traditionalDeparture": "Varies annually",
     "indicativeRoute": "Mangalwedha–Pandharpur",
     "palkhiImage": "",
-    "saintImage": "/images/saints/soyarabai.webp"
+    "saintImage": "soyarabai"
   },
   {
     "id": 28,
@@ -501,7 +501,7 @@
     "traditionalDeparture": "Varies annually",
     "indicativeRoute": "Pandharpur taluka–Pandharpur",
     "palkhiImage": "",
-    "saintImage": "/images/saints/parisa-bhagwat.webp"
+    "saintImage": "parisa-bhagwat"
   },
   {
     "id": 29,
@@ -519,7 +519,7 @@
     "traditionalDeparture": "Local observance",
     "indicativeRoute": "Within Pandharpur / joins ceremonial Wari",
     "palkhiImage": "",
-    "saintImage": "/images/saints/narhari-sonar.webp"
+    "saintImage": "narhari-sonar"
   },
   {
     "id": 30,
@@ -537,7 +537,7 @@
     "traditionalDeparture": "Local observance",
     "indicativeRoute": "Within Pandharpur",
     "palkhiImage": "",
-    "saintImage": "/images/saints/pundalik.webp"
+    "saintImage": "pundalik"
   },
   {
     "id": 31,
@@ -555,7 +555,7 @@
     "traditionalDeparture": "Varies",
     "indicativeRoute": "Local / symbolic",
     "palkhiImage": "",
-    "saintImage": "/images/saints/raka-kumbhar.webp"
+    "saintImage": "raka-kumbhar"
   },
   {
     "id": 32,
@@ -573,7 +573,7 @@
     "traditionalDeparture": "Varies annually",
     "indicativeRoute": "Changdev–Pandharpur",
     "palkhiImage": "",
-    "saintImage": "/images/saints/changdev.webp"
+    "saintImage": "changdev"
   },
   {
     "id": 33,
@@ -609,7 +609,7 @@
     "traditionalDeparture": "Varies annually",
     "indicativeRoute": "Apegaon–Pandharpur",
     "palkhiImage": "",
-    "saintImage": "/images/saints/dnyaneshwar-apegaon-tradition.jpg"
+    "saintImage": "dnyaneshwar-apegaon-tradition"
   },
   {
     "id": 35,
@@ -627,6 +627,6 @@
     "traditionalDeparture": "Local observance",
     "indicativeRoute": "Within Pandharpur / Wakhari",
     "palkhiImage": "",
-    "saintImage": "/images/saints/namdev-pandharpur-tradition.webp"
+    "saintImage": "namdev-pandharpur-tradition"
   }
 ]

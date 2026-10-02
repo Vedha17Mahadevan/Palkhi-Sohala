@@ -98,7 +98,7 @@ ul {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('../images/splash bg.png');
+  background-image: url('https://res.cloudinary.com/ayj5m59a/image/upload/f_auto,q_auto,dpr_auto,w_1400/splash%20bg');
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
@@ -448,17 +448,30 @@ ul {
 
 .main-nav ul {
   display: flex;
+  align-items: center;
   gap: 2.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.main-nav ul > li {
+  display: inline-flex;
+  align-items: center;
 }
 
 .nav-link {
   font-family: 'Marcellus', serif;
   font-weight: 600;
   font-size: 0.95rem;
+  line-height: 1.2;
   color: #FFF7E8;
   letter-spacing: 0.08em;
   padding: 0.5rem 0;
   position: relative;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
   transition: all 0.3s ease;
 }
 
@@ -483,6 +496,286 @@ ul {
 .nav-link:hover::after,
 .nav-link.active::after {
   width: 80%;
+}
+
+/* --- Desktop Dropdown Container --- */
+.nav-item-dropdown {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.nav-dropdown-trigger {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: 'Marcellus', serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  line-height: 1.2;
+  color: #FFF7E8;
+  letter-spacing: 0.08em;
+  padding: 0.5rem 0;
+  transition: all 0.3s ease;
+}
+
+.nav-dropdown-trigger:focus-visible {
+  outline: 2px solid #D9A441;
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.nav-dropdown-chevron-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 2px;
+  cursor: pointer;
+  border-radius: 4px;
+  line-height: 1;
+  transition: all 0.2s ease;
+}
+
+.nav-dropdown-chevron-box:hover {
+  background: rgba(255, 247, 232, 0.12);
+}
+
+.nav-dropdown-chevron {
+  font-size: 0.65rem;
+  color: rgba(255, 247, 232, 0.7);
+  transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.2s ease;
+  margin-top: 0;
+}
+
+.nav-dropdown-trigger:hover .nav-dropdown-chevron,
+.nav-dropdown-chevron.rotate,
+.nav-item-dropdown:hover .nav-dropdown-chevron {
+  transform: rotate(180deg);
+  color: #FFE082;
+}
+
+/* Dropdown Menu Container (Apple-like Floating Card) */
+.nav-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  width: 325px;
+  background: #F8F3EA;
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  border-radius: 16px;
+  padding: 0.65rem;
+  box-shadow: 0 18px 45px rgba(45, 2, 11, 0.22), 0 4px 16px rgba(212, 175, 55, 0.12);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.24s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.24s cubic-bezier(0.16, 1, 0.3, 1),
+              visibility 0.24s ease;
+  z-index: 1050;
+}
+
+/* Continuous Invisible Hover Bridge to prevent premature closing */
+.nav-dropdown-menu::before {
+  content: "";
+  position: absolute;
+  top: -16px;
+  left: 0;
+  right: 0;
+  height: 16px;
+  background: transparent;
+}
+
+/* Elegant Little Top Arrow Notch */
+.dropdown-arrow-notch {
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 12px;
+  height: 12px;
+  background: #F8F3EA;
+  border-top: 1px solid rgba(212, 175, 55, 0.45);
+  border-left: 1px solid rgba(212, 175, 55, 0.45);
+  pointer-events: none;
+}
+
+/* Desktop Open States: Trigger Hover or React State */
+.nav-dropdown-menu.visible,
+.nav-item-dropdown:hover .nav-dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Dropdown List & Items */
+.dropdown-items-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.35rem !important;
+}
+
+.dropdown-item-link {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.75rem 0.9rem;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: all 0.22s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  background: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+  position: relative;
+}
+
+.dropdown-item-link:hover,
+.dropdown-item-link:focus-visible {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.14) 0%, rgba(255, 238, 187, 0.28) 100%);
+  border-color: rgba(212, 175, 55, 0.35);
+  transform: translateX(3px);
+  outline: none;
+}
+
+.dropdown-item-link.active-highlight {
+  background: rgba(212, 175, 55, 0.12);
+  border-left: 3px solid #D4AF37;
+}
+
+/* Item Icon Box */
+.dropdown-icon-box {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: rgba(91, 14, 22, 0.06);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  color: #B45309;
+  flex-shrink: 0;
+  transition: all 0.22s ease;
+}
+
+.dropdown-item-link:hover .dropdown-icon-box,
+.dropdown-item-link:focus-visible .dropdown-icon-box {
+  background: var(--color-maroon);
+  color: #FFE082;
+  border-color: var(--color-gold);
+  transform: scale(1.05);
+}
+
+/* Item Text Group */
+.dropdown-text-group {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.dropdown-item-title {
+  font-family: var(--font-heading, 'Cinzel', serif);
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #3D040A;
+  letter-spacing: 0.04em;
+  transition: color 0.2s ease;
+}
+
+.dropdown-item-link:hover .dropdown-item-title {
+  color: #5B0E16;
+}
+
+.dropdown-item-desc {
+  font-family: var(--font-body, 'Crimson Text', serif);
+  font-size: 0.78rem;
+  color: #7A6958;
+  line-height: 1.35;
+  margin-top: 1px;
+}
+
+/* --- Simple 7-Chapters Dropdown Styling --- */
+.simple-chapters-dropdown {
+  width: 270px;
+  padding: 0.5rem;
+}
+
+.dropdown-simple-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.18rem !important;
+}
+
+.simple-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.52rem 0.85rem;
+  border-radius: 10px;
+  text-decoration: none;
+  transition: all 0.18s ease;
+  background: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.simple-dropdown-item:hover,
+.simple-dropdown-item:focus-visible {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(255, 238, 187, 0.3) 100%);
+  border-color: rgba(212, 175, 55, 0.35);
+  transform: translateX(3px);
+  outline: none;
+}
+
+.simple-dropdown-item.active-highlight {
+  background: rgba(212, 175, 55, 0.14);
+  border-left: 3px solid #D4AF37;
+}
+
+.simple-item-num {
+  font-family: var(--font-heading, 'Cinzel', serif);
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #B45309;
+  letter-spacing: 0.06em;
+  width: 22px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.simple-item-num.overview-icon {
+  font-size: 0.85rem;
+  color: #9A6B0A;
+}
+
+.simple-item-title {
+  font-family: var(--font-heading, 'Cinzel', serif);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #3D040A;
+  letter-spacing: 0.03em;
+  transition: color 0.18s ease;
+}
+
+.simple-dropdown-item:hover .simple-item-title {
+  color: #5B0E16;
+  font-weight: 700;
+}
+
+.simple-dropdown-divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(212, 175, 55, 0.4), transparent);
+  margin: 0.3rem 0.5rem;
 }
 
 /* --- Buttons --- */
@@ -558,9 +851,9 @@ ul {
   border-color: var(--color-white);
 }
 
-/* --- Mobile Menu Button --- */
+/* --- Mobile Menu Button (Phone / Tablet only) --- */
 .mobile-menu-btn {
-  display: none;
+  display: none !important;
   background: transparent;
   border: none;
   font-size: 1.7rem;
@@ -568,7 +861,6 @@ ul {
   cursor: pointer;
   width: 44px;
   height: 44px;
-  display: inline-flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
@@ -631,28 +923,255 @@ ul {
   color: var(--color-maroon-light);
 }
 
-.mobile-nav ul {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2rem;
+/* --- Mobile Navigation Accordion --- */
+.mobile-nav {
+  width: 100%;
+  max-width: 380px;
+  padding: 1.5rem 1.5rem 2rem 1.5rem;
+  max-height: 88vh;
+  overflow-y: auto;
 }
 
-.mobile-link {
-  font-family: var(--font-heading);
-  font-size: 1.4rem;
+.mobile-nav-root-list {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  gap: 0.85rem !important;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.mobile-nav-root-list > li > .mobile-link {
+  display: block;
+  text-align: center;
+  font-family: var(--font-heading, 'Cinzel', serif);
+  font-size: 1.35rem;
+  font-weight: 700;
   color: var(--color-maroon);
-  transition: var(--transition-fast);
+  text-decoration: none;
+  padding: 0.6rem 0;
+  transition: all 0.25s ease;
 }
 
-.mobile-link:hover {
+.mobile-nav-root-list > li > .mobile-link:hover,
+.mobile-nav-root-list > li > .mobile-link.active {
   color: var(--color-saffron);
 }
 
+/* Accordion Header Row in Mobile */
+.mobile-accordion-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  width: 100%;
+}
+
+.mobile-wari-tradition-link {
+  font-family: var(--font-heading, 'Cinzel', serif);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--color-maroon);
+  padding: 0.6rem 0;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.mobile-wari-tradition-link:hover,
+.mobile-wari-tradition-link.active {
+  color: var(--color-saffron);
+}
+
+.mobile-accordion-expand-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.6rem 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-accordion-trigger {
+  width: 100%;
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  font-family: var(--font-heading, 'Cinzel', serif);
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--color-maroon);
+  padding: 0.6rem 0;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.mobile-accordion-trigger:hover {
+  color: var(--color-saffron);
+}
+
+.accordion-chevron {
+  font-size: 0.85rem;
+  color: #B45309;
+  transition: transform 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.accordion-chevron.rotate {
+  transform: rotate(180deg);
+  color: var(--color-maroon);
+}
+
+/* Accordion Body */
+.mobile-accordion-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.38s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.3s ease;
+  opacity: 0;
+}
+
+.mobile-accordion-body.open {
+  max-height: 420px;
+  opacity: 1;
+}
+
+.mobile-sub-list {
+  list-style: none;
+  padding: 0.5rem 0 0.5rem 1.2rem;
+  margin: 0.5rem 0 0.5rem 0;
+  border-left: 2px solid rgba(212, 175, 55, 0.45);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.mobile-sub-link {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  text-decoration: none;
+  padding: 0.65rem 0.85rem;
+  border-radius: 12px;
+  background: rgba(255, 253, 248, 0.75);
+  border: 1px solid rgba(212, 175, 55, 0.28);
+  transition: all 0.2s ease;
+}
+
+.mobile-sub-link:active,
+.mobile-sub-link:hover {
+  background: rgba(212, 175, 55, 0.16);
+  border-color: #D4AF37;
+  transform: translateX(4px);
+}
+
+.mobile-sub-link.active {
+  border-color: #D4AF37;
+  background: rgba(212, 175, 55, 0.22);
+}
+
+.mobile-sub-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(91, 14, 22, 0.08);
+  color: var(--color-maroon);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.88rem;
+  flex-shrink: 0;
+}
+
+.mobile-sub-texts {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.mobile-sub-texts .sub-title {
+  font-family: var(--font-heading, 'Cinzel', serif);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-maroon);
+}
+
+.mobile-sub-texts .sub-caption {
+  font-size: 0.75rem;
+  color: #7A6958;
+}
+
+/* Simple 7-Chapter Mobile Sublist */
+.mobile-simple-sublist {
+  list-style: none;
+  padding: 0.4rem 0 0.4rem 1rem;
+  margin: 0.4rem 0;
+  border-left: 2px solid rgba(212, 175, 55, 0.4);
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.mobile-simple-sublink {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: 10px;
+  background: rgba(255, 253, 248, 0.85);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  transition: all 0.2s ease;
+}
+
+.mobile-simple-sublink:hover,
+.mobile-simple-sublink:active {
+  background: rgba(212, 175, 55, 0.18);
+  border-color: #D4AF37;
+  transform: translateX(4px);
+}
+
+.mobile-simple-sublink.active {
+  border-color: #D4AF37;
+  background: rgba(212, 175, 55, 0.24);
+}
+
+.mobile-simple-sublink .sub-num {
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #B45309;
+  width: 22px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.mobile-simple-sublink .sub-text {
+  font-family: var(--font-heading);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--color-maroon);
+}
+
+.mobile-cta-li {
+  margin-top: 0.6rem;
+  display: flex;
+  justify-content: center;
+}
+
 .btn-mobile-cta {
-  padding: 0.8rem 2rem;
+  padding: 0.8rem 2.2rem;
   border: 1px solid var(--color-maroon);
-  border-radius: 4px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #FFE082 0%, #D4AF37 100%);
+  color: #5B0E16 !important;
+  font-family: 'Marcellus', serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: 0.05em;
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
 }
 
 /* --- Hero Section --- */
@@ -666,7 +1185,7 @@ ul {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url('../images/vk1.png');
+  background-image: url('https://res.cloudinary.com/ayj5m59a/image/upload/f_auto,q_auto,dpr_auto,w_1400/vk1');
   background-size: cover;
   background-position: center top;
   background-repeat: no-repeat;
@@ -1491,7 +2010,66 @@ ul {
   font-size: 16px;
 }
 
+/* Tradition Flow Call To Action Buttons */
+.tradition-cta-wrap {
+  margin-top: 26px;
+  display: flex;
+  align-items: center;
+}
 
+.btn-tradition-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, #5C0618 0%, #7A0A22 100%);
+  color: #FFFDF8;
+  font-family: 'Cinzel', 'Marcellus', serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  padding: 0.85rem 1.85rem;
+  border-radius: 999px;
+  border: 1px solid #D9A441;
+  box-shadow: 0 4px 16px rgba(92, 6, 24, 0.2);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  text-decoration: none;
+}
+
+.btn-tradition-cta span {
+  display: inline-block;
+}
+
+.btn-tradition-cta i {
+  color: #D9A441;
+  font-size: 0.9rem;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.btn-tradition-cta:hover {
+  background: linear-gradient(135deg, #7A0A22 0%, #94102D 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(92, 6, 24, 0.32);
+  border-color: #FFE082;
+  color: #FFFDF8;
+}
+
+.btn-tradition-cta:hover i {
+  transform: translateX(5px);
+  color: #FFE082;
+}
+
+.btn-tradition-cta:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(92, 6, 24, 0.2);
+}
+
+@media (max-width: 768px) {
+  .tradition-cta-wrap {
+    justify-content: center;
+    width: 100%;
+  }
+}
 
 /* Mobile illustration flow */
 .mobile-illustrations-stack {
@@ -2008,7 +2586,7 @@ ul {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('../images/splash bg.png');
+  background-image: url('https://res.cloudinary.com/ayj5m59a/image/upload/f_auto,q_auto,dpr_auto,w_1400/splash%20bg');
   background-size: cover;
   background-position: center;
   z-index: 1;
@@ -2290,7 +2868,7 @@ ul {
     display: none;
   }
   .mobile-menu-btn {
-    display: block;
+    display: inline-flex !important;
   }
 }
 
@@ -3668,12 +4246,12 @@ ul {
 
 .btn-view-all-palkhis {
   padding: 1.05rem 2.6rem;
-  background: linear-gradient(135deg, #5C0618 0%, #8A152C 100%);
-  color: var(--color-ivory);
-  border: 2px solid rgba(212, 175, 55, 0.35);
-  border-radius: 50px;
+  background: linear-gradient(135deg, #5C0618 0%, #820E28 100%);
+  color: #FFFFFF;
+  border: 1.5px solid rgba(212, 175, 55, 0.45);
+  border-radius: 999px;
   font-family: var(--font-heading);
-  font-size: 1rem;
+  font-size: 0.98rem;
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -3682,48 +4260,90 @@ ul {
   align-items: center;
   gap: 0.85rem;
   box-shadow:
-    0 8px 24px rgba(92, 6, 24, 0.2),
-    inset 0 1px 0 rgba(255, 224, 130, 0.15);
-  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    0 8px 24px rgba(92, 6, 24, 0.25),
+    inset 0 1px 0 rgba(255, 224, 130, 0.2);
+  transition: 
+    transform 280ms cubic-bezier(0.16, 1, 0.3, 1),
+    background 280ms ease,
+    border-color 280ms ease,
+    box-shadow 280ms cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
   overflow: hidden;
+  text-decoration: none;
 }
 
+/* Elegant diagonal gold gradient sweep across the maroon surface */
 .btn-view-all-palkhis::before {
   content: "";
   position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, #D4AF37 0%, #FFE082 50%, #D4AF37 100%);
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
-.btn-view-all-palkhis span,
-.btn-view-all-palkhis i {
-  position: relative;
+  top: 0;
+  left: 0;
+  width: 65%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 224, 130, 0.12) 25%,
+    rgba(255, 235, 170, 0.45) 50%,
+    rgba(255, 224, 130, 0.15) 75%,
+    transparent 100%
+  );
+  transform: translateX(-160%) skewX(-25deg);
+  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
   z-index: 1;
 }
 
-.btn-view-all-palkhis:hover {
-  transform: translateY(-3px);
-  color: var(--color-maroon-dark);
-  border-color: rgba(212, 175, 55, 0.6);
-  box-shadow:
-    0 14px 36px rgba(212, 175, 55, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.4);
-}
-
-.btn-view-all-palkhis:hover::before {
-  opacity: 1;
-}
-
-.btn-view-all-palkhis:hover i {
-  transform: translateX(5px);
+/* Ensure text & arrow sit firmly above the sheen and maintain contrast */
+.btn-view-all-palkhis .btn-view-all-text,
+.btn-view-all-palkhis span {
+  position: relative;
+  z-index: 2;
+  color: #FFFFFF;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+  transition: color 280ms ease;
 }
 
 .btn-view-all-palkhis i {
-  transition: transform 0.3s ease;
+  position: relative;
+  z-index: 2;
+  color: #FFE082;
   font-size: 0.95rem;
+  transition: 
+    transform 280ms cubic-bezier(0.16, 1, 0.3, 1),
+    color 280ms ease;
+}
+
+/* Premium Hover State: subtle lift, soft gold glow, sliding arrow, and gold light sweep */
+.btn-view-all-palkhis:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #6B081E 0%, #94102D 100%);
+  border-color: rgba(212, 175, 55, 0.85);
+  box-shadow:
+    0 12px 30px rgba(92, 6, 24, 0.32),
+    0 0 22px rgba(212, 175, 55, 0.28),
+    inset 0 1px 0 rgba(255, 235, 170, 0.45);
+}
+
+.btn-view-all-palkhis:hover::before {
+  transform: translateX(290%) skewX(-25deg);
+}
+
+.btn-view-all-palkhis:hover .btn-view-all-text,
+.btn-view-all-palkhis:hover span {
+  color: #FFFFFF;
+}
+
+.btn-view-all-palkhis:hover i {
+  color: #FFF2B2;
+  transform: translateX(5px);
+}
+
+.btn-view-all-palkhis:active {
+  transform: translateY(0);
+  box-shadow:
+    0 6px 16px rgba(92, 6, 24, 0.25),
+    0 0 12px rgba(212, 175, 55, 0.2);
 }
 
 /* ================================================================= */
@@ -4367,45 +4987,6 @@ ul {
   pointer-events: none;
 }
 
-.btn-back-home-hero {
-  position: absolute;
-  top: 2rem;
-  left: 4rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  color: #FFFFFF;
-  padding: 0.55rem 1.25rem;
-  border-radius: 30px;
-  font-size: 0.88rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-  letter-spacing: 0.05em;
-  z-index: 3;
-}
-
-.btn-back-home-hero:hover {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: #FFE082;
-  color: #FFE082;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  transform: translateX(-3px);
-}
-
-.btn-back-home-hero i {
-  font-size: 0.9rem;
-  transition: transform 0.3s ease;
-}
-
-.btn-back-home-hero:hover i {
-  transform: translateX(-2px);
-}
-
 .hero-centered-content {
   position: relative;
   z-index: 2;
@@ -4633,9 +5214,6 @@ ul {
   .directory-grid-container {
     padding: 2.5rem 2.5rem 5rem 2.5rem;
   }
-  .btn-back-home-hero {
-    left: 2.5rem;
-  }
 }
 
 @media (max-width: 768px) {
@@ -4663,12 +5241,6 @@ ul {
   }
   .directory-grid-container {
     padding: 2rem 1.5rem 4rem 1.5rem;
-  }
-  .btn-back-home-hero {
-    left: 1.5rem;
-    top: 1.5rem;
-    padding: 0.45rem 1rem;
-    font-size: 0.82rem;
   }
   .directory-filter-bar {
     padding: 1.2rem 1.5rem;
@@ -4714,9 +5286,10 @@ ul {
   padding-top: 0;
 }
 
-/* Reduced top padding for the container since it's right below Warkari section */
+/* Reduced top & bottom padding for the container to remove excessive gap before exhibition hero */
 .palkhi-tradition-section .heritage-container-about {
   padding-top: 10px;
+  padding-bottom: 18px;
 }
 
 /* Left (text) column — same styling as Warkari's right column, but positioned left */
@@ -4939,112 +5512,88 @@ ul {
 }
 
 /* ================================================================= */
-/* FIX #1 — Back to Home button: placed above hero, never overlaps   */
+/* Floating Glass Back Navigation Control                           */
+/* Overlaid directly on hero banner (no white strip above hero)     */
 /* ================================================================= */
 
-/* Wrapper lives BETWEEN navbar and hero banner — keeps button outside hero layout */
-.directory-back-wrap {
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
-  background: var(--color-bg-parchment, #FFFDF9);
-  padding: 1.25rem 4rem 0.75rem 4rem;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-}
-
-/* Rewrite button — NO absolute positioning. Simple in-flow pill button.
-   This block intentionally comes AFTER the earlier .btn-back-home-hero absolute
-   rules so these win via cascade. */
-.btn-back-home-hero {
-  position: static;
-  top: auto;
-  left: auto;
+.hero-glass-back-btn {
+  position: absolute;
+  top: 32px;
+  left: 32px;
+  z-index: 50;
   display: inline-flex;
   align-items: center;
-  gap: 0.6rem;
-  background: rgba(253, 249, 241, 0.8);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(128, 0, 32, 0.18);
-  color: var(--color-maroon, #5C0618);
-  padding: 0.6rem 1.25rem;
-  border-radius: 30px;
+  gap: 0.65rem;
+  padding: 12px 22px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #FFFFFF;
+  font-family: var(--font-heading, 'Cinzel', serif);
   font-size: 0.88rem;
   font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
   letter-spacing: 0.05em;
-  z-index: 1;
-  box-shadow: 0 2px 8px rgba(45, 2, 11, 0.06);
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25), 0 2px 6px rgba(0, 0, 0, 0.18);
+  transition: all 250ms ease;
+  user-select: none;
 }
 
-.btn-back-home-hero:hover {
-  background: rgba(128, 0, 32, 0.06);
-  border-color: rgba(212, 175, 55, 0.9);
-  color: var(--color-maroon, #5C0618);
-  box-shadow: 0 4px 14px rgba(45, 2, 11, 0.1);
-  transform: translateX(-3px);
+.hero-glass-back-btn .back-arrow-icon {
+  font-size: 0.88rem;
+  transition: transform 250ms ease;
+  display: inline-block;
 }
 
-.btn-back-home-hero i {
-  font-size: 0.9rem;
-  color: inherit;
-  transition: transform 0.3s ease;
+.hero-glass-back-btn:hover {
+  background: rgba(255, 255, 255, 0.24);
+  border-color: rgba(255, 255, 255, 0.45);
+  color: #FFFFFF;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35), 0 3px 8px rgba(0, 0, 0, 0.2);
 }
 
-.btn-back-home-hero:hover i {
-  transform: translateX(-2px);
+.hero-glass-back-btn:hover .back-arrow-icon {
+  transform: translateX(-4px);
 }
 
-/* Tablet: tighten wrapper padding */
-@media (max-width: 1200px) {
-  .directory-back-wrap {
-    padding: 1.1rem 2.5rem 0.6rem 2.5rem;
-  }
+.hero-glass-back-btn:active {
+  transform: translateY(0);
 }
 
-/* Mobile: reduce padding + smaller button, ensure safe left align with card */
-@media (max-width: 768px) {
-  .directory-back-wrap {
-    padding: 0.9rem 1.5rem 0.5rem 1.5rem;
-  }
-  .btn-back-home-hero {
-    padding: 0.48rem 1rem;
+/* Specific position when rendered inside tradition-page-wrapper (offset 32px below 72px navbar) */
+.tradition-hero-back-btn {
+  top: calc(72px + 32px);
+  left: 32px;
+}
+
+@media (max-width: 900px) {
+  .hero-glass-back-btn {
+    top: 24px;
+    left: 24px;
+    padding: 10px 18px;
     font-size: 0.82rem;
   }
-}
-
-@media (max-width: 480px) {
-  .directory-back-wrap {
-    padding: 0.8rem 1rem 0.4rem 1rem;
-  }
-  .btn-back-home-hero {
-    padding: 0.45rem 0.95rem;
-    font-size: 0.8rem;
+  .tradition-hero-back-btn {
+    top: calc(72px + 24px);
+    left: 24px;
   }
 }
 
-@media (max-width: 375px) {
-  .directory-back-wrap {
-    padding: 0.75rem 0.9rem 0.4rem 0.9rem;
-  }
-  .btn-back-home-hero {
-    padding: 0.42rem 0.9rem;
+@media (max-width: 600px) {
+  .hero-glass-back-btn {
+    top: 16px;
+    left: 16px;
+    padding: 8px 14px;
     font-size: 0.78rem;
-    gap: 0.5rem;
-  }
-}
-
-@media (max-width: 320px) {
-  .directory-back-wrap {
-    padding: 0.7rem 0.75rem 0.35rem 0.75rem;
-  }
-  .btn-back-home-hero {
-    padding: 0.4rem 0.8rem;
-    font-size: 0.76rem;
     gap: 0.45rem;
+  }
+  .tradition-hero-back-btn {
+    top: calc(72px + 16px);
+    left: 16px;
   }
 }
 
@@ -5587,4 +6136,7051 @@ ul {
   }
 }
 
+/* ================================================================= */
+/* TRADITION OF THE PANDHARPUR WARI — DIGITAL MUSEUM EXPERIENCE       */
+/* ================================================================= */
 
+.tradition-page-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--color-cream);
+  overflow-x: hidden;
+  padding-top: 72px; /* Fixed navbar height: hero begins immediately below */
+}
+
+/* --- Floating Museum Bar --- */
+.museum-floating-top-bar {
+  background: rgba(253, 251, 247, 0.94);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+  padding: 0.8rem 0;
+  position: relative;
+  z-index: 10;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.btn-museum-back,
+.btn-museum-palkhis {
+  background: transparent;
+  border: 1px solid rgba(92, 6, 24, 0.2);
+  color: var(--color-maroon);
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.5rem 1.1rem;
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.btn-museum-back:hover,
+.btn-museum-palkhis:hover {
+  background: var(--color-maroon);
+  color: #FFF7E8;
+  border-color: var(--color-maroon);
+  transform: translateY(-1px);
+}
+
+.museum-exhibition-label {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  color: var(--color-maroon);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.exhibition-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--color-gold);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--color-gold);
+  animation: pulse-dot 2s infinite ease-in-out;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.4); opacity: 1; }
+}
+
+.museum-center-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-museum-chapters-trigger {
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  transition: all 0.25s ease;
+  outline: none;
+}
+
+.btn-museum-chapters-trigger:hover {
+  background: #FFF;
+  border-color: var(--color-gold);
+  box-shadow: 0 4px 14px rgba(92, 6, 24, 0.1);
+  transform: translateY(-1px);
+}
+
+.museum-current-label {
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--color-maroon);
+  letter-spacing: 0.04em;
+}
+
+.museum-chapters-pill {
+  background: var(--color-maroon);
+  color: #FFE082;
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: all 0.2s ease;
+}
+
+.btn-museum-chapters-trigger:hover .museum-chapters-pill {
+  background: #7A0A1F;
+  color: #FFFDF8;
+}
+
+@media (max-width: 768px) {
+  .museum-current-label {
+    display: none;
+  }
+}
+
+/* --- Container & General Sections --- */
+.tradition-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  position: relative;
+}
+
+.tradition-section {
+  padding: 5.5rem 0;
+  position: relative;
+}
+
+.tradition-brief-intro-section {
+  padding-top: 2.5rem;
+  padding-bottom: 1.25rem;
+}
+
+.tradition-journey-preview-section {
+  padding-top: 1.25rem;
+}
+
+.tradition-journey-preview-section .museum-section-tag-wrap {
+  margin-top: 0;
+  margin-bottom: 2rem;
+}
+
+.tradition-section.alt-bg {
+  background: linear-gradient(180deg, rgba(253, 251, 247, 0.6) 0%, rgba(245, 239, 235, 0.9) 100%);
+}
+
+.museum-section-tag-wrap {
+  margin-bottom: 2.5rem;
+}
+
+.museum-section-tag-wrap.text-center {
+  text-align: center;
+}
+
+.museum-section-tag-wrap.text-right {
+  text-align: right;
+}
+
+.museum-tag {
+  display: inline-block;
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-saffron);
+  margin-bottom: 0.6rem;
+  padding: 0.25rem 0.85rem;
+  background: rgba(255, 126, 21, 0.08);
+  border: 1px solid rgba(255, 126, 21, 0.25);
+  border-radius: 999px;
+}
+
+.tradition-section-heading {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--color-maroon);
+  line-height: 1.25;
+  margin-bottom: 0.8rem;
+}
+
+.tradition-section-heading.centered {
+  text-align: center;
+}
+
+.tradition-section-subheading {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  color: var(--color-text-muted);
+  max-width: 720px;
+  margin: 0 auto 1.5rem auto;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+/* ================================================================= */
+/* 1. TRADITION PAGE CINEMATIC DOCUMENTARY HERO (65–70VH)            */
+/* ================================================================= */
+
+.tradition-documentary-hero {
+  position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+  height: 68vh;
+  min-height: 520px;
+  max-height: 680px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #1e0407;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Background Media & Cinematic Overlays */
+.docu-hero-bg-wrapper {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.docu-hero-bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 26%;
+  display: block;
+  filter: contrast(1.05) saturate(1.08) brightness(0.92);
+  transform: scale(1.01);
+  transition: transform 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.tradition-documentary-hero:hover .docu-hero-bg-img {
+  transform: scale(1.03);
+}
+
+/* Deep maroon gradient overlay:
+   Left: rgba(55,8,10,0.92)
+   Center: rgba(55,8,10,0.72)
+   Right: rgba(55,8,10,0.35) */
+.docu-hero-maroon-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(55, 8, 10, 0.92) 0%,
+    rgba(55, 8, 10, 0.72) 50%,
+    rgba(55, 8, 10, 0.35) 100%
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Subtle Vignette & Warm Golden Ambient Glow */
+.docu-hero-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+      ellipse at 50% 50%,
+      rgba(212, 175, 55, 0.08) 0%,
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse at 50% 50%,
+      transparent 55%,
+      rgba(20, 2, 4, 0.65) 100%
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(25, 3, 5, 0.4) 0%,
+      transparent 20%,
+      transparent 80%,
+      rgba(25, 3, 5, 0.6) 100%
+    );
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Centered Content Wrap */
+.docu-hero-content-wrap {
+  position: relative;
+  z-index: 4;
+  width: 100%;
+  max-width: 960px;
+  padding: 0 1.5rem;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.docu-hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+
+/* Heading:
+   - Playfair Display
+   - White
+   - Bold
+   - Large (72–84px desktop)
+   - Elegant spacing */
+.docu-hero-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(2.4rem, 5.2vw, 4.6rem);
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 1.15;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  margin: 0 0 1.25rem 0;
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.85), 0 1px 4px rgba(0, 0, 0, 0.9);
+}
+
+/* Highlight only PANDHARPUR WARI using muted antique gold */
+.docu-title-gold {
+  color: #D4AF37;
+  font-weight: 700;
+  display: inline;
+  text-shadow: 0 0 30px rgba(212, 175, 55, 0.4), 0 4px 20px rgba(0, 0, 0, 0.8);
+}
+
+/* Subheading:
+   ॥ पंढरीची वारी आमुचे दैवत ॥
+   - Saffron / Gold
+   - Slight glow
+   - Serif */
+.docu-marathi-chant {
+  font-family: 'Marcellus', 'Yatra One', Georgia, serif;
+  font-size: clamp(1.2rem, 2.2vw, 1.6rem);
+  font-weight: 400;
+  color: #FFC64F;
+  letter-spacing: 0.06em;
+  margin: 0 0 1.2rem 0;
+  text-shadow: 0 0 16px rgba(255, 198, 79, 0.5), 0 2px 10px rgba(0, 0, 0, 0.85);
+}
+
+/* Description:
+   - Warm ivory
+   - Medium weight
+   - Maximum width about 650px
+   - Comfortable line spacing */
+.docu-hero-description {
+  font-family: var(--font-body, 'Crimson Text', serif);
+  font-size: clamp(1.05rem, 1.7vw, 1.25rem);
+  font-weight: 400;
+  line-height: 1.75;
+  color: #F8F5EE;
+  max-width: 650px;
+  margin: 0 auto;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85);
+}
+
+/* Scroll Cue:
+   - Minimal animated scroll indicator at bottom center
+   - Small, Elegant, Gold, Gently bouncing */
+.docu-hero-scroll-cue {
+  position: absolute;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  text-align: center;
+}
+
+.docu-hero-scroll-cue a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.docu-hero-scroll-cue a:hover {
+  opacity: 0.85;
+}
+
+.docu-scroll-chevron {
+  color: #D4AF37;
+  font-size: 1.5rem;
+  line-height: 1;
+  display: block;
+  animation: docuScrollBounce 2.2s infinite ease-in-out;
+  text-shadow: 0 0 10px rgba(212, 175, 55, 0.5), 0 2px 6px rgba(0, 0, 0, 0.8);
+}
+
+.docu-scroll-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #D4AF37;
+  display: block;
+  margin-top: 4px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+@keyframes docuScrollBounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .tradition-documentary-hero {
+    height: 65vh;
+    min-height: 480px;
+  }
+
+  .docu-hero-title {
+    font-size: clamp(1.9rem, 7vw, 2.7rem);
+    line-height: 1.2;
+  }
+
+  .docu-hero-maroon-overlay {
+    background: linear-gradient(
+      180deg,
+      rgba(55, 8, 10, 0.88) 0%,
+      rgba(55, 8, 10, 0.78) 50%,
+      rgba(55, 8, 10, 0.55) 100%
+    );
+  }
+
+  .docu-hero-scroll-cue {
+    bottom: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tradition-documentary-hero {
+    height: 62vh;
+    min-height: 440px;
+  }
+
+  .docu-hero-title {
+    font-size: 1.75rem;
+  }
+
+  .docu-marathi-chant {
+    font-size: 1.05rem;
+  }
+
+  .docu-hero-description {
+    font-size: 0.98rem;
+  }
+}
+
+/* ================================================================= */
+/* MUSEUM PLACEHOLDER COMPONENT                                      */
+/* ================================================================= */
+
+.museum-placeholder-box {
+  position: relative;
+  width: 100%;
+  background: linear-gradient(145deg, #FAF6EE 0%, #F5EFEB 100%);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(92, 6, 24, 0.06), inset 0 0 40px rgba(212, 175, 55, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 2rem 1.5rem;
+  transition: all 0.4s ease;
+}
+
+.museum-placeholder-box:hover {
+  border-color: rgba(212, 175, 55, 0.6);
+  box-shadow: 0 16px 36px rgba(92, 6, 24, 0.1);
+}
+
+.museum-placeholder-inner {
+  text-align: center;
+  position: relative;
+  z-index: 2;
+  max-width: 90%;
+}
+
+.museum-corner-ornament {
+  position: absolute;
+  color: rgba(212, 175, 55, 0.5);
+  font-size: 0.85rem;
+}
+
+.museum-corner-ornament.tl { top: -20px; left: -20px; }
+.museum-corner-ornament.tr { top: -20px; right: -20px; }
+.museum-corner-ornament.bl { bottom: -20px; left: -20px; }
+.museum-corner-ornament.br { bottom: -20px; right: -20px; }
+
+.museum-placeholder-icon-wrap {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 1.2rem auto;
+  border-radius: 50%;
+  background: rgba(92, 6, 24, 0.05);
+  border: 1px dashed rgba(212, 175, 55, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-maroon);
+  font-size: 1.5rem;
+  transition: transform 0.4s ease;
+}
+
+.museum-placeholder-box:hover .museum-placeholder-icon-wrap {
+  transform: scale(1.08) rotate(5deg);
+  background: rgba(212, 175, 55, 0.15);
+}
+
+.museum-placeholder-title {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-maroon);
+  margin-bottom: 0.4rem;
+}
+
+.museum-placeholder-subtitle {
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  color: var(--color-text-muted);
+  line-height: 1.45;
+  margin-bottom: 1rem;
+}
+
+.museum-placeholder-badge {
+  display: inline-block;
+  font-family: var(--font-heading);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-maroon);
+  background: rgba(212, 175, 55, 0.18);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+}
+
+/* --- Museum Artwork Card & Frame (when real image is supplied) --- */
+.museum-artwork-card {
+  width: 100%;
+}
+
+.museum-artwork-frame {
+  position: relative;
+  width: 100%;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 2px solid rgba(212, 175, 55, 0.5);
+  box-shadow:
+    0 16px 40px rgba(45, 2, 11, 0.14),
+    0 0 0 4px #FFFDF8,
+    0 0 0 6px rgba(212, 175, 55, 0.3);
+  background-color: #2D020B;
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s ease;
+}
+
+.museum-artwork-frame:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 22px 50px rgba(45, 2, 11, 0.2),
+    0 0 0 4px #FFFDF8,
+    0 0 0 6px rgba(212, 175, 55, 0.6);
+}
+
+.museum-artwork-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.museum-artwork-frame:hover .museum-artwork-img {
+  transform: scale(1.03);
+}
+
+.museum-artwork-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 60%, rgba(45, 2, 11, 0.4) 100%);
+}
+
+.museum-artwork-caption {
+  margin-top: 1rem;
+  padding: 0.8rem 1.2rem;
+  background: var(--color-ivory);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: 10px;
+  box-shadow: 0 4px 14px rgba(92, 6, 24, 0.03);
+}
+
+.museum-artwork-caption .caption-tag {
+  display: inline-block;
+  font-family: var(--font-heading);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-saffron);
+  margin-bottom: 0.25rem;
+}
+
+.museum-artwork-caption .caption-title {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-maroon);
+  margin-bottom: 0.2rem;
+}
+
+.museum-artwork-caption .caption-sub {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  line-height: 1.45;
+}
+
+/* ================================================================= */
+/* 2. ORIGINS SECTION                                                */
+/* ================================================================= */
+
+.tradition-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3.5rem;
+  align-items: center;
+  margin-bottom: 3.5rem;
+}
+
+.tradition-paragraph {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--color-text-muted);
+  margin-bottom: 1.25rem;
+}
+
+.tradition-paragraph.lead-p {
+  font-size: 1.15rem;
+  color: var(--color-maroon);
+  font-weight: 400;
+  line-height: 1.7;
+}
+
+.tradition-info-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.8rem;
+}
+
+.tradition-info-card {
+  background: var(--color-ivory);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: 14px;
+  padding: 2.2rem 1.8rem;
+  position: relative;
+  box-shadow: 0 8px 24px rgba(92, 6, 24, 0.04);
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s ease;
+}
+
+.tradition-info-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 36px rgba(92, 6, 24, 0.08);
+  border-color: rgba(212, 175, 55, 0.5);
+}
+
+.card-top-icon {
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+}
+
+.tradition-info-card .card-title {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-maroon);
+  margin-bottom: 0.75rem;
+}
+
+.tradition-info-card .card-text {
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+}
+
+.card-accent-border {
+  position: absolute;
+  bottom: 0;
+  left: 20px;
+  right: 20px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-maroon) 0%, var(--color-gold) 50%, var(--color-saffron) 100%);
+  border-radius: 2px 2px 0 0;
+  opacity: 0.3;
+  transition: opacity 0.3s ease;
+}
+
+.tradition-info-card:hover .card-accent-border {
+  opacity: 1;
+}
+
+/* ================================================================= */
+/* 3. HISTORICAL TIMELINE                                            */
+/* ================================================================= */
+
+.timeline-horizontal-wrapper {
+  position: relative;
+  margin: 3.5rem 0 2.5rem 0;
+  padding: 1.5rem 0;
+}
+
+.timeline-track-line {
+  position: absolute;
+  top: 48px;
+  left: 5%;
+  right: 5%;
+  height: 4px;
+  background: rgba(92, 6, 24, 0.1);
+  border-radius: 2px;
+  z-index: 1;
+}
+
+.timeline-track-progress {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-maroon) 0%, var(--color-gold) 50%, var(--color-saffron) 100%);
+  border-radius: 2px;
+  transition: width 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.timeline-nodes-row {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  z-index: 2;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+}
+
+.timeline-node-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  outline: none;
+  min-width: 130px;
+  transition: all 0.3s ease;
+}
+
+.node-circle-portrait {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: #FFFBF3;
+  border: 3px solid rgba(212, 175, 55, 0.4);
+  box-shadow: 0 4px 12px rgba(45, 2, 11, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-maroon);
+  font-size: 1.25rem;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.node-circle-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: 50%;
+  display: block;
+}
+
+.timeline-node-btn:hover .node-circle-portrait {
+  transform: scale(1.1);
+  border-color: var(--color-gold);
+}
+
+.timeline-node-btn.active .node-circle-portrait {
+  background: linear-gradient(135deg, var(--color-maroon) 0%, var(--color-maroon-dark) 100%);
+  color: #FFE082;
+  border-color: var(--color-gold);
+  box-shadow: 0 0 0 5px rgba(212, 175, 55, 0.25), 0 8px 20px rgba(92, 6, 24, 0.25);
+  transform: scale(1.15);
+}
+
+.timeline-node-btn.past .node-circle-portrait {
+  background: #F5EFEB;
+  border-color: var(--color-gold);
+  color: var(--color-gold);
+}
+
+.node-label-group {
+  text-align: center;
+}
+
+.node-saint-name {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--color-maroon);
+  line-height: 1.3;
+}
+
+.node-era-badge {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+
+.timeline-expanded-card {
+  background: var(--color-ivory);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 18px;
+  box-shadow: 0 16px 40px rgba(92, 6, 24, 0.08);
+  padding: 2.8rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.expanded-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 1.6rem;
+  gap: 1.5rem;
+}
+
+.era-capsule {
+  display: inline-block;
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  color: var(--color-saffron);
+  background: rgba(255, 126, 21, 0.08);
+  border: 1px solid rgba(255, 126, 21, 0.2);
+  padding: 0.2rem 0.8rem;
+  border-radius: 999px;
+  margin-bottom: 0.5rem;
+}
+
+.expanded-saint-name {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: 1.9rem;
+  color: var(--color-maroon);
+  font-weight: 700;
+}
+
+.expanded-saint-role {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  font-weight: 400;
+}
+
+.expanded-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.timeline-nav-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid rgba(92, 6, 24, 0.25);
+  background: transparent;
+  color: var(--color-maroon);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+}
+
+.timeline-nav-btn:hover:not(:disabled) {
+  background: var(--color-maroon);
+  color: #FFE082;
+  border-color: var(--color-maroon);
+}
+
+.timeline-nav-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.timeline-step-counter {
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.expanded-quote-box {
+  background: rgba(212, 175, 55, 0.08);
+  border-left: 3px solid var(--color-gold);
+  border-radius: 0 10px 10px 0;
+  padding: 1rem 1.4rem;
+  margin-bottom: 1.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.quote-glyph {
+  font-family: var(--font-quote);
+  font-size: 2.2rem;
+  color: var(--color-gold);
+  line-height: 1;
+}
+
+.marathi-quote {
+  font-family: 'Yatra One', 'Marcellus', serif;
+  font-size: 1.2rem;
+  color: var(--color-maroon);
+}
+
+.expanded-description {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: var(--color-text-dark);
+  margin-bottom: 2rem;
+}
+
+.milestones-heading {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  color: var(--color-maroon);
+  margin-bottom: 0.85rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.milestones-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.milestones-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  font-size: 0.94rem;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+}
+
+.milestone-bullet {
+  color: var(--color-gold);
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
+
+/* Expanded Card Two-Column Body with Featured Saint Portrait */
+.expanded-card-body-layout {
+  display: flex;
+  gap: 2.8rem;
+  align-items: flex-start;
+  margin-top: 0.5rem;
+}
+
+.expanded-portrait-col {
+  flex: 0 0 210px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.expanded-portrait-frame {
+  width: 200px;
+  height: 250px;
+  border-radius: 100px 100px 16px 16px;
+  overflow: hidden;
+  position: relative;
+  background: #FFFBF3;
+  border: 3px solid rgba(212, 175, 55, 0.45);
+  box-shadow: 0 10px 28px rgba(92, 6, 24, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+}
+
+.expanded-portrait-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.expanded-portrait-frame:hover .expanded-portrait-img {
+  transform: scale(1.05);
+}
+
+.portrait-gold-halo {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40%;
+  background: linear-gradient(180deg, transparent 0%, rgba(92, 6, 24, 0.4) 100%);
+  pointer-events: none;
+}
+
+.expanded-portrait-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--color-maroon);
+  background: rgba(212, 175, 55, 0.14);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  padding: 0.3rem 0.85rem;
+  border-radius: 999px;
+}
+
+.expanded-portrait-badge i {
+  color: var(--color-gold);
+  font-size: 0.8rem;
+}
+
+.expanded-content-col {
+  flex: 1;
+  min-width: 0;
+}
+
+@media (max-width: 860px) {
+  .expanded-card-body-layout {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.8rem;
+  }
+  .expanded-portrait-col {
+    flex: none;
+  }
+  .expanded-portrait-frame {
+    width: 170px;
+    height: 220px;
+  }
+}
+
+/* ================================================================= */
+/* 4. LORD SHIVA — THE FIRST WARKARI                                 */
+/* ================================================================= */
+
+.shiva-story-grid {
+  align-items: flex-start;
+}
+
+.parchment-story-card {
+  background: #FFFDF8;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: 0 12px 32px rgba(45, 2, 11, 0.06);
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.story-subhead {
+  display: inline-block;
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  color: var(--color-saffron);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+
+.story-title {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: 1.65rem;
+  color: var(--color-maroon);
+  margin-bottom: 1.2rem;
+}
+
+.story-body {
+  font-size: 0.98rem;
+  line-height: 1.75;
+  color: var(--color-text-muted);
+  margin-bottom: 1.1rem;
+}
+
+.hari-hara-callout {
+  margin-top: 1.5rem;
+  padding: 1.2rem;
+  background: rgba(92, 6, 24, 0.04);
+  border: 1px solid rgba(92, 6, 24, 0.12);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.callout-symbol {
+  font-size: 2.2rem;
+  color: var(--color-maroon);
+}
+
+.callout-text {
+  font-size: 0.92rem;
+  color: var(--color-maroon);
+  line-height: 1.6;
+}
+
+/* ================================================================= */
+/* THE CELESTIAL ROUTE — HORIZONTAL CARD                             */
+/* ================================================================= */
+.celestial-route-horizontal-card {
+  margin-top: 3.2rem;
+  background: var(--color-ivory);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 18px;
+  padding: 2.4rem 2.8rem;
+  box-shadow: 0 14px 36px rgba(92, 6, 24, 0.07);
+  position: relative;
+  overflow: hidden;
+}
+
+.celestial-card-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.celestial-tag {
+  display: inline-block;
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--color-saffron);
+  margin-bottom: 0.35rem;
+}
+
+.celestial-heading {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: 1.6rem;
+  color: var(--color-maroon);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.celestial-steps-track {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2rem;
+  position: relative;
+}
+
+.celestial-step-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 1.15rem;
+  background: #FFFDF8;
+  border: 1px solid rgba(212, 175, 55, 0.28);
+  border-radius: 14px;
+  padding: 1.35rem 1.5rem;
+  box-shadow: 0 6px 18px rgba(45, 2, 11, 0.04);
+  transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.celestial-step-item:hover {
+  transform: translateY(-3px);
+  border-color: var(--color-gold);
+  box-shadow: 0 10px 24px rgba(92, 6, 24, 0.1);
+}
+
+.node-icon-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #FFFBF3;
+  border: 2px solid rgba(212, 175, 55, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-maroon);
+  font-size: 1.15rem;
+  flex-shrink: 0;
+}
+
+.node-icon-circle.active {
+  background: var(--color-saffron);
+  color: #FFFFFF;
+  border-color: #FFA726;
+  box-shadow: 0 4px 12px rgba(255, 126, 21, 0.3);
+}
+
+.node-icon-circle.highlight {
+  background: var(--color-maroon);
+  color: #FFE082;
+  border-color: var(--color-gold);
+  box-shadow: 0 4px 14px rgba(92, 6, 24, 0.3);
+}
+
+.celestial-arrow-separator {
+  color: var(--color-gold);
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  animation: pulseArrow 2.5s ease-in-out infinite;
+}
+
+@keyframes pulseArrow {
+  0%, 100% { transform: translateX(0); opacity: 0.7; }
+  50% { transform: translateX(4px); opacity: 1; }
+}
+
+.celestial-step-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.celestial-stage-badge {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  color: #8C6D23;
+  margin-bottom: 0.2rem;
+}
+
+.celestial-stage-badge.saffron {
+  color: var(--color-saffron);
+}
+
+.celestial-stage-badge.maroon {
+  color: var(--color-maroon);
+}
+
+.celestial-step-name {
+  font-family: var(--font-heading);
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: var(--color-maroon);
+  line-height: 1.3;
+  margin-bottom: 0.2rem;
+}
+
+.celestial-step-desc {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}
+
+@media (max-width: 900px) {
+  .celestial-route-horizontal-card {
+    padding: 1.8rem 1.4rem;
+  }
+  .celestial-steps-track {
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+  .celestial-arrow-separator {
+    transform: rotate(90deg);
+    animation: none;
+    padding: 0.2rem 0;
+  }
+  .celestial-step-item {
+    width: 100%;
+  }
+}
+
+/* ================================================================= */
+/* 5 & 6. PALKHI CHRONICLES (DNYANESHWAR & TUKARAM)                   */
+/* ================================================================= */
+
+.split-chronicle-layout {
+  display: grid;
+  grid-template-columns: 42% 54%;
+  gap: 4rem;
+  align-items: flex-start;
+}
+
+.split-chronicle-layout.mirrored {
+  grid-template-columns: 54% 42%;
+}
+
+.chronicle-milestones-track {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.chronicle-milestone-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.4rem;
+}
+
+.milestone-badge-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.milestone-icon-bubble {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-maroon) 0%, var(--color-maroon-dark) 100%);
+  border: 2px solid var(--color-gold);
+  color: #FFE082;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  box-shadow: 0 4px 10px rgba(92, 6, 24, 0.2);
+}
+
+.milestone-icon-bubble.saffron {
+  background: linear-gradient(135deg, #FF7E15 0%, #D84315 100%);
+  border-color: #FFE082;
+  color: #FFFFFF;
+}
+
+.milestone-connecting-line {
+  width: 2px;
+  height: 50px;
+  background: rgba(212, 175, 55, 0.3);
+  margin: 6px 0;
+}
+
+.milestone-content-card {
+  background: var(--color-ivory);
+  border: 1px solid rgba(212, 175, 55, 0.22);
+  border-radius: 12px;
+  padding: 1.4rem 1.6rem;
+  box-shadow: 0 4px 14px rgba(92, 6, 24, 0.03);
+  flex-grow: 1;
+}
+
+.milestone-era {
+  font-size: 0.72rem;
+  font-family: var(--font-heading);
+  letter-spacing: 0.1em;
+  color: var(--color-maroon);
+  font-weight: 700;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+.milestone-era.saffron-era {
+  color: var(--color-saffron);
+}
+
+.milestone-title {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  color: var(--color-maroon);
+  margin-bottom: 0.4rem;
+}
+
+.milestone-description {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+}
+
+.chronicle-readmore-wrap {
+  margin-top: 2rem;
+}
+
+.btn-museum-readmore {
+  background: rgba(92, 6, 24, 0.05);
+  border: 1px solid rgba(92, 6, 24, 0.2);
+  color: var(--color-maroon);
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.65rem 1.4rem;
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  transition: all 0.3s ease;
+}
+
+.btn-museum-readmore:hover {
+  background: var(--color-maroon);
+  color: #FFF7E8;
+}
+
+.chronicle-extended-text {
+  margin-top: 1.2rem;
+  padding: 1.4rem;
+  background: rgba(212, 175, 55, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: 12px;
+  animation: fadeIn 0.4s ease forwards;
+}
+
+.extended-title {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  color: var(--color-maroon);
+  margin-bottom: 0.5rem;
+}
+
+.chronicle-extended-text p {
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: var(--color-text-muted);
+}
+
+.media-caption-box {
+  margin-top: 1.2rem;
+  padding: 1rem 1.2rem;
+  background: var(--color-ivory);
+  border-radius: 10px;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  display: flex;
+  gap: 0.8rem;
+}
+
+.caption-gold-strip {
+  width: 4px;
+  background: var(--color-gold);
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.caption-text {
+  font-size: 0.86rem;
+  line-height: 1.5;
+  color: var(--color-text-muted);
+}
+
+/* ================================================================= */
+/* 7. TWO SACRED JOURNEYS                                            */
+/* ================================================================= */
+
+.comparison-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  margin-bottom: 3.5rem;
+}
+
+.journey-card {
+  background: var(--color-ivory);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 18px;
+  padding: 2.4rem;
+  box-shadow: 0 12px 32px rgba(92, 6, 24, 0.05);
+  position: relative;
+  transition: transform 0.4s ease;
+}
+
+.journey-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(212, 175, 55, 0.6);
+}
+
+.journey-tag {
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-maroon);
+  font-weight: 700;
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+.journey-tag.saffron-tag {
+  color: var(--color-saffron);
+}
+
+.journey-saint-title {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: 1.5rem;
+  color: var(--color-maroon);
+  margin-bottom: 0.6rem;
+}
+
+.journey-route-badge {
+  display: inline-block;
+  font-size: 0.82rem;
+  font-family: var(--font-body);
+  font-weight: 600;
+  color: var(--color-maroon);
+  background: rgba(92, 6, 24, 0.06);
+  padding: 0.2rem 0.75rem;
+  border-radius: 999px;
+  margin-bottom: 1.4rem;
+}
+
+.journey-route-badge.saffron-badge {
+  color: #D84315;
+  background: rgba(255, 126, 21, 0.1);
+}
+
+.journey-stats-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.stat-pill {
+  flex: 1;
+  background: rgba(250, 246, 238, 0.8);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 10px;
+  padding: 0.6rem 0.8rem;
+  text-align: center;
+}
+
+.stat-label {
+  display: block;
+  font-size: 0.68rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.stat-val {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-maroon);
+  margin-top: 2px;
+}
+
+.journey-highlights {
+  margin-bottom: 1.4rem;
+}
+
+.highlights-title {
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
+  color: var(--color-maroon);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.5rem;
+}
+
+.waypoints-chain {
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: var(--color-text-muted);
+}
+
+.journey-tradition-box {
+  background: rgba(212, 175, 55, 0.08);
+  border-radius: 10px;
+  padding: 0.9rem 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.tradition-icon {
+  font-size: 1.3rem;
+  color: var(--color-maroon);
+}
+
+.tradition-icon.saffron-icon {
+  color: var(--color-saffron);
+}
+
+.tradition-text {
+  font-size: 0.86rem;
+  line-height: 1.45;
+  color: var(--color-text-dark);
+}
+
+/* Convergence Map Showcase */
+.convergence-map-showcase {
+  background: var(--color-ivory);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 20px;
+  padding: 2.5rem 2rem;
+  box-shadow: 0 16px 38px rgba(92, 6, 24, 0.06);
+  text-align: center;
+}
+
+.convergence-ornament-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.label-line {
+  height: 1px;
+  width: 60px;
+  background: var(--color-gold);
+}
+
+.label-badge {
+  font-family: var(--font-heading);
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-maroon);
+}
+
+.convergence-diagram-svg-wrap {
+  width: 100%;
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.convergence-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.animated-route-path {
+  stroke-dasharray: 800;
+  stroke-dashoffset: 800;
+  transition: stroke-dashoffset 2.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.animate-convergence .alandi-path {
+  stroke-dashoffset: 0;
+  transition-delay: 0.2s;
+}
+
+.animate-convergence .dehu-path {
+  stroke-dashoffset: 0;
+  transition-delay: 0.4s;
+}
+
+.animate-convergence .final-path {
+  stroke-dashoffset: 0;
+  transition-delay: 1.5s;
+}
+
+.convergence-note {
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  max-width: 680px;
+  margin: 1.5rem auto 0 auto;
+  line-height: 1.6;
+}
+
+/* ================================================================= */
+/* 8. SPIRIT OF THE WARI                                             */
+/* ================================================================= */
+
+.spirit-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.spirit-card {
+  background: var(--color-ivory);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: 16px;
+  padding: 2.2rem 1.8rem;
+  box-shadow: 0 8px 24px rgba(92, 6, 24, 0.04);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.spirit-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(212, 175, 55, 0.55);
+  box-shadow: 0 16px 36px rgba(92, 6, 24, 0.09);
+}
+
+.spirit-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.2rem;
+}
+
+.spirit-icon-wrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(92, 6, 24, 0.05);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-maroon);
+  font-size: 1.35rem;
+  transition: all 0.35s ease;
+}
+
+.spirit-card:hover .spirit-icon-wrap {
+  background: var(--color-maroon);
+  color: #FFE082;
+  border-color: var(--color-gold);
+  transform: scale(1.08);
+}
+
+.spirit-marathi-tag {
+  font-family: 'Yatra One', 'Marcellus', serif;
+  font-size: 1.15rem;
+  color: var(--color-gold);
+}
+
+.spirit-card-title {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-maroon);
+  margin-bottom: 0.6rem;
+}
+
+.spirit-card-desc {
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+}
+
+.spirit-card-bottom-line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent 0%, var(--color-gold) 50%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.spirit-card:hover .spirit-card-bottom-line {
+  opacity: 1;
+}
+
+/* ================================================================= */
+/* 9. FEATURED ABHANG                                                */
+/* ================================================================= */
+
+.abhang-manuscript-card {
+  background: #FFFDF8;
+  border: 2px solid rgba(212, 175, 55, 0.45);
+  border-radius: 20px;
+  padding: 3.5rem;
+  box-shadow: 0 18px 45px rgba(92, 6, 24, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.abhang-two-col {
+  display: grid;
+  grid-template-columns: 60% 36%;
+  gap: 3.5rem;
+  align-items: center;
+}
+
+.abhang-raga-tag {
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  color: var(--color-saffron);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 1.2rem;
+}
+
+.marathi-abhang-display {
+  margin-bottom: 1.8rem;
+}
+
+.abhang-line {
+  font-family: 'Yatra One', 'Marcellus', serif;
+  font-size: clamp(1.4rem, 2.5vw, 1.85rem);
+  color: var(--color-maroon);
+  line-height: 1.7;
+  letter-spacing: 0.03em;
+}
+
+.abhang-line.author-sign {
+  color: #8A152C;
+  font-size: clamp(1.2rem, 2.1vw, 1.55rem);
+}
+
+.abhang-inner-divider {
+  color: var(--color-gold);
+  letter-spacing: 0.8em;
+  margin: 1.4rem 0;
+  font-size: 0.85rem;
+}
+
+.english-translation-box {
+  background: rgba(212, 175, 55, 0.08);
+  border-radius: 12px;
+  padding: 1.4rem 1.6rem;
+  margin-bottom: 2rem;
+}
+
+.translation-heading {
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  color: var(--color-maroon);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.5rem;
+}
+
+.translation-text {
+  font-family: 'Crimson Text', serif;
+  font-size: 1.15rem;
+  font-style: italic;
+  line-height: 1.7;
+  color: #4A3A35;
+}
+
+.abhang-player-ui {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+}
+
+.btn-abhang-listen {
+  background: linear-gradient(135deg, var(--color-maroon) 0%, var(--color-maroon-dark) 100%);
+  color: #FFE082;
+  border: 1px solid var(--color-gold);
+  font-family: var(--font-heading);
+  font-size: 0.92rem;
+  font-weight: 600;
+  padding: 0.8rem 1.6rem;
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  box-shadow: 0 6px 18px rgba(92, 6, 24, 0.25);
+  transition: all 0.3s ease;
+}
+
+.btn-abhang-listen:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(92, 6, 24, 0.35);
+  background: linear-gradient(135deg, #7A0A21 0%, var(--color-maroon) 100%);
+}
+
+.btn-abhang-listen.playing {
+  background: linear-gradient(135deg, #D84315 0%, #BF360C 100%);
+  border-color: #FFA726;
+  color: #FFFFFF;
+}
+
+.audio-wave-animation {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 22px;
+}
+
+.wave-bar {
+  width: 4px;
+  background: var(--color-gold);
+  border-radius: 2px;
+  animation: wavePulse 1.2s infinite ease-in-out;
+}
+
+.bar-1 { height: 60%; animation-delay: 0.1s; }
+.bar-2 { height: 100%; animation-delay: 0.3s; }
+.bar-3 { height: 40%; animation-delay: 0.2s; }
+.bar-4 { height: 80%; animation-delay: 0.4s; }
+.bar-5 { height: 50%; animation-delay: 0.15s; }
+
+@keyframes wavePulse {
+  0%, 100% { transform: scaleY(0.4); }
+  50% { transform: scaleY(1); }
+}
+
+.player-note-ui {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+.portrait-attribution {
+  text-align: center;
+  margin-top: 0.8rem;
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  letter-spacing: 0.08em;
+}
+
+/* ================================================================= */
+/* 10. LEGACY SECTION                                                */
+/* ================================================================= */
+
+.legacy-header-block {
+  max-width: 820px;
+  margin: 0 auto 3.5rem auto;
+}
+
+.legacy-lead-text {
+  font-size: 1.15rem;
+  line-height: 1.8;
+  color: var(--color-text-dark);
+  font-weight: 300;
+  margin-top: 1.4rem;
+}
+
+.legacy-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.8rem;
+}
+
+.legacy-stat-card {
+  background: var(--color-ivory);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 16px;
+  padding: 2.4rem 1.5rem;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 10px 28px rgba(92, 6, 24, 0.05);
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.legacy-stat-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--color-gold);
+  box-shadow: 0 16px 36px rgba(92, 6, 24, 0.1);
+}
+
+.stat-card-gold-accent {
+  position: absolute;
+  top: 0;
+  left: 25%;
+  right: 25%;
+  height: 3px;
+  background: var(--color-gold);
+  border-radius: 0 0 3px 3px;
+}
+
+.stat-number-wrap {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 2px;
+  margin-bottom: 0.6rem;
+}
+
+.stat-counter {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--color-maroon);
+  line-height: 1;
+}
+
+.stat-counter-word {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: 2.1rem;
+  font-weight: 700;
+  color: var(--color-maroon);
+  line-height: 1;
+}
+
+.stat-plus {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-saffron);
+}
+
+.legacy-stat-card .stat-title {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-maroon);
+  margin-bottom: 0.5rem;
+}
+
+.legacy-stat-card .stat-caption {
+  font-size: 0.86rem;
+  line-height: 1.5;
+  color: var(--color-text-muted);
+}
+
+/* ================================================================= */
+/* 11. CLOSING CTA                                                   */
+/* ================================================================= */
+
+.tradition-closing-cta-section {
+  padding: 4rem 0 6rem 0;
+}
+
+.closing-cta-card {
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(45, 2, 11, 0.25);
+  border: 1px solid rgba(212, 175, 55, 0.5);
+  background: #2D020B;
+}
+
+.closing-cta-visual {
+  width: 100%;
+  opacity: 0.35;
+  filter: brightness(0.7) contrast(1.1);
+}
+
+.closing-cta-content-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 3rem 1.5rem;
+  background: radial-gradient(circle at center, rgba(92, 6, 24, 0.7) 0%, rgba(45, 2, 11, 0.95) 85%);
+  z-index: 2;
+}
+
+.cta-icon-ornament {
+  font-size: 2.4rem;
+  margin-bottom: 1rem;
+}
+
+.closing-cta-title {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 700;
+  color: #FFFDF8;
+  margin-bottom: 0.8rem;
+  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+.closing-cta-subtitle {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.8vw, 1.25rem);
+  font-weight: 300;
+  color: #FFE082;
+  margin-bottom: 2.2rem;
+  max-width: 600px;
+}
+
+.closing-cta-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btn-explore-palkhis-cta {
+  background: linear-gradient(135deg, #D4AF37 0%, #AA7C11 100%);
+  color: #2D020B;
+  border: none;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 1rem 2.2rem;
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  box-shadow: 0 8px 24px rgba(212, 175, 55, 0.35);
+  transition: all 0.3s ease;
+}
+
+.btn-explore-palkhis-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(212, 175, 55, 0.5);
+  background: linear-gradient(135deg, #FFE082 0%, #D4AF37 100%);
+}
+
+.btn-back-home-secondary {
+  background: transparent;
+  color: #FFF7E8;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 0.95rem 1.8rem;
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  transition: all 0.3s ease;
+}
+
+.btn-back-home-secondary:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: #FFFFFF;
+}
+
+/* ================================================================= */
+/* RESPONSIVE DESIGN FOR TRADITION PAGE                              */
+/* ================================================================= */
+
+@media (max-width: 1024px) {
+  .tradition-section {
+    padding: 4rem 0;
+  }
+  .tradition-two-col,
+  .split-chronicle-layout,
+  .split-chronicle-layout.mirrored,
+  .abhang-two-col {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .comparison-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .tradition-info-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 1.4rem;
+  }
+  .spirit-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .legacy-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .tradition-section-heading {
+    font-size: 1.9rem;
+  }
+  .timeline-nodes-row {
+    justify-content: flex-start;
+    gap: 1.5rem;
+  }
+  .timeline-expanded-card {
+    padding: 1.8rem 1.4rem;
+  }
+  .expanded-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .abhang-manuscript-card {
+    padding: 2rem 1.4rem;
+  }
+  .abhang-line {
+    font-size: 1.3rem;
+  }
+  .spirit-cards-grid {
+    grid-template-columns: 1fr;
+  }
+  .legacy-stats-grid {
+    grid-template-columns: 1fr;
+  }
+  .museum-floating-top-bar .museum-exhibition-label {
+    display: none;
+  }
+}
+
+/* ================================================================= */
+/* ================================================================= */
+/* DIGITAL MUSEUM TRADITION HERO (MUSEUM STYLE SPLIT LAYOUT)         */
+/* ================================================================= */
+
+.museum-hero-section {
+  padding: 0.6rem 0 3.2rem 0; /* Reduced top margin by ~60% to eliminate blank void */
+  position: relative;
+  z-index: 4;
+}
+
+.museum-hero-card {
+  background: linear-gradient(135deg, #240207 0%, #35050D 45%, #220206 100%);
+  border: 1.5px solid rgba(212, 175, 55, 0.42);
+  border-radius: 24px;
+  box-shadow: 0 24px 60px rgba(25, 2, 6, 0.38), 0 2px 12px rgba(212, 175, 55, 0.12), inset 0 0 60px rgba(212, 175, 55, 0.04);
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              box-shadow 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.museum-hero-card:hover {
+  border-color: rgba(212, 175, 55, 0.75);
+  box-shadow: 0 30px 75px rgba(25, 2, 6, 0.48), 0 0 36px rgba(212, 175, 55, 0.24), inset 0 0 70px rgba(212, 175, 55, 0.08);
+}
+
+/* --- Museum Corner Filigree Accents --- */
+.museum-corner {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  pointer-events: none;
+  z-index: 10;
+  transition: border-color 0.5s ease;
+}
+
+.museum-corner-tl {
+  top: 12px;
+  left: 12px;
+  border-top: 2px solid rgba(212, 175, 55, 0.7);
+  border-left: 2px solid rgba(212, 175, 55, 0.7);
+  border-top-left-radius: 8px;
+}
+
+.museum-corner-tr {
+  top: 12px;
+  right: 12px;
+  border-top: 2px solid rgba(212, 175, 55, 0.7);
+  border-right: 2px solid rgba(212, 175, 55, 0.7);
+  border-top-right-radius: 8px;
+}
+
+.museum-corner-bl {
+  bottom: 12px;
+  left: 12px;
+  border-bottom: 2px solid rgba(212, 175, 55, 0.7);
+  border-left: 2px solid rgba(212, 175, 55, 0.7);
+  border-bottom-left-radius: 8px;
+}
+
+.museum-corner-br {
+  bottom: 12px;
+  right: 12px;
+  border-bottom: 2px solid rgba(212, 175, 55, 0.7);
+  border-right: 2px solid rgba(212, 175, 55, 0.7);
+  border-bottom-right-radius: 8px;
+}
+
+.museum-hero-card:hover .museum-corner {
+  border-color: #FFE082;
+}
+
+/* --- Faint Sacred Mandala Background Watermark --- */
+.museum-mandala-watermark {
+  position: absolute;
+  top: -80px;
+  left: -80px;
+  width: 380px;
+  height: 380px;
+  background-image: radial-gradient(circle, rgba(212, 175, 55, 0.12) 0%, transparent 65%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='%23D4AF37' stroke-width='0.75'%3E%3Ccircle cx='50' cy='50' r='45'/%3E%3Ccircle cx='50' cy='50' r='35' stroke-dasharray='2,2'/%3E%3Ccircle cx='50' cy='50' r='25'/%3E%3Ccircle cx='50' cy='50' r='15' stroke-dasharray='1,2'/%3E%3Cpolygon points='50,5 61,39 95,50 61,61 50,95 39,61 5,50 39,39'/%3E%3Cpolygon points='50,15 58,42 85,50 58,58 50,85 42,58 15,50 42,42'/%3E%3C/svg%3E");
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.055;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* --- Floating Saffron & Temple Dust Particles --- */
+.museum-dust-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 4;
+}
+
+.dust-particle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(255, 224, 130, 0.8) 0%, rgba(226, 125, 38, 0) 70%);
+}
+
+.dust-particle.p1 {
+  width: 4px; height: 4px; top: 75%; left: 18%;
+  animation: museumDustDrift 9s ease-in-out infinite;
+}
+.dust-particle.p2 {
+  width: 5px; height: 5px; top: 45%; left: 32%;
+  animation: museumDustDrift 11s ease-in-out infinite 2s;
+}
+.dust-particle.p3 {
+  width: 3px; height: 3px; top: 85%; left: 10%;
+  animation: museumDustDrift 10s ease-in-out infinite 4s;
+}
+.dust-particle.p4 {
+  width: 4px; height: 4px; top: 60%; left: 40%;
+  animation: museumDustDrift 8s ease-in-out infinite 1.5s;
+}
+.dust-particle.p5 {
+  width: 6px; height: 6px; top: 70%; left: 25%;
+  animation: museumDustDrift 12s ease-in-out infinite 3.5s;
+}
+.dust-particle.p6 {
+  width: 3px; height: 3px; top: 30%; left: 15%;
+  animation: museumDustDrift 9.5s ease-in-out infinite 5s;
+}
+
+@keyframes museumDustDrift {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  30% {
+    opacity: 0.65;
+  }
+  70% {
+    opacity: 0.55;
+  }
+  100% {
+    transform: translateY(-80px) translateX(24px);
+    opacity: 0;
+  }
+}
+
+/* --- Split Museum Layout --- */
+.museum-split-layout {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  min-height: 480px;
+  position: relative;
+}
+
+/* --- Left Side (40-42%): Editorial Museum Content Panel --- */
+.museum-content-panel {
+  flex: 0 0 42%;
+  width: 42%;
+  padding: 3.5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  position: relative;
+  z-index: 6;
+}
+
+.museum-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  color: #FFE082;
+  font-family: 'Cinzel', serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 1.3rem;
+  transition: all 0.5s ease;
+}
+
+.museum-badge i {
+  font-size: 0.75rem;
+  color: #FFE082;
+}
+
+.museum-hero-card:hover .museum-badge {
+  background: rgba(212, 175, 55, 0.22);
+  border-color: #FFE082;
+  color: #FFFFFF;
+  box-shadow: 0 0 16px rgba(212, 175, 55, 0.3);
+}
+
+.museum-heading {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: clamp(1.75rem, 2.5vw, 2.35rem);
+  font-weight: 700;
+  color: #FFFDF8;
+  line-height: 1.24;
+  letter-spacing: 0.02em;
+  margin: 0 0 1.1rem 0;
+}
+
+.museum-heading-gold {
+  color: #FFE082;
+  text-shadow: 0 0 20px rgba(212, 175, 55, 0.32);
+}
+
+.museum-divider-line {
+  width: 75px;
+  height: 2px;
+  background: linear-gradient(90deg, #D4AF37 0%, rgba(212, 175, 55, 0) 100%);
+  margin-bottom: 1.3rem;
+}
+
+.museum-description {
+  font-family: var(--font-body, 'Crimson Text', serif);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: rgba(255, 253, 248, 0.88);
+  margin: 0 0 2.2rem 0;
+  max-width: 480px;
+  font-weight: 300;
+}
+
+/* --- Action Buttons (Gold + Maroon Language) --- */
+.museum-btn-group {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.museum-btn-primary {
+  background: linear-gradient(135deg, #D4AF37 0%, #F5DE88 50%, #AA7C11 100%);
+  color: #2D020B;
+  font-family: 'Cinzel', serif;
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 0.85rem 1.8rem;
+  border-radius: 999px;
+  border: none;
+  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.35);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  text-decoration: none;
+}
+
+.museum-btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(212, 175, 55, 0.55);
+  background: linear-gradient(135deg, #FFE082 0%, #D4AF37 100%);
+}
+
+.museum-btn-primary i {
+  font-size: 0.88rem;
+  transition: transform 0.4s ease;
+}
+
+.museum-btn-primary:hover i {
+  transform: translateX(4px);
+}
+
+.museum-btn-secondary {
+  background: rgba(36, 2, 7, 0.65);
+  color: #FFE082;
+  font-family: 'Cinzel', serif;
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  padding: 0.82rem 1.7rem;
+  border-radius: 999px;
+  border: 1.5px solid rgba(212, 175, 55, 0.55);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  text-decoration: none;
+}
+
+.museum-btn-secondary:hover {
+  background: rgba(212, 175, 55, 0.16);
+  border-color: #FFE082;
+  color: #FFFFFF;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 22px rgba(212, 175, 55, 0.25);
+}
+
+.museum-btn-secondary i {
+  font-size: 0.88rem;
+  color: #D4AF37;
+  transition: transform 0.5s ease;
+}
+
+.museum-btn-secondary:hover i {
+  transform: rotate(45deg);
+  color: #FFE082;
+}
+
+/* --- Right Side (58-60%): Cinematic Wari Exhibition Artwork --- */
+.museum-visual-panel {
+  flex: 0 0 58%;
+  width: 58%;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+}
+
+.museum-image-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-top-right-radius: 22px;
+  border-bottom-right-radius: 22px;
+}
+
+.museum-hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 35%;
+  display: block;
+  transform-origin: center center;
+  transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Interactive card hover: slow elegant zoom */
+.museum-hero-card:hover .museum-hero-image {
+  transform: scale(1.03);
+}
+
+/* Soft feather fade into left deep maroon panel */
+.museum-fade-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, #240207 0%, rgba(36, 2, 7, 0.9) 6%, rgba(36, 2, 7, 0.35) 20%, transparent 45%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Subtle warm golden-hour ambient overlay without overdarkening */
+.museum-warm-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(226, 125, 38, 0.05) 0%, rgba(212, 175, 55, 0.03) 50%, rgba(36, 2, 7, 0.12) 100%);
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* --- Responsive Behavior: Mobile & Tablet --- */
+@media (max-width: 960px) {
+  .museum-hero-section {
+    padding: 0.5rem 0 2.5rem 0;
+  }
+
+  .museum-split-layout {
+    flex-direction: column;
+    min-height: auto;
+  }
+
+  /* Image appears FIRST on mobile */
+  .museum-visual-panel {
+    order: -1;
+    flex: 0 0 auto;
+    width: 100%;
+    height: 320px;
+  }
+
+  .museum-image-frame {
+    border-top-right-radius: 22px;
+    border-top-left-radius: 22px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  /* Fade smoothly into content below on mobile */
+  .museum-fade-overlay {
+    background: linear-gradient(to top, #240207 0%, rgba(36, 2, 7, 0.7) 20%, transparent 55%);
+  }
+
+  /* Content panel below */
+  .museum-content-panel {
+    flex: 0 0 auto;
+    width: 100%;
+    padding: 2.2rem 1.6rem 2.8rem 1.6rem;
+    align-items: center;
+    text-align: center;
+  }
+
+  .museum-divider-line {
+    margin: 0 auto 1.2rem auto;
+  }
+
+  .museum-description {
+    max-width: 100%;
+  }
+
+  /* Buttons stack vertically on mobile */
+  .museum-btn-group {
+    width: 100%;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .museum-btn-primary,
+  .museum-btn-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .museum-visual-panel {
+    height: 250px;
+  }
+
+  .museum-heading {
+    font-size: 1.55rem;
+  }
+
+  .museum-badge {
+    font-size: 0.68rem;
+    padding: 5px 12px;
+  }
+}
+
+/* ================================================================= */
+/* DIGITAL MUSEUM — CHAPTER NAVIGATION & NEW SECTIONS                */
+/* ================================================================= */
+
+/* --- Sticky Desktop Chapter Navigation --- */
+.sticky-chapter-nav {
+  position: fixed;
+  top: 50%;
+  right: 1.6rem;
+  transform: translateY(-50%);
+  z-index: 950;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.chapter-nav-inner {
+  background: rgba(255, 251, 244, 0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  border-radius: 18px;
+  box-shadow: 0 12px 36px rgba(92, 6, 24, 0.12);
+  padding: 0.9rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  width: 175px;
+}
+
+.chapter-nav-header {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding-bottom: 0.45rem;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+  margin-bottom: 0.25rem;
+}
+
+.chapter-nav-icon {
+  color: var(--color-gold);
+  font-size: 0.8rem;
+}
+
+.chapter-nav-label {
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-maroon);
+}
+
+.chapter-nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.chapter-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.35rem 0.55rem;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+.chapter-num {
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--color-gold);
+  min-width: 18px;
+}
+
+.chapter-name {
+  font-family: var(--font-heading);
+  font-size: 0.76rem;
+  color: var(--color-text-dark);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+}
+
+.chapter-indicator-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: transparent;
+  transition: all 0.3s ease;
+}
+
+.chapter-nav-item:hover {
+  background: rgba(212, 175, 55, 0.12);
+}
+
+.chapter-nav-item:hover .chapter-name {
+  color: var(--color-maroon);
+}
+
+.chapter-nav-item.active {
+  background: var(--color-maroon);
+}
+
+.chapter-nav-item.active .chapter-num {
+  color: #FFE082;
+}
+
+.chapter-nav-item.active .chapter-name {
+  color: #FFFDF8;
+  font-weight: 600;
+}
+
+.chapter-nav-item.active .chapter-indicator-dot {
+  background: var(--color-gold);
+  box-shadow: 0 0 8px var(--color-gold);
+}
+
+@media (max-width: 1240px) {
+  .sticky-chapter-nav {
+    display: none !important;
+  }
+}
+
+/* --- Floating Saffron Particles --- */
+.saffron-particles-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 5;
+}
+
+.saffron-particle {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 153, 51, 0.8) 0%, rgba(212, 175, 55, 0.2) 70%, transparent 100%);
+  animation: floatSaffron 7s ease-in-out infinite;
+}
+
+.saffron-particle.p-1 { width: 12px; height: 12px; left: 15%; bottom: 10%; animation-delay: 0s; }
+.saffron-particle.p-2 { width: 8px; height: 8px; left: 40%; bottom: 5%; animation-delay: 1.5s; }
+.saffron-particle.p-3 { width: 14px; height: 14px; left: 75%; bottom: 15%; animation-delay: 3s; }
+.saffron-particle.p-4 { width: 10px; height: 10px; left: 88%; bottom: 25%; animation-delay: 2s; }
+.saffron-particle.p-5 { width: 16px; height: 16px; left: 28%; bottom: 20%; animation-delay: 4.5s; }
+.saffron-particle.p-6 { width: 9px; height: 9px; left: 60%; bottom: 8%; animation-delay: 3.5s; }
+
+@keyframes floatSaffron {
+  0% { transform: translateY(0) scale(0.8); opacity: 0; }
+  30% { opacity: 0.8; }
+  80% { opacity: 0.6; }
+  100% { transform: translateY(-160px) scale(1.2); opacity: 0; }
+}
+
+/* --- Down Arrow Animation for Hero --- */
+.tradition-down-arrow-anim {
+  font-size: 1.25rem;
+  color: var(--color-gold);
+  margin-top: 0.35rem;
+  animation: bounceDown 2s ease-in-out infinite;
+}
+
+@keyframes bounceDown {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+
+/* --- Evolution of Warkari Tradition (4 Expandable Cards) --- */
+.evolution-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+
+.evolution-card {
+  background: var(--color-ivory);
+  border: 1px solid rgba(212, 175, 55, 0.32);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 10px 28px rgba(92, 6, 24, 0.06);
+  display: flex;
+  flex-direction: column;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.evolution-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-gold);
+  box-shadow: 0 16px 36px rgba(92, 6, 24, 0.12);
+}
+
+.evolution-card-media {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+  background: #FFF7EC;
+}
+
+.evolution-saint-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform 0.6s ease;
+}
+
+.evolution-card:hover .evolution-saint-img {
+  transform: scale(1.05);
+}
+
+.evolution-media-badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: rgba(92, 6, 24, 0.88);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(212, 175, 55, 0.5);
+  color: #FFE082;
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+}
+
+.evolution-card-body {
+  padding: 1.8rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.evolution-era {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-saffron);
+  margin-bottom: 0.35rem;
+}
+
+.evolution-saint-name {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: 1.35rem;
+  color: var(--color-maroon);
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 0.25rem;
+}
+
+.evolution-card-title {
+  font-family: var(--font-heading);
+  font-size: 0.92rem;
+  color: var(--color-gold);
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.evolution-summary {
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: var(--color-text-muted);
+  margin-bottom: 1.4rem;
+  flex: 1;
+}
+
+.btn-evolution-expand {
+  background: transparent;
+  border: 1px solid rgba(92, 6, 24, 0.28);
+  color: var(--color-maroon);
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.6rem 1.2rem;
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  align-self: flex-start;
+  transition: all 0.3s ease;
+}
+
+.btn-evolution-expand:hover {
+  background: var(--color-maroon);
+  color: #FFE082;
+  border-color: var(--color-maroon);
+}
+
+.evolution-drawer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.evolution-drawer.open {
+  max-height: 400px;
+}
+
+.evolution-drawer-inner {
+  padding-top: 1.2rem;
+  margin-top: 1.2rem;
+  border-top: 1px dashed rgba(212, 175, 55, 0.4);
+}
+
+.drawer-heading {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  color: var(--color-maroon);
+  margin-bottom: 0.5rem;
+}
+
+.drawer-text {
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: var(--color-text-dark);
+  margin-bottom: 0.85rem;
+}
+
+.drawer-contribution {
+  font-size: 0.84rem;
+  background: rgba(212, 175, 55, 0.12);
+  border-left: 3px solid var(--color-gold);
+  padding: 0.6rem 0.85rem;
+  border-radius: 0 6px 6px 0;
+  color: var(--color-maroon);
+  line-height: 1.5;
+}
+
+/* --- Shiva Glowing Aura & Trishul --- */
+.shiva-glowing-aura {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120%;
+  height: 120%;
+  background: radial-gradient(circle, rgba(255, 167, 38, 0.3) 0%, rgba(212, 175, 55, 0.15) 45%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(28px);
+  pointer-events: none;
+  animation: auraPulse 5s ease-in-out infinite;
+  z-index: 1;
+}
+
+@keyframes auraPulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(0.96); opacity: 0.7; }
+  50% { transform: translate(-50%, -50%) scale(1.08); opacity: 1; }
+}
+
+.trishul-accent-icon {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.8rem;
+  color: rgba(212, 175, 55, 0.35);
+  transition: all 0.3s ease;
+}
+
+.parchment-story-card:hover .trishul-accent-icon {
+  color: var(--color-gold);
+  transform: rotate(6deg) scale(1.1);
+}
+
+/* --- Birth of Palkhi Section --- */
+.birth-palkhi-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  margin-bottom: 3.5rem;
+}
+
+.palkhi-sohala-card {
+  background: var(--color-ivory);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 14px 34px rgba(92, 6, 24, 0.08);
+  display: flex;
+  flex-direction: column;
+}
+
+.palkhi-card-badge-top {
+  background: linear-gradient(90deg, var(--color-maroon) 0%, var(--color-maroon-dark) 100%);
+  color: #FFE082;
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.6rem 1.6rem;
+}
+
+.palkhi-card-badge-top.saffron {
+  background: linear-gradient(90deg, #D97706 0%, #B45309 100%);
+  color: #FFFDF8;
+}
+
+.palkhi-card-img-wrap {
+  position: relative;
+  width: 100%;
+  height: 280px;
+  overflow: hidden;
+}
+
+.palkhi-feature-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.palkhi-sohala-card:hover .palkhi-feature-img {
+  transform: scale(1.05);
+}
+
+.palkhi-card-img-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.5rem 1.6rem 0.8rem 1.6rem;
+  background: linear-gradient(180deg, transparent 0%, rgba(45, 2, 11, 0.85) 100%);
+  display: flex;
+  flex-direction: column;
+}
+
+.img-title {
+  color: #FFFDF8;
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.img-sub {
+  color: #FFE082;
+  font-size: 0.8rem;
+}
+
+.palkhi-card-content {
+  padding: 2.2rem 2rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.palkhi-saint-title {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: 1.5rem;
+  color: var(--color-maroon);
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+.palkhi-route-lead {
+  font-size: 0.92rem;
+  color: var(--color-text-muted);
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+  margin-bottom: 1.4rem;
+}
+
+.chronicle-subhead {
+  font-family: var(--font-heading);
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-maroon);
+  margin-bottom: 0.85rem;
+}
+
+.palkhi-milestone-bullets {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.palkhi-milestone-bullets li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.m-year {
+  display: inline-block;
+  font-family: var(--font-heading);
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--color-saffron);
+  letter-spacing: 0.06em;
+}
+
+.m-text {
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--color-text-dark);
+}
+
+@media (max-width: 900px) {
+  .birth-palkhi-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+/* --- Grand Convergence Timeline Box --- */
+.grand-convergence-timeline-box {
+  background: var(--color-ivory);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 20px;
+  padding: 2.8rem 2.4rem;
+  box-shadow: 0 14px 36px rgba(92, 6, 24, 0.07);
+}
+
+.convergence-header {
+  text-align: center;
+  margin-bottom: 2.8rem;
+}
+
+.convergence-tag {
+  display: inline-block;
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--color-saffron);
+  margin-bottom: 0.4rem;
+}
+
+.convergence-title {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: 1.7rem;
+  color: var(--color-maroon);
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+
+.convergence-sub {
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+}
+
+.convergence-timeline-track {
+  position: relative;
+  padding: 1rem 0;
+}
+
+.convergence-line-bar {
+  position: absolute;
+  top: 36px;
+  left: 5%;
+  right: 5%;
+  height: 4px;
+  background: rgba(212, 175, 55, 0.3);
+  z-index: 1;
+}
+
+.convergence-line-fill {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #8C6D23 0%, #D97706 50%, #5B0E16 100%);
+}
+
+.convergence-nodes-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1.2rem;
+  position: relative;
+  z-index: 2;
+}
+
+.convergence-node-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.conv-circle {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: #FFFDF8;
+  border: 3px solid rgba(212, 175, 55, 0.45);
+  box-shadow: 0 4px 14px rgba(92, 6, 24, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.1rem;
+  transition: all 0.3s ease;
+}
+
+.conv-year {
+  font-family: var(--font-heading);
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--color-maroon);
+}
+
+.conv-circle.active {
+  background: var(--color-maroon);
+  border-color: var(--color-gold);
+}
+
+.conv-circle.active .conv-year {
+  color: #FFE082;
+}
+
+.conv-circle.saffron {
+  background: var(--color-saffron);
+  border-color: #FFA726;
+  color: #FFFDF8;
+  font-size: 1.1rem;
+}
+
+.conv-circle.gold {
+  background: linear-gradient(135deg, #D4AF37 0%, #AA7C11 100%);
+  border-color: #FFE082;
+  color: #2D020B;
+  font-size: 1.1rem;
+}
+
+.conv-circle.destination {
+  background: linear-gradient(135deg, #5B0E16 0%, #2D020B 100%);
+  border-color: var(--color-gold);
+  color: #FFE082;
+  font-size: 1.2rem;
+  box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.25);
+}
+
+.conv-node-title {
+  font-family: var(--font-heading);
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--color-maroon);
+  margin-bottom: 0.35rem;
+}
+
+.conv-node-desc {
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--color-text-muted);
+}
+
+@media (max-width: 900px) {
+  .convergence-line-bar {
+    display: none;
+  }
+  .convergence-nodes-row {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+/* --- Comparison Table Component --- */
+.comparison-table-wrapper {
+  margin-top: 1.5rem;
+}
+
+.comparison-table-card {
+  background: var(--color-ivory);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 16px 40px rgba(92, 6, 24, 0.08);
+}
+
+.comp-grid-header {
+  display: grid;
+  grid-template-columns: 24% 38% 38%;
+  background: linear-gradient(180deg, #FBF6EE 0%, #F5EFEB 100%);
+  border-bottom: 2px solid rgba(212, 175, 55, 0.35);
+  padding: 1.8rem 2rem;
+  align-items: center;
+}
+
+.col-header-tag {
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-maroon);
+}
+
+.comp-col-palkhi {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.comp-saint-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--color-gold);
+  box-shadow: 0 4px 12px rgba(92, 6, 24, 0.15);
+  flex-shrink: 0;
+}
+
+.comp-saint-avatar .avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+
+.palkhi-lead-badge {
+  display: inline-block;
+  font-family: var(--font-heading);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-maroon);
+  background: rgba(92, 6, 24, 0.08);
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  margin-bottom: 0.25rem;
+}
+
+.palkhi-lead-badge.saffron {
+  color: var(--color-saffron);
+  background: rgba(217, 119, 6, 0.1);
+}
+
+.comp-saint-title {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: 1.15rem;
+  color: var(--color-maroon);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.comp-origin-tag {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.comp-grid-row {
+  display: grid;
+  grid-template-columns: 24% 38% 38%;
+  padding: 1.6rem 2rem;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  align-items: center;
+  transition: background 0.3s ease;
+}
+
+.comp-grid-row:hover {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.comp-row-aspect {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.aspect-icon-bubble {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #FFFDF8;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-maroon);
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+
+.aspect-label {
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-maroon);
+}
+
+.comp-row-cell {
+  padding-right: 1.5rem;
+}
+
+.cell-primary-title {
+  font-family: var(--font-heading);
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--color-maroon);
+  margin-bottom: 0.3rem;
+}
+
+.cell-primary-title.saffron {
+  color: #B45309;
+}
+
+.cell-secondary-desc {
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--color-text-dark);
+}
+
+.comp-bottom-synthesis {
+  background: #FBF6EE;
+  padding: 1.8rem 2.2rem;
+  border-top: 1px solid rgba(212, 175, 55, 0.35);
+  display: flex;
+  align-items: center;
+  gap: 1.8rem;
+}
+
+.synthesis-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-heading);
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--color-maroon);
+  background: rgba(212, 175, 55, 0.18);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+
+.synthesis-badge i {
+  color: var(--color-gold);
+}
+
+.synthesis-text {
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: var(--color-text-dark);
+}
+
+@media (max-width: 860px) {
+  .comp-grid-header {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+  .comp-grid-row {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .comp-bottom-synthesis {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* --- Sacred Abhang Action Bar & Lotus Border --- */
+.lotus-bordered-card {
+  border: 2px solid rgba(212, 175, 55, 0.45);
+  position: relative;
+}
+
+.lotus-corner {
+  position: absolute;
+  font-size: 1.4rem;
+  color: var(--color-gold);
+  line-height: 1;
+}
+
+.lotus-corner.tl { top: 1rem; left: 1rem; }
+.lotus-corner.tr { top: 1rem; right: 1rem; }
+.lotus-corner.bl { bottom: 1rem; left: 1rem; }
+.lotus-corner.br { bottom: 1rem; right: 1rem; }
+
+.abhang-action-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+  margin-top: 1.8rem;
+}
+
+.btn-abhang-action {
+  background: #FFFDF8;
+  border: 1px solid rgba(92, 6, 24, 0.3);
+  color: var(--color-maroon);
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.65rem 1.3rem;
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  transition: all 0.25s ease;
+}
+
+.btn-abhang-action:hover {
+  background: var(--color-maroon);
+  color: #FFE082;
+  border-color: var(--color-maroon);
+  transform: translateY(-2px);
+}
+
+.btn-abhang-action.btn-play {
+  background: linear-gradient(135deg, var(--color-maroon) 0%, var(--color-maroon-dark) 100%);
+  color: #FFE082;
+  border-color: var(--color-gold);
+}
+
+.btn-abhang-action.btn-play.playing {
+  background: linear-gradient(135deg, #D97706 0%, #B45309 100%);
+}
+
+.btn-abhang-action.success {
+  background: #2E7D32;
+  color: #FFFFFF;
+  border-color: #2E7D32;
+}
+
+.abhang-soundwave-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.soundwave-label {
+  font-size: 0.82rem;
+  font-style: italic;
+  color: var(--color-maroon);
+}
+
+/* --- Values of Warkari Tradition (6 Cards) --- */
+.values-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  margin-top: 1.5rem;
+}
+
+.value-feature-card {
+  background: var(--color-ivory);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 18px;
+  padding: 2.2rem 2rem;
+  box-shadow: 0 10px 28px rgba(92, 6, 24, 0.06);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.value-feature-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-gold);
+  box-shadow: 0 16px 36px rgba(92, 6, 24, 0.12);
+}
+
+.value-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.2rem;
+}
+
+.value-icon-bubble {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: #FFFDF8;
+  border: 2px solid rgba(212, 175, 55, 0.4);
+  box-shadow: 0 4px 12px rgba(45, 2, 11, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.value-emoji {
+  font-size: 1.6rem;
+}
+
+.value-marathi-tag {
+  font-family: 'Yatra One', 'Marcellus', serif;
+  font-size: 1.15rem;
+  color: var(--color-maroon);
+}
+
+.value-card-title {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: 1.35rem;
+  color: var(--color-maroon);
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+}
+
+.value-card-desc {
+  font-size: 0.92rem;
+  line-height: 1.7;
+  color: var(--color-text-muted);
+}
+
+.value-card-border-glow {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: transparent;
+  transition: background 0.3s ease;
+}
+
+.value-feature-card:hover .value-card-border-glow {
+  background: linear-gradient(90deg, transparent 0%, var(--color-gold) 50%, transparent 100%);
+}
+
+/* --- Wari Today Panoramic & Quote --- */
+.wari-today-panoramic-card {
+  width: 100%;
+  margin-bottom: 2.8rem;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 16px 40px rgba(92, 6, 24, 0.12);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+}
+
+.today-panoramic-img {
+  width: 100%;
+  height: 360px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+}
+
+.panoramic-gradient-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(45, 2, 11, 0.25) 0%, rgba(45, 2, 11, 0.85) 100%);
+}
+
+.panoramic-floating-caption {
+  position: relative;
+  z-index: 2;
+  padding: 2.4rem;
+}
+
+.panoramic-floating-caption .p-tag {
+  display: inline-block;
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: #FFE082;
+  margin-bottom: 0.4rem;
+}
+
+.panoramic-floating-caption .p-heading {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  color: #FFFDF8;
+  font-weight: 700;
+}
+
+.today-inspirational-quote-card {
+  margin-top: 3.5rem;
+  background: #FFFDF8;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 20px;
+  padding: 3rem 3.5rem;
+  box-shadow: 0 14px 36px rgba(92, 6, 24, 0.08);
+  text-align: center;
+  position: relative;
+}
+
+.quote-ornament-mark {
+  font-family: var(--font-quote);
+  font-size: 4rem;
+  color: var(--color-gold);
+  line-height: 1;
+  margin-bottom: -1rem;
+}
+
+.inspirational-quote-text {
+  font-family: 'Cormorant Garamond', 'Cinzel', serif;
+  font-size: clamp(1.25rem, 2vw, 1.55rem);
+  font-style: italic;
+  line-height: 1.8;
+  color: var(--color-maroon);
+  max-width: 860px;
+  margin: 0 auto 1.8rem auto;
+}
+
+.quote-author-line {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.quote-author-name {
+  font-family: var(--font-heading);
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-saffron);
+}
+
+.quote-flourish-left, .quote-flourish-right {
+  color: var(--color-gold);
+  font-size: 1.1rem;
+}
+
+.stat-unit {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  color: var(--color-gold);
+  margin-left: 0.4rem;
+}
+
+.highlight-destination .stat-counter {
+  font-size: 2.4rem;
+  color: var(--color-maroon);
+}
+
+/* ================================================================= */
+/* MULTI-CHAPTER JOURNEY EXPERIENCE & DEDICATED CHAPTER PAGES        */
+/* ================================================================= */
+
+/* ================================================================= */
+/* HORIZONTAL CHAPTER RIBBON STEPPER & ELEGANT CHAPTER DRAWER       */
+/* ================================================================= */
+
+/* --- Horizontal Chapter Ribbon Bar (Under Banner / On Chapter Pages) --- */
+.chapter-ribbon-bar {
+  background: rgba(253, 251, 247, 0.96);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+  box-shadow: 0 4px 16px rgba(92, 6, 24, 0.04);
+  position: relative;
+  z-index: 15;
+  padding: 0.65rem 0;
+}
+
+.chapter-ribbon-scroll {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.3rem 0.2rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(212, 175, 55, 0.4) transparent;
+  -webkit-overflow-scrolling: touch;
+}
+
+.chapter-ribbon-scroll::-webkit-scrollbar {
+  height: 4px;
+}
+
+.chapter-ribbon-scroll::-webkit-scrollbar-thumb {
+  background: rgba(212, 175, 55, 0.4);
+  border-radius: 999px;
+}
+
+.ribbon-item {
+  background: #FFFDF9;
+  border: 1px solid rgba(212, 175, 55, 0.28);
+  border-radius: 999px;
+  padding: 0.42rem 0.95rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: all 0.25s ease;
+  font-family: var(--font-heading);
+  text-decoration: none;
+}
+
+.ribbon-num {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--color-saffron);
+  letter-spacing: 0.06em;
+}
+
+.ribbon-title {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-maroon);
+  letter-spacing: 0.02em;
+}
+
+.ribbon-item:hover {
+  background: rgba(212, 175, 55, 0.12);
+  border-color: var(--color-gold);
+  transform: translateY(-1px);
+}
+
+.ribbon-item.active {
+  background: var(--color-maroon);
+  border-color: var(--color-gold);
+  box-shadow: 0 4px 14px rgba(92, 6, 24, 0.25);
+}
+
+.ribbon-item.active .ribbon-num {
+  color: #FFE082;
+}
+
+.ribbon-item.active .ribbon-title {
+  color: #FFFDF8;
+  font-weight: 700;
+}
+
+/* --- Unobtrusive Floating Chapter Index Pill (Bottom Corner) --- */
+.journey-quick-trigger-dock {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  z-index: 950;
+}
+
+.btn-journey-quick-pill {
+  background: linear-gradient(135deg, var(--color-maroon) 0%, var(--color-maroon-dark) 100%);
+  color: #FFE082;
+  border: 1.5px solid var(--color-gold);
+  border-radius: 999px;
+  padding: 0.65rem 1.25rem;
+  box-shadow: 0 8px 26px rgba(92, 6, 24, 0.35);
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.btn-journey-quick-pill:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 12px 30px rgba(92, 6, 24, 0.45);
+  background: linear-gradient(135deg, #7A0A1F 0%, #4D030F 100%);
+}
+
+.dock-icon {
+  font-size: 1rem;
+}
+
+.dock-label {
+  letter-spacing: 0.05em;
+  color: #FFFDF8;
+}
+
+.dock-bars-icon {
+  font-size: 0.8rem;
+  color: var(--color-gold);
+  margin-left: 0.15rem;
+}
+
+/* --- Slide-Over Chapter Drawer & Backdrop --- */
+.journey-drawer-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(45, 2, 11, 0.62);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 10000;
+  display: flex;
+  justify-content: flex-end;
+  animation: fadeIn 0.25s ease;
+}
+
+.journey-drawer-panel {
+  width: 100%;
+  max-width: 440px;
+  height: 100%;
+  background: #FFFDF9;
+  border-left: 2px solid var(--color-gold);
+  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.35);
+  padding: 2rem 1.8rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  animation: drawerSlideIn 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+@keyframes drawerSlideIn {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+.drawer-handle-bar {
+  display: none;
+}
+
+.drawer-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.drawer-title-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.drawer-eyebrow {
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-saffron);
+  margin-bottom: 0.3rem;
+}
+
+.drawer-title {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: 1.45rem;
+  color: var(--color-maroon);
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 0.25rem;
+}
+
+.drawer-sub {
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+}
+
+.btn-drawer-close {
+  background: transparent;
+  border: 1px solid rgba(92, 6, 24, 0.2);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 1rem;
+  color: var(--color-maroon);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.btn-drawer-close:hover {
+  background: var(--color-maroon);
+  color: #FFE082;
+  border-color: var(--color-maroon);
+}
+
+.drawer-chapters-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  flex: 1;
+}
+
+.drawer-chapter-item {
+  background: #FAF5ED;
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: 14px;
+  padding: 0.9rem 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  width: 100%;
+}
+
+.drawer-chapter-item:hover {
+  background: #FFF;
+  border-color: var(--color-gold);
+  transform: translateX(4px);
+  box-shadow: 0 4px 14px rgba(92, 6, 24, 0.08);
+}
+
+.drawer-chapter-item.active {
+  background: var(--color-maroon);
+  border-color: var(--color-gold);
+  box-shadow: 0 6px 18px rgba(92, 6, 24, 0.2);
+}
+
+.drawer-item-left {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.drawer-item-num {
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-gold);
+  min-width: 26px;
+}
+
+.drawer-chapter-item.active .drawer-item-num {
+  color: #FFE082;
+}
+
+.drawer-item-center {
+  flex: 1;
+}
+
+.drawer-item-title {
+  font-family: var(--font-heading);
+  font-size: 0.98rem;
+  font-weight: 700;
+  color: var(--color-maroon);
+  margin-bottom: 0.15rem;
+}
+
+.drawer-chapter-item.active .drawer-item-title {
+  color: #FFFDF8;
+}
+
+.drawer-item-desc {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}
+
+.drawer-chapter-item.active .drawer-item-desc {
+  color: rgba(255, 253, 248, 0.82);
+}
+
+.drawer-arrow {
+  color: rgba(92, 6, 24, 0.4);
+  font-size: 0.85rem;
+  transition: transform 0.2s ease;
+}
+
+.drawer-chapter-item:hover .drawer-arrow {
+  color: var(--color-maroon);
+  transform: translateX(3px);
+}
+
+.drawer-active-badge {
+  background: rgba(212, 175, 55, 0.25);
+  border: 1px solid var(--color-gold);
+  color: #FFE082;
+  font-family: var(--font-heading);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+/* Mobile Drawer adjustments: opens from bottom */
+@media (max-width: 768px) {
+  .journey-drawer-backdrop {
+    align-items: flex-end;
+  }
+  .journey-drawer-panel {
+    max-width: 100%;
+    max-height: 85vh;
+    height: auto;
+    border-left: none;
+    border-top: 2px solid var(--color-gold);
+    border-radius: 24px 24px 0 0;
+    padding: 1.2rem 1.4rem 2.2rem 1.4rem;
+    animation: slideUp 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+  .drawer-handle-bar {
+    display: block;
+    width: 44px;
+    height: 4px;
+    border-radius: 999px;
+    background: rgba(212, 175, 55, 0.4);
+    margin: 0 auto 1.2rem auto;
+  }
+  .journey-quick-trigger-dock {
+    bottom: 1.5rem;
+    left: 1.2rem;
+    right: auto;
+  }
+}
+
+/* --- Tradition Overview Page Sections --- */
+.intro-compact-grid {
+  align-items: center;
+  margin-top: 1.5rem;
+}
+
+.intro-cta-wrapper {
+  margin-top: 1.8rem;
+}
+
+.btn-begin-journey-primary {
+  background: linear-gradient(135deg, var(--color-maroon) 0%, var(--color-maroon-dark) 100%);
+  color: #FFE082;
+  border: 1px solid var(--color-gold);
+  font-family: var(--font-heading);
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 0.85rem 1.8rem;
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  box-shadow: 0 8px 22px rgba(92, 6, 24, 0.25);
+  transition: all 0.3s ease;
+}
+
+.btn-begin-journey-primary:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(135deg, #D97706 0%, #B45309 100%);
+  color: #FFFDF8;
+  border-color: #FFA726;
+  box-shadow: 0 12px 28px rgba(217, 119, 6, 0.35);
+}
+
+/* --- "Explore the Journey" 7 Chapter Preview Cards Grid --- */
+.journey-chapters-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2.2rem;
+  margin-top: 2.4rem;
+}
+
+.journey-preview-card {
+  background: var(--color-ivory);
+  border: 1px solid rgba(212, 175, 55, 0.32);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 10px 28px rgba(92, 6, 24, 0.06);
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.journey-preview-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--color-gold);
+  box-shadow: 0 18px 40px rgba(92, 6, 24, 0.14);
+}
+
+.preview-card-media {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  background: #FFF7EC;
+}
+
+.preview-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform 0.6s ease;
+}
+
+.journey-preview-card:hover .preview-card-img {
+  transform: scale(1.06);
+}
+
+.preview-card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(45, 2, 11, 0.7) 100%);
+}
+
+.preview-chap-num {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: rgba(92, 6, 24, 0.9);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(212, 175, 55, 0.5);
+  color: #FFE082;
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  z-index: 2;
+}
+
+.preview-card-body {
+  padding: 1.8rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.preview-sub-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-saffron);
+  margin-bottom: 0.4rem;
+}
+
+.preview-chap-title {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: 1.45rem;
+  color: var(--color-maroon);
+  font-weight: 700;
+  margin-bottom: 0.65rem;
+}
+
+.preview-chap-desc {
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: var(--color-text-muted);
+  margin-bottom: 1.5rem;
+  flex: 1;
+}
+
+.preview-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(212, 175, 55, 0.22);
+}
+
+.preview-link-text {
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-maroon);
+  letter-spacing: 0.04em;
+  transition: color 0.25s ease;
+}
+
+.journey-preview-card:hover .preview-link-text {
+  color: #B45309;
+}
+
+.preview-arrow-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(212, 175, 55, 0.14);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  color: var(--color-maroon);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+}
+
+.journey-preview-card:hover .preview-arrow-circle {
+  background: var(--color-maroon);
+  color: #FFE082;
+  transform: translateX(3px);
+}
+
+/* --- Overview Featured Quote Section --- */
+.tradition-home-quote-section {
+  padding: 4.5rem 0;
+  position: relative;
+}
+
+.today-inspirational-quote-card {
+  max-width: 900px;
+  margin: 0 auto;
+  background: linear-gradient(145deg, #FFFDF8 0%, #FAF3E7 100%);
+  border: 1px solid rgba(212, 175, 55, 0.42);
+  border-radius: 24px;
+  padding: 3.5rem 3rem 3rem 3rem;
+  box-shadow: 0 16px 42px rgba(92, 6, 24, 0.08);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.today-inspirational-quote-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, transparent 0%, var(--color-gold) 50%, transparent 100%);
+}
+
+.quote-ornament-mark {
+  font-size: 2.5rem;
+  line-height: 1;
+  margin: 0 auto 1.2rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+}
+
+.quote-ornament-mark::before,
+.quote-ornament-mark::after {
+  content: "";
+  display: inline-block;
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.6));
+}
+
+.quote-ornament-mark::after {
+  background: linear-gradient(90deg, rgba(212, 175, 55, 0.6), transparent);
+}
+
+.overview-marathi-quote {
+  font-family: 'Yatra One', 'Marcellus', serif;
+  font-size: clamp(1.3rem, 2.4vw, 1.65rem);
+  color: var(--color-maroon);
+  margin: 0 auto 1.3rem auto;
+  line-height: 1.6;
+  text-align: center;
+  letter-spacing: 0.02em;
+  font-weight: 500;
+}
+
+.inspirational-quote-text {
+  font-family: 'Cormorant Garamond', 'Cinzel', serif;
+  font-size: clamp(1.2rem, 1.9vw, 1.48rem);
+  font-style: italic;
+  line-height: 1.85;
+  color: #4A121A;
+  max-width: 780px;
+  margin: 0 auto 1.6rem auto;
+  text-align: center;
+  border: none;
+  padding: 0;
+}
+
+.quote-author-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.quote-author-name {
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-saffron);
+}
+
+.quote-flourish-left,
+.quote-flourish-right {
+  color: var(--color-gold);
+  font-size: 0.9rem;
+}
+
+.overview-quote-btn-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-explore-abhang-mini {
+  background: #FFFDF8;
+  border: 1.5px solid rgba(212, 175, 55, 0.5);
+  color: var(--color-maroon);
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 0.75rem 1.8rem;
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  box-shadow: 0 4px 14px rgba(92, 6, 24, 0.06);
+  transition: all 0.25s ease;
+}
+
+.btn-explore-abhang-mini:hover {
+  background: var(--color-maroon);
+  color: #FFE082;
+  border-color: var(--color-maroon);
+  box-shadow: 0 8px 22px rgba(92, 6, 24, 0.2);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .today-inspirational-quote-card {
+    padding: 2.2rem 1.5rem 2rem 1.5rem;
+  }
+}
+
+/* --- Overview Bottom CTA --- */
+.overview-bottom-cta {
+  margin-top: 4.5rem;
+  padding: 3.5rem 2rem;
+  background: linear-gradient(180deg, #FBF6EE 0%, #F5EFEB 100%);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 24px;
+}
+
+.bottom-cta-heading {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+  color: var(--color-maroon);
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+}
+
+.bottom-cta-sub {
+  font-size: 1.05rem;
+  color: var(--color-text-muted);
+  max-width: 580px;
+  margin: 0 auto 2rem auto;
+}
+
+.btn-begin-journey-large {
+  background: linear-gradient(135deg, #D97706 0%, #B45309 100%);
+  color: #FFFDF8;
+  border: 1px solid #FFA726;
+  font-family: var(--font-heading);
+  font-size: 1.02rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 1rem 2.5rem;
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  box-shadow: 0 10px 30px rgba(217, 119, 6, 0.35);
+  transition: all 0.3s ease;
+}
+
+.btn-begin-journey-large:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 36px rgba(217, 119, 6, 0.5);
+  background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+}
+
+/* --- Dedicated Chapter Page Layout & Banner --- */
+.chapter-detail-page {
+  animation: fadeIn 0.4s ease;
+}
+
+.chapter-page-hero-banner {
+  background: linear-gradient(180deg, #5B0E16 0%, #3D040A 100%);
+  color: #FFFDF8;
+  padding: 4.5rem 0 2.2rem 0;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 3px solid var(--color-gold);
+}
+
+.chapter-page-hero-banner::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: radial-gradient(circle, rgba(212, 175, 55, 0.15) 1px, transparent 1px);
+  background-size: 24px 24px;
+  pointer-events: none;
+}
+
+.chapter-breadcrumb {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: #FFE082;
+  margin-bottom: 0.8rem;
+}
+
+.crumb-sep {
+  opacity: 0.5;
+}
+
+.crumb-active {
+  color: #FFA726;
+}
+
+.chapter-banner-title {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: clamp(2rem, 3.8vw, 3rem);
+  font-weight: 700;
+  color: #FFFDF8;
+  line-height: 1.2;
+  margin-bottom: 0.75rem;
+}
+
+.chapter-banner-desc {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  color: rgba(255, 253, 248, 0.85);
+  max-width: 720px;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+/* --- Chapter Footer Pagination Bar --- */
+.chapter-footer-nav {
+  margin-top: 2.5rem;
+  padding: 2rem 0;
+  background: linear-gradient(180deg, #FBF6EE 0%, #F5EFEB 100%);
+  border-top: 2px solid rgba(212, 175, 55, 0.35);
+}
+
+.chapter-footer-nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.nav-cell {
+  flex: 1;
+}
+
+.nav-cell.center-cell {
+  flex: none;
+  display: flex;
+  justify-content: center;
+}
+
+.nav-cell.next-cell {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-chapter-pagination {
+  background: #FFFDF8;
+  border: 1px solid rgba(212, 175, 55, 0.38);
+  border-radius: 14px;
+  padding: 0.85rem 1.4rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 6px 18px rgba(92, 6, 24, 0.05);
+  transition: all 0.3s ease;
+  max-width: 320px;
+}
+
+.btn-chapter-pagination:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-gold);
+  box-shadow: 0 10px 24px rgba(92, 6, 24, 0.12);
+  background: #FFFFFF;
+}
+
+.pagination-arrow-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--color-maroon);
+  color: #FFE082;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+  transition: transform 0.25s ease;
+}
+
+.btn-chapter-pagination.prev:hover .pagination-arrow-circle {
+  transform: translateX(-3px);
+}
+
+.btn-chapter-pagination.next:hover .pagination-arrow-circle {
+  transform: translateX(3px);
+}
+
+.pagination-text-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.pagination-sub {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-saffron);
+  font-weight: 700;
+  margin-bottom: 0.15rem;
+}
+
+.pagination-title {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-maroon);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+.btn-back-to-tradition-overview {
+  background: transparent;
+  border: 1px solid rgba(92, 6, 24, 0.25);
+  color: var(--color-maroon);
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 0.75rem 1.4rem;
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  transition: all 0.25s ease;
+}
+
+.btn-back-to-tradition-overview:hover {
+  background: var(--color-maroon);
+  color: #FFE082;
+  border-color: var(--color-maroon);
+}
+
+@media (max-width: 768px) {
+  .chapter-footer-nav-inner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+  .nav-cell.next-cell {
+    justify-content: stretch;
+  }
+  .btn-chapter-pagination {
+    max-width: 100%;
+    width: 100%;
+    justify-content: space-between;
+  }
+  .pagination-title {
+    max-width: none;
+  }
+}
+
+/* ================================================================= */
+/* DIGITAL MUSEUM TRADITION CHAPTER ENHANCEMENTS                      */
+/* ================================================================= */
+
+/* --- 1. Subtle Paper / Manuscript Background on Chapter Pages --- */
+.chapter-detail-page {
+  position: relative;
+  background-color: #FDFBF7;
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(212, 175, 55, 0.035) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(92, 6, 24, 0.025) 0%, transparent 45%),
+    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23B8860B' fill-opacity='0.02' fill-rule='evenodd'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* --- 2. Museum Flourishes & Dividers --- */
+.museum-flourish-separator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin: 3.5rem auto;
+  max-width: 600px;
+}
+
+.flourish-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(212, 175, 55, 0.4), transparent);
+}
+
+.flourish-symbol {
+  font-family: 'Marcellus', 'Cinzel', serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #B45309;
+  letter-spacing: 0.15em;
+  padding: 0.25rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(255, 126, 21, 0.06);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+}
+
+/* --- 3. Full-Width Quote Banners --- */
+.museum-fullwidth-quote-banner {
+  position: relative;
+  width: 100%;
+  margin: 3.5rem 0;
+  padding: 3rem 4rem;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #FAF4E6 0%, #F5ECDA 100%);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  box-shadow: 0 12px 35px rgba(92, 6, 24, 0.05), inset 0 0 50px rgba(212, 175, 55, 0.06);
+  text-align: center;
+  overflow: hidden;
+}
+
+.quote-ornamental-mark {
+  position: absolute;
+  font-family: 'Cinzel Decorative', Georgia, serif;
+  font-size: 5rem;
+  color: rgba(212, 175, 55, 0.22);
+  line-height: 1;
+  pointer-events: none;
+}
+
+.quote-ornamental-mark.left {
+  top: 15px;
+  left: 20px;
+}
+
+.quote-ornamental-mark.right {
+  bottom: -15px;
+  right: 25px;
+}
+
+.quote-verse-text {
+  font-family: 'Yatra One', 'Marcellus', serif;
+  font-size: clamp(1.25rem, 2.2vw, 1.65rem);
+  color: #3E060E;
+  line-height: 1.65;
+  margin: 0 0 1.2rem 0;
+  letter-spacing: 0.03em;
+}
+
+.quote-verse-translation {
+  font-family: var(--font-body, 'Crimson Text', serif);
+  font-size: 1.15rem;
+  font-style: italic;
+  color: #554433;
+  line-height: 1.7;
+  max-width: 820px;
+  margin: 0 auto 1.4rem auto;
+}
+
+.quote-author-tag {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.quote-author-tag .author-name {
+  font-family: var(--font-heading, 'Cinzel', serif);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-maroon);
+  letter-spacing: 0.08em;
+}
+
+.quote-author-tag .author-work {
+  font-size: 0.8rem;
+  color: #B45309;
+  letter-spacing: 0.05em;
+}
+
+/* --- 4. Chapter 1 (Origins) Exhibits & Stats Strip --- */
+.origins-editorial-grid {
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.exhibit-mini-label {
+  font-family: var(--font-heading, 'Cinzel', serif);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-saffron);
+  display: block;
+  margin-bottom: 0.6rem;
+}
+
+.exhibit-story-title {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: clamp(1.6rem, 2.4vw, 2.2rem);
+  color: var(--color-maroon);
+  margin-bottom: 1rem;
+  line-height: 1.25;
+}
+
+.story-key-takeaway {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  background: rgba(212, 175, 55, 0.09);
+  border-left: 3px solid #D4AF37;
+  padding: 1rem 1.3rem;
+  border-radius: 0 12px 12px 0;
+  margin-top: 1.5rem;
+}
+
+.takeaway-icon {
+  font-size: 1.25rem;
+  color: #B45309;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.takeaway-text {
+  font-family: var(--font-body);
+  font-size: 0.98rem;
+  line-height: 1.55;
+  color: #4A3525;
+}
+
+/* Framed Artwork with Gold Corner Ornaments */
+.museum-framed-artwork {
+  position: relative;
+  padding: 8px;
+  background: #FFFDF8;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  border-radius: 16px;
+  box-shadow: 0 12px 35px rgba(92, 6, 24, 0.09);
+}
+
+.frame-corner-ornament {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border: 2px solid #D4AF37;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.frame-corner-ornament.top-left { top: 4px; left: 4px; border-right: none; border-bottom: none; }
+.frame-corner-ornament.top-right { top: 4px; right: 4px; border-left: none; border-bottom: none; }
+.frame-corner-ornament.bottom-left { bottom: 4px; left: 4px; border-right: none; border-top: none; }
+.frame-corner-ornament.bottom-right { bottom: 4px; right: 4px; border-left: none; border-top: none; }
+
+.artwork-museum-caption {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.8rem 0.5rem 0.3rem 0.5rem;
+}
+
+.artwork-museum-caption .caption-badge {
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-maroon);
+}
+
+.artwork-museum-caption .caption-detail {
+  font-size: 0.86rem;
+  color: #6A5B4D;
+  line-height: 1.4;
+}
+
+/* Stats Strip */
+.origins-stats-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin: 3rem 0;
+}
+
+.museum-stat-card {
+  position: relative;
+  background: #FFFDF8;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 16px;
+  padding: 1.8rem 1.4rem;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(92, 6, 24, 0.04);
+  transition: all 0.35s ease;
+}
+
+.museum-stat-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-gold);
+  box-shadow: 0 14px 32px rgba(92, 6, 24, 0.1);
+}
+
+.stat-card-top-ornament {
+  width: 32px;
+  height: 2px;
+  background: var(--color-gold);
+  margin: 0 auto 1rem auto;
+  border-radius: 999px;
+}
+
+.stat-num-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 3px;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.stat-num-row .stat-num {
+  font-family: 'Cinzel Decorative', Georgia, serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--color-maroon);
+}
+
+.stat-num-row .stat-suffix {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #B45309;
+}
+
+.museum-stat-card .stat-label {
+  font-family: var(--font-heading);
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #2D020B;
+  margin-bottom: 0.5rem;
+}
+
+.museum-stat-card .stat-explainer {
+  font-size: 0.88rem;
+  color: #6C5D4F;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Artifact Showcase Grid */
+.museum-artifact-showcase-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  margin: 2.5rem 0;
+}
+
+.artifact-display-card {
+  position: relative;
+  background: linear-gradient(145deg, #FFFDF9 0%, #F9F5EC 100%);
+  border: 1px solid rgba(212, 175, 55, 0.38);
+  border-radius: 18px;
+  padding: 2.2rem 2rem;
+  box-shadow: 0 10px 28px rgba(92, 6, 24, 0.05);
+  transition: all 0.35s ease;
+}
+
+.artifact-display-card:hover {
+  transform: translateY(-3px);
+  border-color: #D4AF37;
+  box-shadow: 0 16px 36px rgba(92, 6, 24, 0.1);
+}
+
+.artifact-badge-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.2rem;
+}
+
+.artifact-badge {
+  font-family: var(--font-heading);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-maroon);
+  padding: 0.25rem 0.75rem;
+  background: rgba(92, 6, 24, 0.06);
+  border-radius: 999px;
+}
+
+.artifact-badge.saffron {
+  color: #B45309;
+  background: rgba(255, 126, 21, 0.1);
+}
+
+.artifact-code {
+  font-family: monospace;
+  font-size: 0.72rem;
+  color: #8C7864;
+  letter-spacing: 0.08em;
+}
+
+.artifact-icon-wrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(212, 175, 55, 0.15);
+  color: #9A6B0A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  margin-bottom: 1.2rem;
+}
+
+.artifact-title {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--color-maroon);
+  margin-bottom: 0.9rem;
+}
+
+.artifact-text {
+  font-family: var(--font-body);
+  font-size: 1.02rem;
+  line-height: 1.65;
+  color: #4A3A2C;
+  margin-bottom: 1.2rem;
+}
+
+.artifact-curator-note {
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: #6B5542;
+  background: rgba(212, 175, 55, 0.08);
+  padding: 0.9rem 1.1rem;
+  border-radius: 10px;
+  border-left: 2px solid #D4AF37;
+}
+
+.artifact-quote-small {
+  font-family: 'Marcellus', 'Yatra One', serif;
+  font-size: 1.08rem;
+  color: #B45309;
+  margin: 0.8rem 0;
+}
+
+.artifact-text-secondary {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #6C5B4E;
+  margin: 0;
+}
+
+/* --- 5. Chapter 2 (Lord Shiva - Himalayan Atmosphere) --- */
+.chapter-museum-shiva {
+  background: linear-gradient(180deg, #FAF7F2 0%, #F0EBE3 100%);
+}
+
+.shiva-tag {
+  background: rgba(43, 76, 102, 0.1) !important;
+  color: #1E3A5F !important;
+  border-color: rgba(43, 76, 102, 0.3) !important;
+}
+
+.shiva-gold-heading {
+  color: #24141E !important;
+}
+
+.shiva-stone-frame {
+  border-color: rgba(43, 76, 102, 0.35) !important;
+  box-shadow: 0 14px 40px rgba(15, 30, 45, 0.15) !important;
+}
+
+.frame-corner-ornament.shiva {
+  border-color: #386082 !important;
+}
+
+.shiva-himalayan-quote {
+  background: linear-gradient(135deg, #18222E 0%, #2A1724 100%) !important;
+  border-color: rgba(212, 175, 55, 0.5) !important;
+  color: #FFFDF8 !important;
+}
+
+.shiva-himalayan-quote .quote-verse-text {
+  color: #FFE082 !important;
+}
+
+.shiva-himalayan-quote .quote-verse-translation {
+  color: rgba(255, 253, 248, 0.88) !important;
+}
+
+.shiva-himalayan-quote .author-name {
+  color: #F8F5EE !important;
+}
+
+.shiva-card-theme {
+  border-color: rgba(43, 76, 102, 0.28) !important;
+}
+
+/* --- 6. Chapter 3 (Saints) Temple of Bhakti & Gallery --- */
+.temple-of-bhakti-banner {
+  background: linear-gradient(135deg, #FAF3E6 0%, #F5ECDB 100%);
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  border-radius: 20px;
+  padding: 2.5rem 2rem;
+  margin: 2.5rem 0 3.5rem 0;
+  box-shadow: 0 10px 30px rgba(92, 6, 24, 0.05);
+}
+
+.temple-banner-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.temple-mini-tag {
+  font-family: var(--font-heading);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #B45309;
+}
+
+.temple-title {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: clamp(1.5rem, 2.4vw, 2.1rem);
+  color: var(--color-maroon);
+  margin: 0.4rem 0 0.5rem 0;
+}
+
+.temple-sub {
+  font-size: 1.05rem;
+  color: #6C5B4C;
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.temple-pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem;
+}
+
+.temple-pillar-item {
+  background: #FFFDF8;
+  border: 1px solid rgba(212, 175, 55, 0.32);
+  border-radius: 14px;
+  padding: 1.4rem 1.2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.temple-pillar-item:hover {
+  transform: translateY(-3px);
+  border-color: var(--color-gold);
+  box-shadow: 0 10px 24px rgba(92, 6, 24, 0.08);
+}
+
+.temple-pillar-item.highlight {
+  border-color: #D4AF37;
+  background: linear-gradient(145deg, #FFFDF8 0%, #FFF8E7 100%);
+}
+
+.pillar-stage {
+  font-family: var(--font-heading);
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-maroon);
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
+.pillar-stage.gold {
+  color: #B45309;
+}
+
+.pillar-saint {
+  font-family: 'Marcellus', 'Cinzel', serif;
+  font-size: 1.15rem;
+  color: #2D020B;
+  margin-bottom: 0.5rem;
+}
+
+.pillar-desc {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: #5C4D3E;
+  margin: 0;
+}
+
+/* Interactive Saint Showcase */
+.saints-interactive-showcase {
+  margin: 3.5rem 0;
+}
+
+.showcase-nav-row {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+}
+
+.saint-tab-btn {
+  background: #FFFDF8;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 999px;
+  padding: 0.5rem 1.4rem 0.5rem 0.6rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.saint-tab-btn:hover,
+.saint-tab-btn.active {
+  background: var(--color-maroon);
+  border-color: var(--color-gold);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(92, 6, 24, 0.2);
+}
+
+.tab-thumb-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--color-gold);
+  flex-shrink: 0;
+}
+
+.tab-thumb-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tab-label-wrap {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.tab-saint-name {
+  font-family: var(--font-heading);
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--color-maroon);
+}
+
+.tab-saint-era {
+  font-size: 0.72rem;
+  color: #8C7864;
+}
+
+.saint-tab-btn.active .tab-saint-name {
+  color: #FFE082;
+}
+
+.saint-tab-btn.active .tab-saint-era {
+  color: rgba(255, 253, 248, 0.8);
+}
+
+/* Active Saint Spotlight Exhibit */
+.saint-spotlight-display {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 3rem;
+  align-items: center;
+  background: #FFFDF8;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  border-radius: 24px;
+  padding: 2.5rem 3rem;
+  box-shadow: 0 16px 40px rgba(92, 6, 24, 0.08);
+}
+
+.halo-portrait-wrapper {
+  position: relative;
+  width: 280px;
+  height: 350px;
+  border-radius: 20px;
+  overflow: hidden;
+  margin: 0 auto;
+  border: 3px solid rgba(212, 175, 55, 0.6);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.saint-golden-halo {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 224, 130, 0.6) 0%, rgba(212, 175, 55, 0) 70%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.saint-halo-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: relative;
+  z-index: 1;
+}
+
+.portrait-accession-tag {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0.8rem;
+  background: linear-gradient(to top, rgba(20, 2, 4, 0.9) 0%, transparent 100%);
+  text-align: center;
+  color: #FFE082;
+  font-family: 'Marcellus', serif;
+  font-size: 1rem;
+  z-index: 3;
+}
+
+.spotlight-era-badge {
+  display: inline-block;
+  font-family: var(--font-heading);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #B45309;
+  background: rgba(255, 126, 21, 0.08);
+  padding: 0.25rem 0.8rem;
+  border-radius: 999px;
+  margin-bottom: 0.5rem;
+}
+
+.spotlight-saint-title {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: 2.1rem;
+  color: var(--color-maroon);
+  margin: 0 0 0.4rem 0;
+}
+
+.spotlight-role {
+  font-family: var(--font-heading);
+  font-size: 0.92rem;
+  color: #6C5B4C;
+  display: block;
+}
+
+.spotlight-divider {
+  width: 60px;
+  height: 2px;
+  background: var(--color-gold);
+  margin: 1.2rem 0;
+}
+
+.spotlight-philosophy {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #4A3A2C;
+  margin-bottom: 1.5rem;
+}
+
+.spotlight-quote-box {
+  background: rgba(212, 175, 55, 0.08);
+  border-left: 3px solid #D4AF37;
+  padding: 1.2rem 1.5rem;
+  border-radius: 0 14px 14px 0;
+  margin-bottom: 1.5rem;
+}
+
+.quote-marathi {
+  font-family: 'Yatra One', 'Marcellus', serif;
+  font-size: 1.15rem;
+  color: #2D020B;
+  margin-bottom: 0.4rem;
+}
+
+.quote-english {
+  font-size: 0.96rem;
+  font-style: italic;
+  color: #5C4D3E;
+  line-height: 1.55;
+}
+
+.spotlight-masterpiece-row {
+  font-size: 0.92rem;
+  color: #5C4D3E;
+}
+
+.spotlight-masterpiece-row .label {
+  font-weight: 700;
+  color: var(--color-maroon);
+  margin-right: 0.5rem;
+}
+
+/* Vocational Saints */
+.vocational-saints-section {
+  margin: 4.5rem 0 3.5rem 0;
+}
+
+.vocational-header {
+  margin-bottom: 2.5rem;
+}
+
+.vocational-badge {
+  font-family: var(--font-heading);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-saffron);
+}
+
+.vocational-title {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: clamp(1.6rem, 2.4vw, 2.2rem);
+  color: var(--color-maroon);
+  margin: 0.5rem 0 0.6rem 0;
+}
+
+.vocational-sub {
+  font-size: 1.05rem;
+  color: #6C5B4C;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.vocational-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.vocation-saint-card {
+  background: #FFFDF8;
+  border: 1px solid rgba(212, 175, 55, 0.32);
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 22px rgba(92, 6, 24, 0.04);
+  transition: all 0.3s ease;
+}
+
+.vocation-saint-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--color-gold);
+  box-shadow: 0 12px 28px rgba(92, 6, 24, 0.09);
+}
+
+.vocation-card-top {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.vocation-img-circle {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--color-gold);
+  flex-shrink: 0;
+}
+
+.vocation-img-circle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.v-name {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-maroon);
+  margin: 0 0 0.15rem 0;
+}
+
+.v-marathi {
+  font-family: 'Marcellus', serif;
+  font-size: 0.8rem;
+  color: #B45309;
+  display: block;
+}
+
+.v-tag {
+  font-size: 0.74rem;
+  color: #7A6958;
+}
+
+.v-note {
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: #4C3C2E;
+  margin: 0;
+}
+
+/* Pasaydan Banner */
+.pasaydan-banner {
+  background: linear-gradient(135deg, #2D020B 0%, #1A0106 100%) !important;
+  color: #FFFDF8 !important;
+  border-color: #D4AF37 !important;
+}
+
+.pasaydan-pre {
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #FFC64F;
+  display: block;
+  margin-bottom: 0.8rem;
+}
+
+.pasaydan-text {
+  color: #FFFDF8 !important;
+}
+
+.pasaydan-banner .quote-verse-translation {
+  color: rgba(255, 253, 248, 0.88) !important;
+}
+
+.pasaydan-banner .author-name {
+  color: #FFE082 !important;
+}
+
+.pasaydan-banner .author-work {
+  color: rgba(255, 224, 130, 0.75) !important;
+}
+
+/* --- 7. Chapter 4 (Palkhi) Sacred Emblems & Haibat Baba Protocol --- */
+.sacred-emblems-section {
+  margin: 2.5rem 0 3.5rem 0;
+}
+
+.emblems-header {
+  margin-bottom: 2rem;
+}
+
+.emblems-badge {
+  font-family: var(--font-heading);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-saffron);
+}
+
+.emblems-title {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: clamp(1.5rem, 2.4vw, 2.1rem);
+  color: var(--color-maroon);
+  margin: 0.4rem 0 0 0;
+}
+
+.sacred-emblems-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+
+.emblem-card {
+  background: #FFFDF8;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 18px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(92, 6, 24, 0.04);
+  transition: all 0.3s ease;
+}
+
+.emblem-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-gold);
+  box-shadow: 0 14px 32px rgba(92, 6, 24, 0.1);
+}
+
+.emblem-icon-ring {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: rgba(92, 6, 24, 0.08);
+  color: var(--color-maroon);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  margin: 0 auto 1.2rem auto;
+}
+
+.emblem-icon-ring.saffron { background: rgba(255, 126, 21, 0.12); color: #B45309; }
+.emblem-icon-ring.green { background: rgba(46, 125, 50, 0.12); color: #2E7D32; }
+.emblem-icon-ring.gold { background: rgba(212, 175, 55, 0.18); color: #9A6B0A; }
+
+.emblem-name {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: 1.15rem;
+  color: var(--color-maroon);
+  margin: 0 0 0.25rem 0;
+}
+
+.emblem-subtitle {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #8C7864;
+  display: block;
+  margin-bottom: 0.8rem;
+}
+
+.emblem-desc {
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: #554433;
+  margin: 0;
+}
+
+/* Haibat Baba Protocol Block */
+.haibatbaba-protocol-block {
+  background: linear-gradient(145deg, #FFFDF9 0%, #F8F3E8 100%);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  border-radius: 22px;
+  padding: 3rem;
+  margin: 3.5rem 0;
+  box-shadow: 0 12px 36px rgba(92, 6, 24, 0.06);
+}
+
+.protocol-inner-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.protocol-badge {
+  font-family: var(--font-heading);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-maroon);
+}
+
+.protocol-title {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: 2rem;
+  color: var(--color-maroon);
+  margin: 0.5rem 0 1.2rem 0;
+}
+
+.protocol-text {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #4A3A2C;
+  margin-bottom: 1rem;
+}
+
+.protocol-features-list {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.protocol-features-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: #4A3A2C;
+}
+
+.protocol-features-list li i {
+  color: #B45309;
+  font-size: 1.05rem;
+  margin-top: 3px;
+  flex-shrink: 0;
+}
+
+.ringan-ceremony-card {
+  background: linear-gradient(135deg, #2D020B 0%, #1A0106 100%);
+  color: #FFFDF8;
+  border: 1px solid #D4AF37;
+  border-radius: 18px;
+  padding: 2.2rem 2rem;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.2);
+}
+
+.ringan-badge {
+  font-family: var(--font-heading);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #FFE082;
+  margin-bottom: 0.5rem;
+}
+
+.ringan-title {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: 1.45rem;
+  color: #FFFDF8;
+  margin: 0 0 1rem 0;
+}
+
+.ringan-p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: rgba(255, 253, 248, 0.85);
+  margin-bottom: 1.2rem;
+}
+
+.ringan-highlight-box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.ringan-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+}
+
+.ringan-step .step-num {
+  font-family: monospace;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #FFE082;
+  background: rgba(212, 175, 55, 0.2);
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.ringan-step p {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: rgba(255, 253, 248, 0.9);
+  margin: 0;
+}
+
+/* --- 8. Chapter 6 (Abhang) Acoustics & Manuscript Switcher --- */
+.dindi-acoustics-section {
+  margin: 2.5rem 0 3.5rem 0;
+}
+
+.acoustics-header {
+  margin-bottom: 2rem;
+}
+
+.acoustics-badge {
+  font-family: var(--font-heading);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #B45309;
+}
+
+.acoustics-title {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: clamp(1.5rem, 2.4vw, 2.1rem);
+  color: var(--color-maroon);
+  margin: 0.4rem 0 0.5rem 0;
+}
+
+.acoustics-sub {
+  font-size: 1.05rem;
+  color: #6C5B4C;
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.acoustics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.acoustic-item {
+  background: #FFFDF8;
+  border: 1px solid rgba(212, 175, 55, 0.32);
+  border-radius: 16px;
+  padding: 1.8rem 1.4rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.acoustic-item:hover {
+  transform: translateY(-3px);
+  border-color: var(--color-gold);
+  box-shadow: 0 10px 26px rgba(92, 6, 24, 0.08);
+}
+
+.acoustic-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(212, 175, 55, 0.15);
+  color: #B45309;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  margin: 0 auto 1rem auto;
+}
+
+.acoustic-name {
+  font-family: 'Marcellus', 'Cinzel', serif;
+  font-size: 1.15rem;
+  color: var(--color-maroon);
+  margin: 0 0 0.2rem 0;
+}
+
+.acoustic-role {
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #8C7864;
+  display: block;
+  margin-bottom: 0.6rem;
+}
+
+.acoustic-desc {
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: #554433;
+  margin: 0;
+}
+
+/* Abhang Switcher Buttons */
+.abhang-selector-row {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.abhang-select-btn {
+  background: #FFFDF8;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  border-radius: 999px;
+  padding: 0.6rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.abhang-select-btn:hover,
+.abhang-select-btn.active {
+  background: var(--color-maroon);
+  border-color: var(--color-gold);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(92, 6, 24, 0.18);
+}
+
+.abhang-select-btn .btn-saint {
+  font-size: 0.74rem;
+  color: #B45309;
+  letter-spacing: 0.05em;
+}
+
+.abhang-select-btn .btn-title {
+  font-family: var(--font-heading);
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--color-maroon);
+}
+
+.abhang-select-btn.active .btn-saint {
+  color: #FFE082;
+}
+
+.abhang-select-btn.active .btn-title {
+  color: #FFFDF8;
+}
+
+/* Ovi Metric Callout Block */
+.ovi-metric-callout-block {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  background: linear-gradient(135deg, #FAF4E8 0%, #F5ECDB 100%);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  border-radius: 18px;
+  padding: 2rem 2.4rem;
+  margin: 3.5rem 0;
+  box-shadow: 0 10px 28px rgba(92, 6, 24, 0.04);
+}
+
+.ovi-icon-wrap {
+  font-size: 2.2rem;
+  color: #B45309;
+  flex-shrink: 0;
+}
+
+.ovi-title {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: 1.35rem;
+  color: var(--color-maroon);
+  margin: 0 0 0.6rem 0;
+}
+
+.ovi-desc {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #4A3A2C;
+  margin: 0;
+}
+
+/* --- 9. Chapter 7 (Legacy) Modern Dimensions Grid --- */
+.modern-dimensions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.8rem;
+  margin: 3.5rem 0 2rem 0;
+}
+
+.modern-dim-card {
+  background: #FFFDF8;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 18px;
+  padding: 2.2rem 1.8rem;
+  box-shadow: 0 8px 26px rgba(92, 6, 24, 0.04);
+  transition: all 0.3s ease;
+}
+
+.modern-dim-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-gold);
+  box-shadow: 0 14px 34px rgba(92, 6, 24, 0.1);
+}
+
+.dim-icon-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  margin-bottom: 1.2rem;
+}
+
+.dim-icon-circle.green { background: rgba(46, 125, 50, 0.12); color: #2E7D32; }
+.dim-icon-circle.blue { background: rgba(25, 118, 210, 0.12); color: #1976D2; }
+.dim-icon-circle.gold { background: rgba(212, 175, 55, 0.18); color: #B45309; }
+
+.dim-title {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: 1.2rem;
+  color: var(--color-maroon);
+  margin-bottom: 0.75rem;
+}
+
+.dim-desc {
+  font-family: var(--font-body);
+  font-size: 0.98rem;
+  line-height: 1.65;
+  color: #4A3A2C;
+  margin: 0;
+}
+
+/* --- 10. Responsive Adjustments for Mobile & Tablets --- */
+@media (max-width: 960px) {
+  .saint-spotlight-display {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding: 2rem;
+  }
+  .spotlight-divider {
+    margin: 1.2rem auto;
+  }
+  .protocol-inner-grid {
+    grid-template-columns: 1fr;
+  }
+  .museum-fullwidth-quote-banner {
+    padding: 2.5rem 1.8rem;
+  }
+  .quote-ornamental-mark {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .haibatbaba-protocol-block {
+    padding: 1.8rem 1.4rem;
+  }
+  .ovi-metric-callout-block {
+    flex-direction: column;
+    padding: 1.5rem;
+  }
+  .origins-stats-strip {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+}
+
+/* ================================================================= */
+/* CHAPTER 01: ORIGINS OF THE WARI (AUTHENTIC EDITORIAL LAYOUT)       */
+/* ================================================================= */
+
+.chapter-origins-editorial {
+  position: relative;
+  padding-top: 1.8rem;
+  padding-bottom: 2.2rem;
+  background-color: #FDFBF7;
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(212, 175, 55, 0.03) 0%, transparent 20%),
+    radial-gradient(circle at 90% 80%, rgba(180, 83, 9, 0.025) 0%, transparent 25%);
+  overflow: hidden;
+}
+
+/* Subtle Faded Heritage Margin Watermarks (Opacity ~3.5%) */
+.editorial-margin-watermark {
+  position: absolute;
+  top: 6%;
+  bottom: 6%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  opacity: 0.035;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+  color: var(--color-maroon);
+}
+
+.editorial-margin-watermark.left {
+  left: 24px;
+}
+
+.editorial-margin-watermark.right {
+  right: 24px;
+}
+
+.watermark-flower,
+.watermark-tilak {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.watermark-motif {
+  font-family: 'Marcellus', 'Cinzel', serif;
+  writing-mode: vertical-rl;
+  letter-spacing: 0.3em;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.watermark-rule {
+  width: 1px;
+  flex: 1;
+  background: currentColor;
+  margin: 1.2rem 0;
+}
+
+.watermark-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: currentColor;
+  margin: 6px 0;
+}
+
+@media (max-width: 1100px) {
+  .editorial-margin-watermark {
+    display: none;
+  }
+}
+
+.origins-header-block {
+  margin-bottom: 1.8rem;
+  position: relative;
+  z-index: 1;
+}
+
+.chapter-badge-pill {
+  display: inline-block;
+  font-family: var(--font-heading, 'Cinzel', serif);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-saffron);
+  background: rgba(255, 126, 21, 0.08);
+  border: 1px solid rgba(255, 126, 21, 0.3);
+  border-radius: 999px;
+  padding: 0.25rem 1rem;
+  margin-bottom: 0.6rem;
+}
+
+/* 1. Historical Foundation: Unified Spread Component */
+.origins-foundation-spread {
+  position: relative;
+  background: #FFFDF9;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 18px;
+  padding: 1.6rem 1.8rem;
+  box-shadow: 0 10px 30px rgba(92, 6, 24, 0.05);
+  z-index: 1;
+  overflow: hidden;
+}
+
+.foundation-spread-corner {
+  position: absolute;
+  color: rgba(212, 175, 55, 0.55);
+  font-size: 1.15rem;
+  pointer-events: none;
+  line-height: 1;
+}
+
+.foundation-spread-corner.tl { top: 8px; left: 10px; }
+.foundation-spread-corner.tr { top: 8px; right: 10px; }
+.foundation-spread-corner.bl { bottom: 8px; left: 10px; }
+.foundation-spread-corner.br { bottom: 8px; right: 10px; }
+
+.foundation-content-grid {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 2.2rem;
+  align-items: center;
+}
+
+.origins-section-label {
+  font-family: var(--font-heading, 'Cinzel', serif);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-maroon);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.origins-lead-text {
+  font-family: var(--font-body, 'Crimson Text', serif);
+  font-size: 1.22rem;
+  font-weight: 400;
+  line-height: 1.8;
+  color: #38020A;
+  margin: 0 0 1rem 0;
+}
+
+.foundation-era-inline-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.14) 0%, rgba(255, 238, 187, 0.28) 100%);
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  border-radius: 999px;
+  padding: 0.35rem 1rem;
+}
+
+.era-badge-dot {
+  color: #B45309;
+  font-size: 0.65rem;
+}
+
+.era-badge-text {
+  font-family: var(--font-heading, 'Cinzel', serif);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--color-maroon);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.foundation-image-blend-wrapper {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(92, 6, 24, 0.1);
+  background: #F4EAD4;
+}
+
+.foundation-blend-img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 11;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.foundation-blend-img:hover {
+  transform: scale(1.02);
+}
+
+.blend-gold-border {
+  position: absolute;
+  inset: 0;
+  border: 1.5px solid rgba(212, 175, 55, 0.4);
+  border-radius: 12px;
+  pointer-events: none;
+}
+
+/* Decorative Separators */
+.origins-decorative-separator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+  margin: 2.2rem auto;
+  max-width: 600px;
+  z-index: 1;
+  position: relative;
+}
+
+.separator-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(212, 175, 55, 0.45), transparent);
+}
+
+.separator-motif {
+  font-family: 'Marcellus', 'Yatra One', serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #B45309;
+  letter-spacing: 0.12em;
+  padding: 0.2rem 0.8rem;
+  border-radius: 999px;
+  background: rgba(255, 126, 21, 0.06);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+}
+
+/* 2. The Keepers of the Tradition (Side-by-side Parchment Cards) */
+.keepers-section {
+  margin-bottom: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.keepers-header {
+  margin-bottom: 1.5rem;
+}
+
+.keepers-section-title {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--color-maroon);
+  margin: 0.2rem 0 0.6rem 0;
+  letter-spacing: 0.04em;
+}
+
+.divider-split-gold.mini {
+  max-width: 100px;
+  margin: 0 auto;
+}
+
+.keepers-profile-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.8rem;
+}
+
+.saint-profile-card.parchment-card {
+  background: linear-gradient(145deg, #FFFDF9 0%, #F9F3E7 100%);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  border-radius: 16px;
+  padding: 1.6rem 1.6rem;
+  box-shadow: 0 8px 24px rgba(92, 6, 24, 0.05);
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.saint-profile-card.parchment-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #D4AF37, #B45309, #D4AF37);
+  opacity: 0.85;
+}
+
+.saint-profile-card.parchment-card:hover {
+  transform: translateY(-2px);
+  border-color: #D4AF37;
+  box-shadow: 0 14px 34px rgba(92, 6, 24, 0.09);
+}
+
+.card-corner-ornament {
+  position: absolute;
+  color: rgba(212, 175, 55, 0.5);
+  font-size: 0.95rem;
+  pointer-events: none;
+  line-height: 1;
+}
+
+.card-corner-ornament.tl { top: 6px; left: 8px; }
+.card-corner-ornament.tr { top: 6px; right: 8px; }
+
+.profile-card-top {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  margin-bottom: 1.1rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.22);
+}
+
+.profile-avatar-frame {
+  position: relative;
+  width: 66px;
+  height: 66px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(92, 6, 24, 0.15);
+  background: #F4EAD4;
+}
+
+.profile-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.avatar-gold-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid #D4AF37;
+  pointer-events: none;
+}
+
+.profile-identity {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-saint-name {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--color-maroon);
+  margin: 0;
+  line-height: 1.25;
+}
+
+.profile-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  flex-grow: 1;
+}
+
+.profile-point {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+}
+
+.point-bullet-ornament {
+  color: #B45309;
+  font-size: 0.85rem;
+  line-height: 1.7;
+  flex-shrink: 0;
+}
+
+.profile-point-text {
+  font-family: var(--font-body, 'Crimson Text', serif);
+  font-size: 1.12rem;
+  line-height: 1.7;
+  color: #38020A;
+  margin: 0;
+}
+
+/* 3. The Legacy Section: Horizontal Visual Timeline */
+.origins-legacy-section {
+  margin-top: 1.5rem;
+  padding: 1.5rem 0 1rem 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* Faded Background Motifs (2-3% Opacity) */
+.legacy-faded-bg-motifs {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+  max-width: 950px;
+  pointer-events: none;
+  user-select: none;
+  opacity: 0.028;
+  z-index: -1;
+  color: var(--color-maroon);
+}
+
+.faded-tilak-symbol {
+  font-family: 'Marcellus', 'Yatra One', serif;
+  font-size: 14rem;
+  line-height: 1;
+}
+
+.faded-mandala-circle {
+  font-size: 16rem;
+  line-height: 1;
+}
+
+.legacy-header {
+  margin-bottom: 1.2rem;
+}
+
+.legacy-section-title {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: clamp(1.7rem, 2.5vw, 2.2rem);
+  font-weight: 700;
+  color: var(--color-maroon);
+  margin: 0.3rem 0 0.5rem 0;
+  letter-spacing: 0.04em;
+}
+
+.legacy-description-wrap {
+  max-width: 880px;
+  margin: 0 auto 1.8rem auto;
+  padding: 0 1rem;
+}
+
+.legacy-editorial-text {
+  font-family: var(--font-body, 'Crimson Text', serif);
+  font-size: 1.25rem;
+  line-height: 1.85;
+  color: #38020A;
+  margin: 0;
+}
+
+/* Decorative Divider Above Timeline */
+.legacy-timeline-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+  margin: 0 auto 2.4rem auto;
+  max-width: 320px;
+}
+
+.timeline-divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(212, 175, 55, 0.55), transparent);
+}
+
+.timeline-divider-motif {
+  color: #D4AF37;
+  font-size: 0.95rem;
+  line-height: 1;
+}
+
+/* Horizontal Visual Timeline */
+.legacy-timeline-viewport {
+  position: relative;
+  width: 100%;
+  margin-bottom: 2.5rem;
+}
+
+.legacy-timeline-track {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  position: relative;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.2rem 0;
+}
+
+/* Continuous Gold Connecting Axis Line */
+.timeline-connecting-axis {
+  position: absolute;
+  top: 72px;
+  left: 9%;
+  right: 9%;
+  height: 2px;
+  background: linear-gradient(90deg, 
+    rgba(212, 175, 55, 0.25) 0%, 
+    rgba(212, 175, 55, 0.85) 20%, 
+    rgba(212, 175, 55, 0.95) 50%, 
+    rgba(212, 175, 55, 0.85) 80%, 
+    rgba(212, 175, 55, 0.25) 100%);
+  z-index: 0;
+  box-shadow: 0 0 8px rgba(212, 175, 55, 0.3);
+}
+
+/* Milestone Node */
+.timeline-milestone-node {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 200px;
+  padding: 0 0.5rem;
+  cursor: pointer;
+}
+
+/* Diamond Marker sitting on the connector line */
+.milestone-diamond-marker {
+  color: #D4AF37;
+  font-size: 0.72rem;
+  line-height: 1;
+  margin-bottom: 0.55rem;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  text-shadow: 0 0 6px rgba(212, 175, 55, 0.5);
+}
+
+/* Circular Portrait Container */
+.milestone-portrait-container {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  margin-bottom: 1rem;
+}
+
+.milestone-portrait-frame {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #FAF3E8;
+  box-shadow: 0 8px 24px rgba(92, 6, 24, 0.12);
+  position: relative;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+}
+
+.milestone-portrait-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.portrait-gold-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2.5px solid #D4AF37;
+  pointer-events: none;
+  transition: all 0.35s ease;
+}
+
+.portrait-soft-glow {
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.45) 0%, transparent 70%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+  z-index: -1;
+}
+
+/* Name and Subtitle */
+.milestone-text-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.milestone-saint-name {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-maroon);
+  margin: 0 0 0.35rem 0;
+  line-height: 1.25;
+  transition: color 0.3s ease;
+}
+
+.milestone-subtitle-text {
+  font-family: var(--font-body, 'Crimson Text', serif);
+  font-size: 0.92rem;
+  line-height: 1.45;
+  color: #6B5E51;
+  margin: 0;
+  max-width: 175px;
+  transition: color 0.3s ease;
+}
+
+/* Hover Interaction */
+.timeline-milestone-node:hover .milestone-portrait-frame {
+  transform: scale(1.05);
+  box-shadow: 0 14px 34px rgba(92, 6, 24, 0.18);
+}
+
+.timeline-milestone-node:hover .portrait-gold-ring {
+  border-color: #ECC94B;
+  box-shadow: 0 0 14px rgba(212, 175, 55, 0.65);
+}
+
+.timeline-milestone-node:hover .portrait-soft-glow {
+  opacity: 1;
+}
+
+.timeline-milestone-node:hover .milestone-diamond-marker {
+  transform: scale(1.3);
+  color: #B45309;
+}
+
+.timeline-milestone-node:hover .milestone-saint-name {
+  color: #7A0C1A;
+}
+
+.timeline-milestone-node:hover .milestone-subtitle-text {
+  color: #38020A;
+}
+
+/* Closing Saffron Pill */
+.legacy-closing-wrap {
+  margin-top: 1.8rem;
+}
+
+.legacy-saffron-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(255, 126, 21, 0.1) 0%, rgba(245, 158, 11, 0.18) 100%);
+  border: 1.5px solid rgba(212, 175, 55, 0.5);
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.15);
+  border-radius: 999px;
+  padding: 0.6rem 2.2rem;
+  transition: all 0.3s ease;
+}
+
+.legacy-saffron-pill:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(245, 158, 11, 0.22);
+  border-color: #D4AF37;
+}
+
+.pill-sacred-text {
+  font-family: 'Marcellus', 'Yatra One', serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #B45309;
+  letter-spacing: 0.14em;
+}
+
+/* Mobile & Tablet Responsiveness: Horizontal Scrollable Timeline */
+@media (max-width: 900px) {
+  .foundation-content-grid,
+  .keepers-profile-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .saint-profile-card.parchment-card,
+  .origins-foundation-spread {
+    padding: 1.4rem 1.2rem;
+  }
+
+  .origins-lead-text,
+  .profile-point-text,
+  .legacy-editorial-text {
+    font-size: 1.1rem;
+  }
+
+  /* Do NOT stack items vertically on mobile — maintain horizontal experience */
+  .legacy-timeline-viewport {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    padding: 0.8rem 0.5rem 1.6rem 0.5rem;
+  }
+
+  .legacy-timeline-viewport::-webkit-scrollbar {
+    height: 5px;
+  }
+
+  .legacy-timeline-viewport::-webkit-scrollbar-track {
+    background: rgba(212, 175, 55, 0.1);
+    border-radius: 999px;
+  }
+
+  .legacy-timeline-viewport::-webkit-scrollbar-thumb {
+    background: rgba(212, 175, 55, 0.45);
+    border-radius: 999px;
+  }
+
+  .legacy-timeline-track {
+    display: flex;
+    min-width: 780px;
+    width: max-content;
+    justify-content: space-between;
+    padding: 0.5rem 1.5rem;
+  }
+
+  .timeline-connecting-axis {
+    left: 45px;
+    right: 45px;
+  }
+
+  .timeline-milestone-node {
+    scroll-snap-align: center;
+    min-width: 145px;
+    max-width: 160px;
+  }
+
+  .milestone-portrait-container {
+    width: 78px;
+    height: 78px;
+  }
+}
+
+/* ================================================================= */
+/* CHAPTER 02 EXTENSIONS (MATCHING CHAPTER 01 DESIGN SYSTEM)        */
+/* ================================================================= */
+
+/* Balanced two-column spread for Chapter 02 */
+.shiva-foundation-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 2.4rem;
+  align-items: stretch;
+}
+
+.shiva-foundation-grid .foundation-text-pane {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0.35rem 0;
+}
+
+.shiva-intro-text-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 1.05rem;
+  margin: 0.6rem 0 1.25rem 0;
+}
+
+.shiva-intro-text-flow .origins-lead-text {
+  font-family: var(--font-body, 'Crimson Text', serif);
+  font-size: 1.18rem;
+  line-height: 1.76;
+  color: #38020A;
+  margin: 0;
+  text-align: left;
+}
+
+.shiva-foundation-grid .foundation-media-pane {
+  display: flex;
+  align-items: stretch;
+  height: 100%;
+}
+
+.shiva-foundation-grid .foundation-image-blend-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 380px;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(92, 6, 24, 0.12);
+  display: flex;
+}
+
+.shiva-foundation-grid .foundation-blend-img {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+  object-fit: cover;
+  object-position: center 25%;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.shiva-foundation-grid .foundation-blend-img:hover {
+  transform: scale(1.025);
+}
+
+/* Slightly larger circular illustrations for Shiva timeline */
+.milestone-portrait-container.shiva-milestone-portrait {
+  width: 96px;
+  height: 96px;
+  margin-bottom: 1rem;
+}
+
+/* Richer descriptions under each node */
+.shiva-rich-desc {
+  max-width: 210px;
+  font-size: 0.92rem;
+  line-height: 1.52;
+  color: #5C4B40;
+}
+
+@media (max-width: 900px) {
+  .shiva-foundation-grid {
+    grid-template-columns: 1fr;
+    gap: 1.8rem;
+    align-items: start;
+  }
+
+  .shiva-foundation-grid .foundation-image-blend-wrapper {
+    min-height: 280px;
+    height: 320px;
+  }
+
+  .milestone-portrait-container.shiva-milestone-portrait {
+    width: 82px;
+    height: 82px;
+  }
+
+  .shiva-rich-desc {
+    max-width: 170px;
+    font-size: 0.88rem;
+    line-height: 1.45;
+  }
+}
+
+/* ==========================================================================
+   Chapter 03: Single-Column Visual Storytelling Panel (Palkhi Infographic)
+   ========================================================================== */
+.palkhi-visual-storytelling-panel {
+  position: relative;
+  background: #FFFDF9;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 18px;
+  padding: clamp(24px, 3.5vw, 32px);
+  box-shadow: 0 12px 40px rgba(120, 70, 20, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 1;
+  margin: 0 0 2.5rem 0;
+}
+
+.palkhi-visual-storytelling-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.06;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.palkhi-infographic-img {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  max-width: 95%;
+  height: auto;
+  object-fit: contain;
+  margin: 0 auto;
+  border-radius: 12px;
+}
+
+@media (max-width: 900px) {
+  .palkhi-infographic-img {
+    max-width: 98%;
+  }
+}
+
+@media (max-width: 600px) {
+  .palkhi-visual-storytelling-panel {
+    padding: 20px 14px;
+  }
+  .palkhi-infographic-img {
+    max-width: 100%;
+    border-radius: 8px;
+  }
+}
+
+/* ==========================================================================
+   High-Performance Navigation Transitions & Shimmer Skeleton (Instant-Feel UI)
+   ========================================================================== */
+
+/* Main Page Content Transition (220-250ms, subtle content-only transition, NO full page fade) */
+.app-route-transition-wrap {
+  animation: routeContentEnter 250ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: opacity, transform;
+}
+
+@keyframes routeContentEnter {
+  0% {
+    opacity: 0.94;
+    transform: translateY(3px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Chapter Content-Only Transition (keeps Hero Banner, Ribbon, & Shell fully static) */
+.chapter-content-transition-wrap {
+  animation: chapterContentSwap 240ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: opacity, transform;
+}
+
+@keyframes chapterContentSwap {
+  0% {
+    opacity: 0.92;
+    transform: translateY(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Skeleton Loading Shimmer for Images & Below-the-fold content */
+.img-skeleton-wrapper {
+  position: relative;
+  overflow: hidden;
+  background-color: rgba(235, 228, 218, 0.6);
+}
+
+.img-skeleton-shimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.45) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: skeletonShimmerWave 1.6s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes skeletonShimmerWave {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.img-pre-load {
+  opacity: 0;
+  transition: opacity 280ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.img-fade-in {
+  opacity: 1;
+  transition: opacity 280ms cubic-bezier(0.16, 1, 0.3, 1);
+}
