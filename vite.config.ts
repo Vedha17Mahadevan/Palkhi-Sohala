@@ -17,6 +17,21 @@ function copyDirSync(src: string, dest: string) {
   }
 }
 
+// Ensure public folder and favicon exist
+try {
+  const publicDir = resolve(process.cwd(), 'public');
+  if (!fs.existsSync(publicDir)) {
+    fs.mkdirSync(publicDir, { recursive: true });
+  }
+  const favSource = resolve(process.cwd(), 'images', 'favicon.png');
+  if (fs.existsSync(favSource)) {
+    fs.copyFileSync(favSource, resolve(publicDir, 'favicon.png'));
+    fs.copyFileSync(favSource, resolve(publicDir, 'favicon.ico'));
+  }
+} catch (e) {
+  console.warn('Could not sync favicon to public dir:', e);
+}
+
 export default defineConfig({
   plugins: [
     react(),
@@ -24,7 +39,15 @@ export default defineConfig({
       name: 'serve-and-copy-images',
       configureServer(server) {
         server.middlewares.use((req, res, next) => {
-          if (req.url && (req.url.startsWith('/images/palkhis/') || req.url.startsWith('/images/saints/'))) {
+          if (req.url === '/favicon.ico' || req.url === '/favicon.png') {
+            const filePath = resolve(process.cwd(), 'images', 'favicon.png');
+            if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
+              res.setHeader('Content-Type', 'image/png');
+              fs.createReadStream(filePath).pipe(res);
+              return;
+            }
+          }
+          if (req.url && req.url.startsWith('/images/')) {
             const relativePath = req.url.substring(8).split('?')[0]; // Strip "/images/"
             const filePath = resolve(process.cwd(), 'images', decodeURIComponent(relativePath));
             if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
@@ -51,6 +74,11 @@ export default defineConfig({
         const destDir = resolve(process.cwd(), 'dist/images');
         if (fs.existsSync(srcDir)) {
           copyDirSync(srcDir, destDir);
+        }
+        const faviconSrc = resolve(process.cwd(), 'images/favicon.png');
+        if (fs.existsSync(faviconSrc)) {
+          fs.copyFileSync(faviconSrc, resolve(process.cwd(), 'dist/favicon.png'));
+          fs.copyFileSync(faviconSrc, resolve(process.cwd(), 'dist/favicon.ico'));
         }
       }
     }
