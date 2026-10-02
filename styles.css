@@ -1366,6 +1366,8 @@ ul {
 .warkari-highlight-quote .marathi-quote-text {
   font-weight: 600;
   letter-spacing: 0.5px;
+  line-height: 1.7;
+  text-align: center;
 }
 
 /* Small elegant flourish for text layout spacing */

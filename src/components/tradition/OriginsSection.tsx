@@ -116,7 +116,7 @@ export const OriginsSection: React.FC = () => {
         {/* Decorative Divider: Section Transition */}
         <div className="origins-decorative-separator" aria-hidden="true">
           <span className="separator-line"></span>
-          <span className="separator-motif">────────── ❖ ॥ पंढरीची वारी ॥ ❖ ──────────</span>
+          <span className="separator-motif">❖ ॥ पंढरीची वारी ॥ ❖</span>
           <span className="separator-line"></span>
         </div>
 
@@ -210,7 +210,7 @@ export const OriginsSection: React.FC = () => {
         {/* Decorative Divider: Section Transition */}
         <div className="origins-decorative-separator" aria-hidden="true">
           <span className="separator-line"></span>
-          <span className="separator-motif">────────── ❖ ──────────</span>
+          <span className="separator-motif">❖</span>
           <span className="separator-line"></span>
         </div>
 
