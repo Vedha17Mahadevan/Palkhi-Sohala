@@ -125,7 +125,7 @@ export const ShivaWarkariStory: React.FC = () => {
         {/* Decorative Divider Transition */}
         <div className="origins-decorative-separator" aria-hidden="true">
           <span className="separator-line"></span>
-          <span className="separator-motif">────────── ❖ ॥ ॐ नमः शिवाय ॥ ❖ ──────────</span>
+          <span className="separator-motif">❖ ॥ ॐ नमः शिवाय ॥ ❖</span>
           <span className="separator-line"></span>
         </div>
 

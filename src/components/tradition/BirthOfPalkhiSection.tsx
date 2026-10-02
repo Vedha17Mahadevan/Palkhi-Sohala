@@ -213,7 +213,7 @@ export const BirthOfPalkhiSection: React.FC = () => {
         {/* Decorative Divider: Timeline Transition */}
         <div className="origins-decorative-separator" aria-hidden="true">
           <span className="separator-line"></span>
-          <span className="separator-motif">────────── ❖ ॥ पंढरीची वारी ॥ ❖ ──────────</span>
+          <span className="separator-motif">❖ ॥ पंढरीची वारी ॥ ❖</span>
           <span className="separator-line"></span>
         </div>
 

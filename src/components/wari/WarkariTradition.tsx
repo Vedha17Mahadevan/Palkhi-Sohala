@@ -61,7 +61,12 @@ export const WarkariTradition: React.FC = () => {
               
               <div className="warkari-highlight-quote">
                 <span className="quote-symbol">“</span>
-                <span className="marathi-quote-text">विठ्ठल विठ्ठल जय हरी विठ्ठल</span>
+                <span className="marathi-quote-text">
+                  जाय जाय तूं पंढरी । होय होय वारकरी ॥१॥<br />
+                  सांडोनियां वाळवंट । काय इच्छिसी वैकुंठ ॥ध्रु.॥<br />
+                  खांद्या पताकांचे भार । तुळसीमाळा आणि अबीर ॥२॥<br />
+                  साधुसंतांच्या दाटणी । तुका जाय लोटांगणीं ॥३॥
+                </span>
                 <span className="quote-symbol">”</span>
               </div>
               
