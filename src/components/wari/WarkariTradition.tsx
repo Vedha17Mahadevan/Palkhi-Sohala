@@ -69,6 +69,7 @@ export const WarkariTradition: React.FC = () => {
                 </span>
                 <span className="quote-symbol">”</span>
               </div>
+
               
               <p className="warkari-tradition-body" style={{ marginTop: '24px' }}>
                 Ashadhi Ekadashi marks the spiritual culmination of this divine journey. United by this timeless chant, the Warkaris walk together beyond differences of caste, wealth, or status, celebrating devotion, compassion, and the eternal bond between Lord Vitthal and His devotees.

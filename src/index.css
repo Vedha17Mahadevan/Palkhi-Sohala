@@ -14304,6 +14304,7 @@ ul {
    2. MOBILE & TABLET PORTRAIT BREAKPOINT (max-width: 768px)
    -------------------------------------------------------------------------- */
 @media (max-width: 768px) {
+
   /* Performance optimizations: disable heavy decorative animations */
   .saffron-particles-overlay,
   .museum-dust-particles,
@@ -14397,7 +14398,8 @@ ul {
   }
 
   .docu-hero-description {
-    font-size: 1rem; /* 16px min */
+    font-size: 1rem;
+    /* 16px min */
     line-height: 1.7;
     text-align: center;
     max-width: 100%;
@@ -14428,7 +14430,8 @@ ul {
   }
 
   .chapter-banner-desc {
-    font-size: 1rem; /* 16px min */
+    font-size: 1rem;
+    /* 16px min */
     line-height: 1.65;
     text-align: center;
     max-width: 100%;
@@ -14516,7 +14519,8 @@ ul {
   }
 
   .ribbon-item {
-    min-height: 44px; /* Touch target 44px min */
+    min-height: 44px;
+    /* Touch target 44px min */
     padding: 0.55rem 1.1rem;
     border-radius: 999px;
     display: inline-flex;
@@ -14649,7 +14653,8 @@ ul {
   }
 
   .tradition-paragraph {
-    font-size: 1rem; /* 16px min */
+    font-size: 1rem;
+    /* 16px min */
     line-height: 1.7;
     margin-bottom: 1rem;
   }
@@ -14690,7 +14695,8 @@ ul {
   }
 
   .origins-lead-text {
-    font-size: 1.05rem; /* 16.8px */
+    font-size: 1.05rem;
+    /* 16.8px */
     line-height: 1.75;
     margin-bottom: 1.2rem;
   }
@@ -14830,7 +14836,8 @@ ul {
   }
 
   .profile-point-text {
-    font-size: 0.98rem; /* ~16px */
+    font-size: 0.98rem;
+    /* ~16px */
     line-height: 1.68;
   }
 
@@ -15210,4 +15217,4 @@ ul {
     height: 36px;
     font-size: 0.85rem;
   }
-}
+}
