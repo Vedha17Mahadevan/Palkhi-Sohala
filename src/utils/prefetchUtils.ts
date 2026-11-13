@@ -63,6 +63,38 @@ export const ROUTE_HERO_ASSETS: Record<string, string[]> = {
   ],
   '/tradition/palkhi': [
     'https://res.cloudinary.com/ayj5m59a/image/upload/v1790936481/From_Two_Palkhis_to_Pandharpur.png',
+  ],
+  '/tradition/rituals': [
+    '/images/Chapter/Ringan.png',
+    '/images/Chapter/Dhava.png',
+  ],
+  '/tradition/dindi-life': [
+    '/images/Chapter/Dindi.png',
+    '/images/Chapter/Daily Rhythm.png',
+  ],
+  '/tradition/devotional-practices': [
+    '/images/Chapter/Kirtan.png',
+    '/images/Chapter/tulsi.png',
+  ],
+  '/tradition/arrival-and-seva': [
+    '/images/Chapter/pilgrims.png',
+    '/images/Chapter/seva.png',
+  ],
+  '/tradition/living-traditions/rituals': [
+    '/images/Chapter/Ringan.png',
+    '/images/Chapter/Dhava.png',
+  ],
+  '/tradition/living-traditions/dindi-life': [
+    '/images/Chapter/Dindi.png',
+    '/images/Chapter/Daily Rhythm.png',
+  ],
+  '/tradition/living-traditions/devotional-practices': [
+    '/images/Chapter/Kirtan.png',
+    '/images/Chapter/tulsi.png',
+  ],
+  '/tradition/living-traditions/arrival-and-seva': [
+    '/images/Chapter/pilgrims.png',
+    '/images/Chapter/seva.png',
   ]
 };
 

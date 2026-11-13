@@ -1,6 +1,5 @@
 import React from 'react';
 import { useRouter } from '../../context/NavigationContext';
-import TraditionHero from '../../components/tradition/TraditionHero';
 import MuseumPlaceholder from '../../components/tradition/MuseumPlaceholder';
 import { CHAPTERS_DATA } from '../../components/tradition/chaptersData';
 
@@ -16,10 +15,7 @@ export const TraditionOverview: React.FC = () => {
 
   return (
     <div className="tradition-overview-page">
-      {/* 1. Existing Hero Section */}
-      <TraditionHero />
-
-      {/* 2. Concise Introduction (2–3 paragraphs only) */}
+      {/* 1. Concise Introduction (2–3 paragraphs) */}
       <section id="introduction" className="tradition-section tradition-brief-intro-section">
         <div className="tradition-container">
           <div className="museum-section-tag-wrap text-center">

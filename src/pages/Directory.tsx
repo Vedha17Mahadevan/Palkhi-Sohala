@@ -55,7 +55,7 @@ export const Directory: React.FC<DirectoryProps> = React.memo(({ onSelectPalkhi 
         {/* Floating Glass Back Button overlaid on Hero */}
         <button 
           className="hero-glass-back-btn" 
-          onClick={() => navigateTo('/', 'palkhi-route')}
+          onClick={() => navigateTo('/', 'palkhi')}
           aria-label="Back to Home"
         >
           <i className="fa-solid fa-arrow-left-long back-arrow-icon" aria-hidden="true"></i>

@@ -15,6 +15,18 @@ export const Footer: React.FC = () => {
             width={300}
             height={46}
           />
+          <div className="footer-org-link-wrap">
+            <a 
+              href="https://radhekrishnasatsangam.com/" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="footer-org-website-link"
+              title="Visit RadhaKrishna Satsangam Official Website"
+            >
+              <span>RadhaKrishna Satsangam Website</span>
+              <i className="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+            </a>
+          </div>
           <div className="social-links">
             <a href="https://www.youtube.com/@GurujeeGopalavallidasar" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i className="fa-brands fa-youtube"></i></a>
             <a href="https://www.facebook.com/gopalavalli.dasan/#" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i className="fa-brands fa-facebook"></i></a>

@@ -33,7 +33,18 @@ export const smoothScrollToSection = (targetId: string, duration = 750): boolean
     return true;
   }
 
-  const target = document.getElementById(targetId);
+  const resolveTarget = (id: string): HTMLElement | null => {
+    const direct = document.getElementById(id);
+    if (direct) return direct;
+    if (id === 'palkhi' || id === 'palkhis' || id === 'palkhi-route') {
+      return document.getElementById('palkhi') ||
+        document.getElementById('palkhis') ||
+        document.getElementById('palkhi-route');
+    }
+    return null;
+  };
+
+  const target = resolveTarget(targetId);
   if (!target) return false;
 
   const header = document.querySelector('.main-header') as HTMLElement;
@@ -42,7 +53,7 @@ export const smoothScrollToSection = (targetId: string, duration = 750): boolean
   const comfortableOffset = 24;
 
   const targetRect = target.getBoundingClientRect();
-  const startPosition = window.pageYOffset;
+  const startPosition = window.pageYOffset || document.documentElement.scrollTop;
   const targetPosition = Math.max(0, targetRect.top + startPosition - (headerHeight + comfortableOffset));
   const distance = targetPosition - startPosition;
 

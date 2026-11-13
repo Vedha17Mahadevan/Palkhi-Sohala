@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 
 const shivaPilgrimageImg = 'https://res.cloudinary.com/ayj5m59a/image/upload/v1790917679/Shiva_s_Golden-Hour_Pilgrimage.png';
 const sunsetPilgrimageImg = 'https://res.cloudinary.com/ayj5m59a/image/upload/v1790917680/Sunset_Pilgrimage_to_the_Temple.png';
@@ -8,47 +9,101 @@ const mountKailashImg = 'https://res.cloudinary.com/ayj5m59a/image/upload/v17909
 const longingImg = 'https://res.cloudinary.com/ayj5m59a/image/upload/v1790933967/longing.png';
 const firstWariImg = 'https://res.cloudinary.com/ayj5m59a/image/upload/v1790933676/First_wari.png';
 
-interface Milestone {
+interface ShivaMilestone {
   id: string;
-  name: string;
-  description: string;
+  number: string;
+  title: string;
+  shortText: string;
+  detailText: string;
   image: string;
 }
 
-const SHIVA_TIMELINE_MILESTONES: Milestone[] = [
+const SHIVA_TIMELINE_MILESTONES: ShivaMilestone[] = [
   {
     id: 'kailash',
-    name: 'Mount Kailash',
-    description: "Leaving the sacred abode of Kailash after hearing of Lord Vitthal's divine manifestation at Pandharpur.",
+    number: '01',
+    title: 'Mount Kailash',
+    shortText: 'The sacred abode from which the divine journey begins.',
+    detailText: "Leaving the sacred snow-clad abode of Mount Kailash upon hearing of Lord Vitthal's divine manifestation, Lord Shiva prepares to embark upon the first barefoot pilgrimage across Maharashtra.",
     image: mountKailashImg,
   },
   {
     id: 'darshan-longing',
-    name: 'Longing for Darshan',
-    description: 'Filled with devotion, Lord Shiva desired to behold Lord Vitthal standing upon the brick offered by Bhakta Pundalik.',
+    number: '02',
+    title: 'Longing for Darshan',
+    shortText: 'Moved by devotion, Lord Shiva longs to behold Lord Vitthal at Pandharpur.',
+    detailText: 'Filled with profound devotion, Lord Shiva desired to behold Lord Vitthal standing patiently upon the brick offered by the devotee Bhakta Pundalik on the banks of the sacred Bhima River.',
     image: longingImg,
   },
   {
     id: 'ascetic-journey',
-    name: 'The Ascetic Journey',
-    description: 'Disguised as a wandering renunciant (sadhu), he began the pilgrimage on foot towards Pandharpur.',
+    number: '03',
+    title: 'The Ascetic Journey',
+    shortText: 'Taking the form of a wandering ascetic, Shiva sets forth towards Pandharpur.',
+    detailText: 'Disguising himself as a humble renunciant ascetic (sadhu), Lord Shiva set forth on foot across the rugged plains and valleys of the Deccan, traversing hundreds of leagues in pure spiritual contemplation.',
     image: shivaPilgrimageImg,
   },
   {
     id: 'pandharpur-arrival',
-    name: 'Arrival at Pandharpur',
-    description: 'Lord Shiva reached the holy town to receive the divine darshan of Lord Vitthal.',
+    number: '04',
+    title: 'Arrival at Pandharpur',
+    shortText: 'Lord Shiva reaches the sacred town to receive the darshan of Lord Vitthal.',
+    detailText: 'Reaching the holy pilgrimage town of Pandharpur, Lord Shiva stepped onto the sandy banks of the Chandrabhaga to receive the blessed and transcendent darshan of Lord Panduranga.',
     image: sunsetPilgrimageImg,
   },
   {
     id: 'first-warkari',
-    name: 'The First Warkari',
-    description: 'Because of this sacred pilgrimage, Lord Shiva is traditionally revered as the very first Warkari.',
+    number: '05',
+    title: 'The First Warkari',
+    shortText: 'Through this sacred pilgrimage, Lord Shiva is revered in the tradition as the first Warkari.',
+    detailText: 'By virtue of undertaking this selfless pilgrimage on foot to behold Lord Vitthal, ancient tradition and sacred lore revere Mahadev as the primordial pioneer and First Warkari of the Pandharpur tradition.',
     image: firstWariImg,
   },
 ];
 
 export const ShivaWarkariStory: React.FC = () => {
+  const [activeMilestone, setActiveMilestone] = useState<ShivaMilestone | null>(null);
+  const closeBtnRef = useRef<HTMLButtonElement | null>(null);
+
+  // Keyboard accessibility and robust background scroll-lock
+  useEffect(() => {
+    if (!activeMilestone) return;
+
+    // Record exact scroll position BEFORE locking body
+    const savedScrollY = window.pageYOffset || document.documentElement.scrollTop;
+    const prevBodyOverflow = document.body.style.overflow;
+    const prevHtmlOverflow = document.documentElement.style.overflow;
+
+    // Prevent background scrolling without moving page
+    document.body.style.overflow = 'hidden';
+
+    // Focus close button WITHOUT scrolling the page
+    const timer = setTimeout(() => {
+      closeBtnRef.current?.focus({ preventScroll: true });
+    }, 40);
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setActiveMilestone(null);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = prevBodyOverflow;
+      document.documentElement.style.overflow = prevHtmlOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+      clearTimeout(timer);
+
+      // Guarantee the window scroll position remains exactly where it was before opening
+      window.scrollTo({
+        top: savedScrollY,
+        behavior: 'instant' as ScrollBehavior,
+      });
+    };
+  }, [activeMilestone]);
+
   return (
     <section id="shiva-content" className="tradition-section tradition-origins-section chapter-origins-editorial">
       
@@ -71,14 +126,6 @@ export const ShivaWarkariStory: React.FC = () => {
       </div>
 
       <div className="tradition-container">
-        
-        {/* Section Header */}
-        <div className="origins-header-block text-center">
-          <span className="chapter-badge-pill">Chapter 02 • Lord Shiva – The First Warkari</span>
-          <h2 className="tradition-section-heading centered">Lord Shiva – the First Warkari</h2>
-          <div className="divider-split-gold center small"></div>
-        </div>
-
         {/* 1. Introductory Content: Exact Chapter 1 Foundation Spread Layout */}
         <div className="origins-foundation-spread">
           <div className="foundation-spread-corner tl">❦</div>
@@ -125,12 +172,12 @@ export const ShivaWarkariStory: React.FC = () => {
         {/* Decorative Divider Transition */}
         <div className="origins-decorative-separator" aria-hidden="true">
           <span className="separator-line"></span>
-          <span className="separator-motif">❖ ॥ ॐ नमः शिवाय ॥ ❖</span>
+          <span className="separator-motif">❖</span>
           <span className="separator-line"></span>
         </div>
 
-        {/* 2. Timeline Section: Exact Chapter 1 Component Updated for Lord Shiva's Journey */}
-        <div className="origins-legacy-section">
+        {/* 2. Redesigned Interactive Sacred Journey Timeline */}
+        <div className="origins-legacy-section shiva-interactive-section">
           {/* Faded Background Motifs (2-3% opacity) */}
           <div className="legacy-faded-bg-motifs" aria-hidden="true">
             <div className="faded-tilak-symbol">ॐ</div>
@@ -141,6 +188,9 @@ export const ShivaWarkariStory: React.FC = () => {
           <div className="legacy-header text-center">
             <span className="origins-section-label">Devotional Evolution</span>
             <h3 className="legacy-section-title">The Sacred Journey</h3>
+            <p className="shiva-timeline-guide">
+              Click any milestone along the sacred path to explore the journey in detail.
+            </p>
           </div>
 
           {/* Small Decorative Divider */}
@@ -150,54 +200,134 @@ export const ShivaWarkariStory: React.FC = () => {
             <span className="timeline-divider-line"></span>
           </div>
 
-          {/* Horizontal Visual Timeline */}
-          <div className="legacy-timeline-viewport">
-            <div className="legacy-timeline-track">
-              {/* Continuous Gold Connecting Axis Line */}
-              <div className="timeline-connecting-axis" aria-hidden="true"></div>
+          {/* Horizontal / Responsive Interactive Timeline Track */}
+          <div className="shiva-timeline-wrapper">
+            <div className="shiva-timeline-track">
+              {/* Continuous Antique-Gold Connecting Axis Line */}
+              <div className="shiva-timeline-axis" aria-hidden="true"></div>
 
               {SHIVA_TIMELINE_MILESTONES.map((milestone) => (
-                <div key={milestone.id} className="timeline-milestone-node">
-                  {/* Decorative Diamond Marker sitting on the axis */}
-                  <div className="milestone-diamond-marker" aria-hidden="true">◆</div>
-
-                  {/* Circular Portrait with Gold Border */}
-                  <div className="milestone-portrait-container shiva-milestone-portrait">
-                    <div className="milestone-portrait-frame">
-                      <img 
-                        src={milestone.image} 
-                        alt={milestone.name} 
-                        className="milestone-portrait-img"
-                        loading="lazy"
-                        decoding="async"
-                        onError={(e) => {
-                          (e.target as HTMLElement).style.display = 'none';
-                        }}
-                      />
-                      <div className="portrait-gold-ring"></div>
-                    </div>
-                    <div className="portrait-soft-glow" aria-hidden="true"></div>
+                <div
+                  key={milestone.id}
+                  className="shiva-milestone-node"
+                  onClick={() => setActiveMilestone(milestone)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setActiveMilestone(milestone);
+                    }
+                  }}
+                  aria-label={`Milestone ${milestone.number}: ${milestone.title}. Click to view details.`}
+                >
+                  {/* Step Number & Diamond Marker */}
+                  <div className="shiva-node-indicator">
+                    <span className="shiva-node-step">{milestone.number}</span>
+                    <span className="shiva-node-diamond" aria-hidden="true">◆</span>
                   </div>
 
-                  {/* Milestone Name and Rich Description */}
-                  <div className="milestone-text-block text-center">
-                    <h4 className="milestone-saint-name">{milestone.name}</h4>
-                    <p className="milestone-subtitle-text shiva-rich-desc">{milestone.description}</p>
+                  {/* Circular Portrait with Gold Border (Refined, smaller diameter ~74px) */}
+                  <div className="shiva-node-avatar-frame">
+                    <img 
+                      src={milestone.image} 
+                      alt={milestone.title} 
+                      className="shiva-node-avatar-img"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <div className="shiva-node-gold-ring" aria-hidden="true"></div>
+                    <div className="shiva-node-glow" aria-hidden="true"></div>
+                  </div>
+
+                  {/* Title & Short Concise Description */}
+                  <div className="shiva-node-text-wrap text-center">
+                    <h4 className="shiva-node-title">{milestone.title}</h4>
+                    <p className="shiva-node-short-text">{milestone.shortText}</p>
+                    <span className="shiva-node-click-cue">
+                      <span>Explore</span>
+                      <i className="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                    </span>
                   </div>
                 </div>
               ))}
             </div>
           </div>
-
-          {/* Closing Saffron Pill */}
-          <div className="legacy-closing-wrap text-center">
-            <div className="legacy-saffron-pill">
-              <span className="pill-sacred-text">॥ हर हर महादेव • जय जय विठ्ठल ॥</span>
-            </div>
-          </div>
         </div>
 
       </div>
+
+      {/* Interactive Milestone Details Modal - Mounted via Portal directly into document.body */}
+      {activeMilestone && createPortal(
+        <div 
+          className="shiva-modal-backdrop"
+          onClick={() => setActiveMilestone(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="shiva-modal-title"
+        >
+          <div 
+            className="shiva-modal-card parchment-card"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Corner Ornaments */}
+            <div className="card-corner-ornament tl" aria-hidden="true">❦</div>
+            <div className="card-corner-ornament tr" aria-hidden="true">❦</div>
+            <div className="card-corner-ornament bl" aria-hidden="true">❦</div>
+            <div className="card-corner-ornament br" aria-hidden="true">❦</div>
+
+            {/* Close Button */}
+            <button 
+              ref={closeBtnRef}
+              type="button" 
+              className="shiva-modal-close-btn"
+              onClick={() => setActiveMilestone(null)}
+              aria-label="Close milestone details"
+            >
+              <i className="fa-solid fa-xmark" aria-hidden="true"></i>
+            </button>
+
+            <div className="shiva-modal-grid">
+              {/* Left / Top: Prominent Milestone Image */}
+              <div className="shiva-modal-image-pane">
+                <img 
+                  src={activeMilestone.image} 
+                  alt={activeMilestone.title} 
+                  className="shiva-modal-featured-img"
+                />
+                <div className="shiva-modal-img-overlay" aria-hidden="true"></div>
+                <span className="shiva-modal-pill-tag">
+                  Stage {activeMilestone.number} • Sacred Journey
+                </span>
+              </div>
+
+              {/* Right / Bottom: Detailed Narrative Content */}
+              <div className="shiva-modal-body-pane">
+                <span className="origins-section-label">Lord Shiva – The First Warkari</span>
+                <h3 id="shiva-modal-title" className="shiva-modal-title">
+                  {activeMilestone.title}
+                </h3>
+                <div className="divider-split-gold mini" style={{ margin: '0.6rem 0 1.2rem 0' }}></div>
+                
+                <p className="shiva-modal-desc">
+                  {activeMilestone.detailText}
+                </p>
+
+                <div className="shiva-modal-footer">
+                  <button 
+                    type="button" 
+                    className="btn-shiva-modal-dismiss"
+                    onClick={() => setActiveMilestone(null)}
+                  >
+                    <span>Close Window</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>,
+        document.body
+      )}
     </section>
   );
 };

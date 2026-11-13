@@ -1,4 +1,6 @@
 import React from 'react';
+import { useRouter } from '../../context/NavigationContext';
+import { prefetchRoute } from '../../utils/prefetchUtils';
 
 const palkhiMainImg = '/images/palkhi.jpg';
 const dnyaneshwarImg = '/images/saints/dnyaneshwar.jpg';
@@ -69,6 +71,12 @@ const PALKHI_EVOLUTION_MILESTONES: Milestone[] = [
 ];
 
 export const BirthOfPalkhiSection: React.FC = () => {
+  const { navigateTo } = useRouter();
+
+  const handleNavigate = (path: string) => {
+    navigateTo(path);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
   return (
     <section id="palkhi-content" className="tradition-section tradition-origins-section chapter-origins-editorial">
       
@@ -91,14 +99,6 @@ export const BirthOfPalkhiSection: React.FC = () => {
       </div>
 
       <div className="tradition-container">
-        
-        {/* Section Header */}
-        <div className="origins-header-block text-center">
-          <span className="chapter-badge-pill">Chapter 03 • Palkhi Tradition</span>
-          <h2 className="tradition-section-heading centered">The Sacred Palkhi Tradition</h2>
-          <div className="divider-split-gold center small"></div>
-        </div>
-
         {/* The Keepers of the Tradition: Side-by-side Parchment Cards with Gold Corners */}
         <div className="keepers-section">
           <div className="keepers-profile-grid">
@@ -213,7 +213,7 @@ export const BirthOfPalkhiSection: React.FC = () => {
         {/* Decorative Divider: Timeline Transition */}
         <div className="origins-decorative-separator" aria-hidden="true">
           <span className="separator-line"></span>
-          <span className="separator-motif">❖ ॥ पंढरीची वारी ॥ ❖</span>
+          <span className="separator-motif">❖</span>
           <span className="separator-line"></span>
         </div>
 
@@ -277,10 +277,30 @@ export const BirthOfPalkhiSection: React.FC = () => {
             </div>
           </div>
 
-          {/* Closing Saffron Pill */}
-          <div className="legacy-closing-wrap text-center">
-            <div className="legacy-saffron-pill">
-              <span className="pill-sacred-text">॥ ज्ञानोबा माउली तुकाराम • पालखी सोहळा ॥</span>
+          {/* Compact Call-To-Action: Explore the Palkhis Directory */}
+          <div className="chapter-palkhi-explorer-cta">
+            <div className="palkhi-explorer-cta-inner">
+              <div className="palkhi-explorer-text-group">
+                <span className="palkhi-explorer-tag">
+                  <span className="palkhi-explorer-ornament" aria-hidden="true">❖</span> PALKHI DIRECTORY
+                </span>
+                <h4 className="palkhi-explorer-heading">Explore the Palkhis</h4>
+                <p className="palkhi-explorer-desc">
+                  Discover the Palkhis, their origins, routes and traditions.
+                </p>
+              </div>
+              <div className="palkhi-explorer-btn-wrap">
+                <button 
+                  type="button" 
+                  className="btn-palkhi-explorer"
+                  onClick={() => handleNavigate('/palkhis')}
+                  onMouseEnter={() => prefetchRoute('/palkhis')}
+                  aria-label="Explore the Palkhis Directory"
+                >
+                  <span>Explore Palkhis</span>
+                  <i className="fa-solid fa-arrow-right-long" aria-hidden="true"></i>
+                </button>
+              </div>
             </div>
           </div>
         </div>

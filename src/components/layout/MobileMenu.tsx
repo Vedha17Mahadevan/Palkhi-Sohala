@@ -6,9 +6,10 @@ import { smoothScrollToSection } from '../../utils/scrollUtils';
 interface MobileMenuProps {
   isOpen: boolean;
   onClose: () => void;
+  activeSection?: string;
 }
 
-export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
+export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, activeSection = '' }) => {
   const { currentPath, navigateTo } = useRouter();
   const [isWariExpanded, setIsWariExpanded] = useState(false);
 
@@ -121,9 +122,9 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
           {/* 3. Palkhis */}
           <li>
             <a 
-              href="#palkhi-route" 
-              className="mobile-link" 
-              onClick={(e) => handleNavClick(e, 'palkhi-route')}
+              href="/#palkhi" 
+              className={`mobile-link ${currentPath === '/' && (activeSection === 'palkhi' || activeSection === 'palkhis' || activeSection === 'palkhi-route') ? 'active' : ''}`} 
+              onClick={(e) => handleNavClick(e, 'palkhi')}
             >
               Palkhis
             </a>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useRouter } from '../../context/NavigationContext';
 import { CHAPTERS_DATA, ChapterItem } from './chaptersData';
+import { prefetchRoute } from '../../utils/prefetchUtils';
 
 interface ChapterFooterNavProps {
   currentSlug: string;
@@ -30,13 +31,14 @@ export const ChapterFooterNav: React.FC<ChapterFooterNavProps> = ({ currentSlug 
               <button 
                 className="btn-chapter-pagination prev"
                 onClick={() => handleNav(prevChapter.path)}
+                onMouseEnter={() => prefetchRoute(prevChapter.path)}
                 title={`Go to Chapter ${prevChapter.number}: ${prevChapter.title}`}
               >
                 <div className="pagination-arrow-circle">
-                  <i className="fa-solid fa-arrow-left"></i>
+                  <i className="fa-solid fa-arrow-left" aria-hidden="true"></i>
                 </div>
                 <div className="pagination-text-group text-left">
-                  <span className="pagination-sub">Previous Chapter</span>
+                  <span className="pagination-sub">Chapter {prevChapter.number}</span>
                   <h4 className="pagination-title">{prevChapter.title}</h4>
                 </div>
               </button>
@@ -44,14 +46,15 @@ export const ChapterFooterNav: React.FC<ChapterFooterNavProps> = ({ currentSlug 
               <button 
                 className="btn-chapter-pagination prev"
                 onClick={() => handleNav('/tradition')}
+                onMouseEnter={() => prefetchRoute('/tradition')}
                 title="Return to Tradition Overview"
               >
                 <div className="pagination-arrow-circle">
-                  <i className="fa-solid fa-arrow-left"></i>
+                  <i className="fa-solid fa-arrow-left" aria-hidden="true"></i>
                 </div>
                 <div className="pagination-text-group text-left">
-                  <span className="pagination-sub">Tradition</span>
-                  <h4 className="pagination-title">Overview</h4>
+                  <span className="pagination-sub">Wari Beginning</span>
+                  <h4 className="pagination-title">Tradition Overview</h4>
                 </div>
               </button>
             )}
@@ -62,9 +65,10 @@ export const ChapterFooterNav: React.FC<ChapterFooterNavProps> = ({ currentSlug 
             <button 
               className="btn-back-to-tradition-overview"
               onClick={() => handleNav('/tradition')}
+              onMouseEnter={() => prefetchRoute('/tradition')}
               title="Return to Tradition Landing Page"
             >
-              <i className="fa-solid fa-book-open"></i>
+              <i className="fa-solid fa-book-open" aria-hidden="true"></i>
               <span>All Chapters</span>
             </button>
           </div>
@@ -75,28 +79,30 @@ export const ChapterFooterNav: React.FC<ChapterFooterNavProps> = ({ currentSlug 
               <button 
                 className="btn-chapter-pagination next"
                 onClick={() => handleNav(nextChapter.path)}
+                onMouseEnter={() => prefetchRoute(nextChapter.path)}
                 title={`Go to Chapter ${nextChapter.number}: ${nextChapter.title}`}
               >
                 <div className="pagination-text-group text-right">
-                  <span className="pagination-sub">Next Chapter</span>
+                  <span className="pagination-sub">Chapter {nextChapter.number}</span>
                   <h4 className="pagination-title">{nextChapter.title}</h4>
                 </div>
                 <div className="pagination-arrow-circle">
-                  <i className="fa-solid fa-arrow-right"></i>
+                  <i className="fa-solid fa-arrow-right" aria-hidden="true"></i>
                 </div>
               </button>
             ) : (
               <button 
                 className="btn-chapter-pagination next"
-                onClick={() => handleNav('/palkhis')}
-                title="Explore All Palkhis Directory"
+                onClick={() => handleNav('/tradition')}
+                onMouseEnter={() => prefetchRoute('/tradition')}
+                title="Return to Tradition Overview"
               >
                 <div className="pagination-text-group text-right">
-                  <span className="pagination-sub">Continue to</span>
-                  <h4 className="pagination-title">Palkhi Directory</h4>
+                  <span className="pagination-sub">Pilgrimage Culmination</span>
+                  <h4 className="pagination-title">Return to Overview</h4>
                 </div>
                 <div className="pagination-arrow-circle">
-                  <i className="fa-solid fa-arrow-right"></i>
+                  <i className="fa-solid fa-rotate-left" aria-hidden="true"></i>
                 </div>
               </button>
             )}
@@ -108,4 +114,4 @@ export const ChapterFooterNav: React.FC<ChapterFooterNavProps> = ({ currentSlug 
   );
 };
 
-export default ChapterFooterNav;
+export default React.memo(ChapterFooterNav);
