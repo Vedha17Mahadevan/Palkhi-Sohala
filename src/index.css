@@ -2965,6 +2965,39 @@ ul {
   display: none;
 }
 
+.footer-org-link-wrap {
+  margin-bottom: 0.85rem;
+}
+
+.footer-org-website-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgba(255, 253, 248, 0.85);
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  padding: 0.2rem 0;
+  transition: all 0.25s ease;
+}
+
+.footer-org-website-link:hover {
+  color: var(--color-gold-light);
+  transform: translateX(2px);
+}
+
+.footer-org-website-link i {
+  font-size: 0.72rem;
+  color: var(--color-gold);
+  transition: transform 0.2s ease;
+}
+
+.footer-org-website-link:hover i {
+  transform: translate(1px, -1px);
+}
+
 .social-links {
   display: flex;
   gap: 0.75rem;
@@ -3295,7 +3328,9 @@ ul {
 
   /* Footer */
   .btn-back-to-top-float {
-    left: 1.5rem;
+    right: 1.5rem;
+    left: auto;
+    bottom: max(1.5rem, env(safe-area-inset-bottom, 1.5rem));
     width: 48px;
     height: 48px;
     font-size: 0.9rem;
@@ -10762,86 +10797,1053 @@ ul {
 /* HORIZONTAL CHAPTER RIBBON STEPPER & ELEGANT CHAPTER DRAWER       */
 /* ================================================================= */
 
-/* --- Horizontal Chapter Ribbon Bar (Under Banner / On Chapter Pages) --- */
-.chapter-ribbon-bar {
-  background: rgba(253, 251, 247, 0.96);
-  border-bottom: 1px solid rgba(212, 175, 55, 0.3);
-  box-shadow: 0 4px 16px rgba(92, 6, 24, 0.04);
+/* ================================================================= */
+/* EXPLORE WARI TRADITION: SINGLE COMPACT CHAPTER NAVIGATOR          */
+/* ================================================================= */
+
+.explore-tradition-navigator {
+  background: #FAF6EF;
+  border-top: 1px solid rgba(212, 175, 55, 0.35);
+  border-bottom: 1.5px solid rgba(212, 175, 55, 0.45);
+  padding: 0.85rem 0;
   position: relative;
-  z-index: 15;
-  padding: 0.65rem 0;
+  z-index: 45;
+  box-shadow: 0 2px 10px rgba(92, 6, 24, 0.03);
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.chapter-ribbon-scroll {
+.explore-nav-wrapper {
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Compact Navigation Trigger Button */
+.explore-nav-trigger {
+  width: 100%;
+  max-width: 100%;
+  min-height: 52px;
+  background: #FFFFFF;
+  border: 1.5px solid rgba(212, 175, 55, 0.45);
+  border-radius: 10px;
+  padding: 0.65rem 1.25rem;
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding: 0.3rem 0.2rem;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(212, 175, 55, 0.4) transparent;
-  -webkit-overflow-scrolling: touch;
-}
-
-.chapter-ribbon-scroll::-webkit-scrollbar {
-  height: 4px;
-}
-
-.chapter-ribbon-scroll::-webkit-scrollbar-thumb {
-  background: rgba(212, 175, 55, 0.4);
-  border-radius: 999px;
-}
-
-.ribbon-item {
-  background: #FFFDF9;
-  border: 1px solid rgba(212, 175, 55, 0.28);
-  border-radius: 999px;
-  padding: 0.42rem 0.95rem;
+  justify-content: space-between;
+  gap: 1rem;
   cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  white-space: nowrap;
-  flex-shrink: 0;
-  transition: all 0.25s ease;
-  font-family: var(--font-heading);
-  text-decoration: none;
+  text-align: left;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 16px rgba(92, 6, 24, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+  box-sizing: border-box;
 }
 
-.ribbon-num {
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: var(--color-saffron);
-  letter-spacing: 0.06em;
-}
-
-.ribbon-title {
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: var(--color-maroon);
-  letter-spacing: 0.02em;
-}
-
-.ribbon-item:hover {
-  background: rgba(212, 175, 55, 0.12);
-  border-color: var(--color-gold);
+.explore-nav-trigger:hover {
+  background: #FFFFFF;
+  border-color: #D4AF37;
+  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.18);
   transform: translateY(-1px);
 }
 
-.ribbon-item.active {
-  background: var(--color-maroon);
-  border-color: var(--color-gold);
-  box-shadow: 0 4px 14px rgba(92, 6, 24, 0.25);
+.explore-nav-trigger.open {
+  background: #FFFFFF;
+  border-color: #5B0E16;
+  box-shadow: 0 0 0 3px rgba(91, 14, 22, 0.1), 0 8px 24px rgba(91, 14, 22, 0.08);
 }
 
-.ribbon-item.active .ribbon-num {
+.explore-trigger-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+  flex: 1 1 auto;
+  overflow: hidden;
+}
+
+.explore-badge-line {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.explore-label-tag {
+  font-family: var(--font-heading, 'Cinzel', serif);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #8C4010;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  user-select: none;
+}
+
+.explore-label-tag .explore-ornament {
+  color: #D4AF37;
+  font-size: 0.62rem;
+}
+
+.explore-chapter-indicator {
+  font-family: var(--font-heading, 'Cinzel', serif);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #FFE082;
+  background: #5B0E16;
+  padding: 0.15rem 0.55rem;
+  border-radius: 4px;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  line-height: 1.2;
+}
+
+.explore-trigger-title {
+  font-family: var(--font-heading, 'Cinzel', serif);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #381A14;
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.explore-trigger-action {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: #8C4010;
+  flex-shrink: 0;
+  font-family: var(--font-heading, 'Cinzel', serif);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: #FAF6EF;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.explore-nav-trigger:hover .explore-trigger-action {
+  background: #5B0E16;
+  border-color: #5B0E16;
   color: #FFE082;
 }
 
-.ribbon-item.active .ribbon-title {
-  color: #FFFDF8;
+.explore-chevron {
+  font-size: 0.78rem;
+  transition: transform 0.25s ease;
+}
+
+.explore-chevron.rotated {
+  transform: rotate(180deg);
+}
+
+/* Single Organised Chapter List Dropdown Overlay */
+.explore-dropdown-overlay {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  width: 100%;
+  box-sizing: border-box;
+  background: #FFFFFF;
+  border: 1.5px solid rgba(212, 175, 55, 0.48);
+  border-radius: 12px;
+  box-shadow: 0 16px 48px rgba(92, 6, 24, 0.16), 0 3px 8px rgba(0, 0, 0, 0.04);
+  z-index: 150;
+  overflow: hidden;
+  animation: exploreDropdownFade 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes exploreDropdownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.explore-menu-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1.25rem;
+  background: #FAF6EF;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+}
+
+.menu-header-title {
+  font-family: var(--font-heading, 'Cinzel', serif);
+  font-size: 0.72rem;
   font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #8C4010;
+}
+
+.menu-header-count {
+  font-family: var(--font-heading, 'Cinzel', serif);
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #5B0E16;
+  background: rgba(212, 175, 55, 0.2);
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+}
+
+.explore-chapters-list {
+  list-style: none;
+  padding: 0.4rem 0;
+  margin: 0;
+  max-height: 440px;
+  overflow-y: auto;
+}
+
+.explore-chapter-item {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.8rem 1.25rem;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.12);
+  transition: background 0.18s ease, color 0.18s ease;
+  box-sizing: border-box;
+}
+
+.explore-chapter-item:last-child {
+  border-bottom: none;
+}
+
+.explore-chapter-item:hover {
+  background: #FAF3E6;
+}
+
+.explore-chapter-item.selected {
+  background: #F8EDE0;
+  border-left: 3.5px solid #D4AF37;
+}
+
+.item-num-badge {
+  font-family: var(--font-heading, 'Cinzel', serif);
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #FFE082;
+  background: #5B0E16;
+  padding: 0.22rem 0.55rem;
+  border-radius: 5px;
+  flex-shrink: 0;
+  min-width: 28px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.explore-chapter-item.selected .item-num-badge {
+  box-shadow: 0 0 0 1.5px #D4AF37;
+}
+
+.item-text-group {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1 1 auto;
+  gap: 0.15rem;
+  overflow: hidden;
+}
+
+.item-title {
+  font-family: var(--font-heading, 'Cinzel', serif);
+  font-size: 0.94rem;
+  font-weight: 600;
+  color: #381A14;
+  line-height: 1.35;
+}
+
+.explore-chapter-item.selected .item-title {
+  color: #5B0E16;
+  font-weight: 700;
+}
+
+.item-subtitle {
+  font-family: var(--font-body, 'Crimson Text', serif);
+  font-size: 0.84rem;
+  color: #6D4A3E;
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.item-status-icon {
+  font-size: 0.85rem;
+  flex-shrink: 0;
+  margin-left: 0.5rem;
+}
+
+.item-status-icon.active {
+  color: #5B0E16;
+  font-weight: 800;
+}
+
+.item-status-icon.idle {
+  color: rgba(212, 175, 55, 0.4);
+  font-size: 0.75rem;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.explore-chapter-item:hover .item-status-icon.idle {
+  transform: translateX(3px);
+  color: #8C4010;
+}
+
+/* ================================================================= */
+/* RESPONSIVE MEDIA QUERIES FOR EXPLORE NAV                          */
+/* ================================================================= */
+
+@media (max-width: 768px) {
+  .explore-tradition-navigator {
+    padding: 0.65rem 0;
+  }
+
+  .explore-nav-trigger {
+    padding: 0.6rem 0.95rem;
+    min-height: 50px;
+  }
+
+  .explore-trigger-title {
+    font-size: 0.94rem;
+  }
+
+  .explore-chapter-item {
+    padding: 0.75rem 0.95rem;
+    gap: 0.75rem;
+  }
+
+  .item-subtitle {
+    white-space: normal;
+    font-size: 0.8rem;
+  }
+
+  .explore-dropdown-overlay {
+    max-height: 380px;
+  }
+}
+
+@media (max-width: 480px) {
+  .explore-badge-line {
+    gap: 0.45rem;
+  }
+
+  .explore-label-tag {
+    font-size: 0.62rem;
+  }
+
+  .explore-chapter-indicator {
+    font-size: 0.65rem;
+    padding: 0.1rem 0.45rem;
+  }
+
+  .explore-trigger-action .explore-action-label {
+    display: none;
+  }
+}
+
+/* --- Chapter 04 Living Traditions Museum Layout & Proportions --- */
+.living-traditions-section {
+  padding-top: 3rem;
+  padding-bottom: 4rem;
+}
+
+.living-traditions-section .origins-header-block {
+  margin-bottom: 2.6rem;
+}
+
+.living-traditions-section .origins-foundation-spread {
+  padding: 2.2rem 2.4rem;
+  background: #FFFDF9;
+  border: 1.5px solid rgba(212, 175, 55, 0.42);
+  border-radius: 18px;
+  box-shadow: 0 12px 36px rgba(92, 6, 24, 0.07), 0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+  margin-bottom: 2.5rem;
+}
+
+.living-traditions-section .foundation-content-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 2.6rem;
+  align-items: start;
+}
+
+.living-traditions-section .foundation-content-grid.reverse-grid {
+  grid-template-columns: 1fr 1.2fr;
+}
+
+/* Media Pane & Prominent Image Display */
+.living-traditions-section .foundation-media-pane {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.living-traditions-section .foundation-image-blend-wrapper {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 12px 32px rgba(92, 6, 24, 0.12);
+  background: #F4EAD4;
+}
+
+.living-traditions-section .foundation-blend-img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 11;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.living-traditions-section .foundation-blend-img.fit-contain {
+  object-fit: contain;
+  background: #2D020B;
+}
+
+.living-traditions-section .foundation-blend-img:hover {
+  transform: scale(1.02);
+}
+
+.living-traditions-section .blend-gold-border {
+  position: absolute;
+  inset: 0;
+  border: 1.5px solid rgba(212, 175, 55, 0.5);
+  border-radius: 14px;
+  pointer-events: none;
+}
+
+/* Archival Documentary Caption Plaque */
+.foundation-media-caption {
+  background: rgba(250, 246, 238, 0.95);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 8px;
+  padding: 0.65rem 0.95rem;
+  box-shadow: 0 2px 8px rgba(92, 6, 24, 0.03);
+}
+
+.foundation-media-caption .caption-tag {
+  display: inline-block;
+  font-family: var(--font-heading);
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #B45309;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.2rem;
+}
+
+.foundation-media-caption .caption-desc {
+  font-family: var(--font-body, 'Crimson Text', serif);
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: #4A2818;
+  margin: 0;
+}
+
+/* Text Pane Typography & Readability */
+.living-traditions-section .origins-section-label {
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #B45309;
+  display: inline-block;
+  margin-bottom: 0.45rem;
+}
+
+.living-traditions-section .keepers-section-title {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: #5B0E16;
+  line-height: 1.28;
+  margin-bottom: 0.9rem;
+  text-align: left;
+}
+
+.living-traditions-section .origins-lead-text {
+  font-family: var(--font-body, 'Crimson Text', serif);
+  font-size: 1.18rem;
+  font-weight: 400;
+  line-height: 1.78;
+  color: #2D020B;
+  margin-bottom: 1.1rem;
+}
+
+.living-traditions-section .tradition-paragraph {
+  font-family: var(--font-body, 'Crimson Text', serif);
+  font-size: 1.08rem; /* 17.3px */
+  line-height: 1.75;
+  color: #381E1C;
+  margin-bottom: 1.1rem;
+}
+
+.living-traditions-section .tradition-paragraph strong {
+  color: #5B0E16;
+  font-weight: 700;
+}
+
+.living-traditions-section .profile-point {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 0.9rem;
+  padding: 0.75rem 1rem;
+  background: rgba(248, 244, 235, 0.75);
+  border-left: 3px solid #D4AF37;
+  border-radius: 0 8px 8px 0;
+  transition: background 0.2s ease;
+}
+
+.living-traditions-section .profile-point:hover {
+  background: rgba(248, 244, 235, 0.95);
+}
+
+.living-traditions-section .point-bullet-ornament {
+  color: #B45309;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  margin-top: 0.15rem;
+  flex-shrink: 0;
+}
+
+.living-traditions-section .profile-point-text {
+  font-family: var(--font-body, 'Crimson Text', serif);
+  font-size: 1.06rem;
+  line-height: 1.68;
+  color: #2D1412;
+  margin: 0;
+}
+
+.living-traditions-section .profile-point-text strong {
+  color: #5B0E16;
+  font-weight: 700;
+}
+
+.living-traditions-section .foundation-era-inline-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.15) 0%, rgba(255, 238, 187, 0.3) 100%);
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  border-radius: 999px;
+  padding: 0.4rem 1.1rem;
+  margin-top: 0.9rem;
+}
+
+.living-traditions-section .era-badge-dot {
+  color: #B45309;
+  font-size: 0.65rem;
+}
+
+.living-traditions-section .era-badge-text {
+  font-family: var(--font-heading, 'Cinzel', serif);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #5B0E16;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.living-traditions-section .foundation-era-inline-badge.centered {
+  margin: 0 auto;
+}
+
+/* Responsiveness for Living Traditions Spreads */
+@media (max-width: 960px) {
+  .living-traditions-section .foundation-content-grid,
+  .living-traditions-section .foundation-content-grid.reverse-grid {
+    grid-template-columns: 1fr;
+    gap: 1.8rem;
+  }
+
+  .living-traditions-section .origins-foundation-spread {
+    padding: 1.8rem 1.6rem;
+  }
+
+  .editorial-blocks-grid-2,
+  .editorial-blocks-grid-3,
+  .ringan-rituals-dual-grid {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .living-traditions-section .origins-foundation-spread {
+    padding: 1.4rem 1.1rem;
+    border-radius: 14px;
+  }
+
+  .living-traditions-section .keepers-section-title {
+    font-size: 1.45rem;
+  }
+
+  .living-traditions-section .origins-lead-text {
+    font-size: 1.08rem;
+    line-height: 1.7;
+  }
+
+  .living-traditions-section .tradition-paragraph,
+  .living-traditions-section .profile-point-text {
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  .editorial-featured-media-wrap,
+  .dhava-featured-media-wrap,
+  .ringan-featured-media-wrap,
+  .rhythm-featured-media-wrap {
+    margin: 1.2rem auto 1.4rem auto;
+    gap: 0.6rem;
+  }
+
+  .editorial-featured-media-wrap .foundation-media-caption,
+  .dhava-featured-media-wrap .foundation-media-caption,
+  .ringan-featured-media-wrap .foundation-media-caption,
+  .rhythm-featured-media-wrap .foundation-media-caption {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+    padding: 0.65rem 0.95rem;
+  }
+
+  .editorial-blocks-grid-2,
+  .editorial-blocks-grid-3,
+  .ringan-rituals-dual-grid {
+    grid-template-columns: 1fr;
+    gap: 1.1rem;
+  }
+
+  .editorial-card,
+  .ritual-card {
+    padding: 1.15rem 1.25rem;
+  }
+
+  .editorial-narrative-block,
+  .dhava-narrative-block {
+    margin-top: 1.2rem;
+  }
+
+  .editorial-narrative-block .tradition-paragraph,
+  .dhava-narrative-block .tradition-paragraph {
+    font-size: 1.02rem;
+    line-height: 1.7;
+    margin-bottom: 1.1rem;
+  }
+
+  .editorial-concluding-block,
+  .editorial-closing-badge-wrap,
+  .dhava-closing-badge-wrap,
+  .ringan-concluding-box {
+    margin-top: 1.4rem;
+    padding-top: 1.1rem;
+  }
+
+  .warkari-timeline {
+    padding-left: 2.8rem;
+  }
+
+  .warkari-timeline-spine {
+    left: 1rem;
+  }
+
+  .timeline-icon-node {
+    left: -2.8rem;
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
+
+  .stage-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+  }
+
+  .timeline-stage-card {
+    padding: 1rem 1.1rem;
+  }
+}
+
+/* ================================================================= */
+/* UNIFIED EDITORIAL SYSTEM FOR LIVING TRADITIONS (CHAPTER 04)        */
+/* ================================================================= */
+.editorial-section-flow,
+.dhava-section-flow,
+.ringan-section-flow {
+  width: 100%;
+}
+
+.editorial-intro-block,
+.dhava-intro-block,
+.ringan-intro-block {
+  width: 100%;
+}
+
+.editorial-featured-media-wrap,
+.dhava-featured-media-wrap,
+.ringan-featured-media-wrap,
+.rhythm-featured-media-wrap {
+  width: 100%;
+  max-width: 980px;
+  margin: 1.6rem auto 1.8rem auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.editorial-featured-media-wrap .foundation-image-blend-wrapper,
+.dhava-featured-media-wrap .foundation-image-blend-wrapper,
+.ringan-featured-media-wrap .foundation-image-blend-wrapper,
+.rhythm-featured-media-wrap .foundation-image-blend-wrapper {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(92, 6, 24, 0.1);
+  background: #F4EAD4;
+}
+
+.editorial-featured-media-wrap .foundation-blend-img,
+.dhava-featured-media-wrap .foundation-blend-img,
+.ringan-featured-media-wrap .foundation-blend-img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  border-radius: 14px;
+  transition: transform 0.4s ease;
+}
+
+.editorial-featured-media-wrap .foundation-blend-img.fit-contain,
+.rhythm-featured-media-wrap .foundation-blend-img.fit-contain {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: contain;
+  background: #2D020B;
+  display: block;
+  border-radius: 14px;
+}
+
+.editorial-featured-media-wrap .foundation-blend-img:hover,
+.dhava-featured-media-wrap .foundation-blend-img:hover,
+.ringan-featured-media-wrap .foundation-blend-img:hover {
+  transform: scale(1.015);
+}
+
+.editorial-featured-media-wrap .foundation-media-caption,
+.dhava-featured-media-wrap .foundation-media-caption,
+.ringan-featured-media-wrap .foundation-media-caption,
+.rhythm-featured-media-wrap .foundation-media-caption {
+  display: flex;
+  align-items: baseline;
+  gap: 1.1rem;
+  padding: 0.75rem 1.25rem;
+  background: rgba(252, 249, 242, 0.98);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(92, 6, 24, 0.03);
+}
+
+.editorial-featured-media-wrap .caption-tag,
+.dhava-featured-media-wrap .caption-tag,
+.ringan-featured-media-wrap .caption-tag,
+.rhythm-featured-media-wrap .caption-tag {
+  flex-shrink: 0;
+  margin-bottom: 0;
+}
+
+.editorial-featured-media-wrap .caption-desc,
+.dhava-featured-media-wrap .caption-desc,
+.ringan-featured-media-wrap .caption-desc,
+.rhythm-featured-media-wrap .caption-desc {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.editorial-narrative-block,
+.dhava-narrative-block {
+  width: 100%;
+  max-width: 980px;
+  margin: 1.6rem auto 0 auto;
+}
+
+.editorial-narrative-block .tradition-paragraph,
+.dhava-narrative-block .tradition-paragraph {
+  margin-bottom: 1.25rem;
+  line-height: 1.82;
+  font-size: 1.1rem;
+  color: #2D1412;
+}
+
+.editorial-narrative-block .tradition-paragraph:last-child,
+.dhava-narrative-block .tradition-paragraph:last-child {
+  margin-bottom: 0;
+}
+
+/* Balanced 2-Column & 3-Column Grids for Sub-Blocks */
+.editorial-blocks-grid-2,
+.ringan-rituals-dual-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin: 1.5rem auto;
+  max-width: 980px;
+  width: 100%;
+}
+
+.editorial-blocks-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.4rem;
+  margin: 1.5rem auto;
+  max-width: 980px;
+  width: 100%;
+}
+
+.editorial-card,
+.ritual-card {
+  background: rgba(253, 250, 243, 0.95);
+  border: 1.5px solid rgba(212, 175, 55, 0.38);
+  border-radius: 12px;
+  padding: 1.35rem 1.5rem;
+  box-shadow: 0 4px 14px rgba(92, 6, 24, 0.04);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.editorial-card:hover,
+.ritual-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(92, 6, 24, 0.08);
+  border-color: rgba(212, 175, 55, 0.6);
+}
+
+.editorial-card-header,
+.ritual-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+  padding-bottom: 0.45rem;
+}
+
+.editorial-card-ornament,
+.ritual-ornament {
+  color: #B45309;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+
+.editorial-card-title,
+.ritual-title {
+  font-family: var(--font-heading);
+  font-size: 1.18rem;
+  font-weight: 700;
+  color: #5B0E16;
+  margin: 0;
+}
+
+.editorial-card-marathi,
+.marathi-term {
+  font-family: 'Marcellus', 'Yatra One', serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #B45309;
+  margin-left: 0.35rem;
+}
+
+.editorial-card-desc,
+.ritual-desc {
+  font-family: var(--font-body, 'Crimson Text', serif);
+  font-size: 1.05rem;
+  line-height: 1.72;
+  color: #3A1F1D;
+  margin: 0;
+}
+
+.editorial-concluding-block,
+.ringan-concluding-box {
+  width: 100%;
+  max-width: 980px;
+  margin: 1.6rem auto 0 auto;
+  padding-top: 1.4rem;
+  border-top: 1px dashed rgba(212, 175, 55, 0.35);
+}
+
+.editorial-closing-badge-wrap,
+.dhava-closing-badge-wrap {
+  margin-top: 2rem;
+  padding-top: 1.4rem;
+  border-top: 1px dashed rgba(212, 175, 55, 0.35);
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+/* ================================================================= */
+/* DAILY RHYTHM CHRONOLOGICAL TIMELINE STYLES                       */
+/* ================================================================= */
+.rhythm-featured-media-wrap {
+  width: 100%;
+  max-width: 900px;
+  margin: 1.6rem auto 2.4rem auto;
+}
+
+.warkari-timeline {
+  position: relative;
+  max-width: 900px;
+  margin: 2rem auto 1.5rem auto;
+  padding: 0.5rem 0 0.5rem 3.5rem;
+}
+
+.warkari-timeline-spine {
+  position: absolute;
+  left: 1.45rem;
+  top: 1.2rem;
+  bottom: 1.2rem;
+  width: 3px;
+  background: linear-gradient(180deg, #D4AF37 0%, #B45309 35%, #5B0E16 75%, #D4AF37 100%);
+  border-radius: 3px;
+}
+
+.timeline-stage-item {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.timeline-stage-item:last-child {
+  margin-bottom: 0;
+}
+
+.timeline-icon-node {
+  position: absolute;
+  left: -3.5rem;
+  top: 0.8rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #FFFDF9;
+  border: 2.5px solid #D4AF37;
+  box-shadow: 0 4px 14px rgba(92, 6, 24, 0.14);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  z-index: 2;
+  transition: all 0.25s ease;
+}
+
+.timeline-stage-item:hover .timeline-icon-node {
+  transform: scale(1.1);
+  border-color: #5B0E16;
+  background: #FFF7EC;
+}
+
+.timeline-stage-card {
+  background: rgba(253, 250, 243, 0.95);
+  border: 1.5px solid rgba(212, 175, 55, 0.35);
+  border-radius: 12px;
+  padding: 1.3rem 1.6rem;
+  box-shadow: 0 4px 16px rgba(92, 6, 24, 0.04);
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.timeline-stage-card:hover {
+  border-color: rgba(212, 175, 55, 0.6);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 22px rgba(92, 6, 24, 0.08);
+}
+
+.stage-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 0.6rem;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.22);
+  padding-bottom: 0.45rem;
+}
+
+.stage-title-group {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.stage-num-pill {
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #5B0E16;
+  background: rgba(212, 175, 55, 0.2);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  letter-spacing: 0.05em;
+}
+
+.stage-title {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #5B0E16;
+  margin: 0;
+}
+
+.stage-time-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #B45309;
+  background: rgba(180, 83, 9, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 6px;
+  padding: 0.25rem 0.75rem;
+  letter-spacing: 0.03em;
+}
+
+.stage-phase-name {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: #B45309;
+  margin-bottom: 0.45rem;
+}
+
+.stage-desc {
+  font-family: var(--font-body, 'Crimson Text', serif);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #3A1F1D;
+  margin: 0;
 }
 
 /* --- Unobtrusive Floating Chapter Index Pill (Bottom Corner) --- */
@@ -11506,7 +12508,7 @@ ul {
 .chapter-page-hero-banner {
   background: linear-gradient(180deg, #5B0E16 0%, #3D040A 100%);
   color: #FFFDF8;
-  padding: 4.5rem 0 2.2rem 0;
+  padding: 4.2rem 0 2rem 0;
   position: relative;
   overflow: hidden;
   border-bottom: 3px solid var(--color-gold);
@@ -11537,6 +12539,17 @@ ul {
   margin-bottom: 0.8rem;
 }
 
+.crumb-link {
+  color: #FFE082;
+  cursor: pointer;
+  transition: color 0.2s ease, text-decoration 0.2s ease;
+}
+
+.crumb-link:hover {
+  color: #FFFFFF;
+  text-decoration: underline;
+}
+
 .crumb-sep {
   opacity: 0.5;
 }
@@ -11561,6 +12574,281 @@ ul {
   max-width: 720px;
   font-weight: 300;
   line-height: 1.6;
+}
+
+/* ================================================================= */
+/* INTEGRATED HERO CHAPTER NAVIGATION CAROUSEL (WARI TRADITION)      */
+/* ================================================================= */
+
+.hero-chapter-carousel-section {
+  position: relative;
+  z-index: 2;
+  margin-top: 2rem;
+  padding-top: 1.6rem;
+  border-top: 1px solid rgba(212, 175, 55, 0.28);
+  width: 100%;
+}
+
+.hero-carousel-row {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  position: relative;
+  width: 100%;
+}
+
+/* Circular Arrow Navigation Controls */
+.hero-carousel-arrow {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(45, 2, 11, 0.85);
+  border: 1.5px solid rgba(212, 175, 55, 0.7);
+  color: #FFE082;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.22s ease-in-out;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 5;
+  outline: none;
+}
+
+.hero-carousel-arrow:hover:not(:disabled) {
+  background: #7A141E;
+  border-color: #FFFDF8;
+  color: #FFFFFF;
+  transform: scale(1.08);
+  box-shadow: 0 0 14px rgba(212, 175, 55, 0.55);
+}
+
+.hero-carousel-arrow:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
+.hero-carousel-arrow:disabled {
+  opacity: 0.22;
+  cursor: not-allowed;
+  pointer-events: none;
+  box-shadow: none;
+}
+
+/* Horizontal Scroll Track */
+.hero-carousel-track {
+  display: flex;
+  align-items: stretch;
+  gap: 0.85rem;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 0.35rem 0.2rem 0.6rem 0.2rem;
+  flex: 1 1 auto;
+}
+
+.hero-carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+/* Chapter Card (Compact Rectangular Design) */
+.hero-carousel-card {
+  flex: 0 0 auto;
+  width: 175px;
+  min-height: 86px;
+  padding: 0.85rem 1rem;
+  background: #FFFDF8;
+  border: 1.5px solid rgba(212, 175, 55, 0.4);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+  outline: none;
+}
+
+.hero-carousel-card:hover:not(.active) {
+  background: #FFFFFF;
+  border-color: #D4AF37;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3), 0 0 10px rgba(212, 175, 55, 0.25);
+}
+
+/* Active Highlighted Chapter Card */
+.hero-carousel-card.active {
+  background: linear-gradient(145deg, #3A050D 0%, #1E0106 100%);
+  border: 1.5px solid #D4AF37;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5), 0 0 16px rgba(212, 175, 55, 0.45);
+  transform: translateY(-1px);
+}
+
+.carousel-card-badge-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.45rem;
+}
+
+.carousel-card-num {
+  font-family: 'Cinzel', serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #7A141E;
+  transition: color 0.2s ease;
+}
+
+.hero-carousel-card.active .carousel-card-num {
+  color: #FFE082;
+}
+
+.carousel-card-indicator {
+  font-size: 0.68rem;
+  color: #FFE082;
+  text-shadow: 0 0 8px rgba(212, 175, 55, 0.7);
+}
+
+.carousel-card-title {
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.32;
+  color: #3D040A;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  transition: color 0.2s ease;
+}
+
+.hero-carousel-card.active .carousel-card-title {
+  color: #FFFDF8;
+  font-weight: 700;
+}
+
+/* Pagination Indicators Row */
+.hero-carousel-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  margin-top: 0.85rem;
+}
+
+.hero-carousel-dot {
+  width: 7px;
+  height: 5px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.32);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
+}
+
+.hero-carousel-dot:hover {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.hero-carousel-dot.active {
+  width: 24px;
+  background: #D4AF37;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.7);
+}
+
+/* --- Tablet Responsive Styling --- */
+@media (max-width: 900px) {
+  .hero-chapter-carousel-section {
+    margin-top: 1.6rem;
+    padding-top: 1.3rem;
+  }
+
+  .hero-carousel-row {
+    gap: 0.65rem;
+  }
+
+  .hero-carousel-arrow {
+    width: 36px;
+    height: 36px;
+    font-size: 0.82rem;
+  }
+
+  .hero-carousel-card {
+    width: 152px;
+    min-height: 80px;
+    padding: 0.75rem 0.85rem;
+  }
+
+  .carousel-card-title {
+    font-size: 0.78rem;
+  }
+}
+
+/* --- Mobile Responsive Styling (360px - 640px) --- */
+@media (max-width: 640px) {
+  .hero-chapter-carousel-section {
+    margin-top: 1.3rem;
+    padding-top: 1.1rem;
+  }
+
+  .hero-carousel-row {
+    gap: 0.35rem;
+  }
+
+  .hero-carousel-arrow {
+    width: 32px;
+    height: 32px;
+    font-size: 0.75rem;
+  }
+
+  .hero-carousel-track {
+    gap: 0.6rem;
+    padding-bottom: 0.35rem;
+  }
+
+  .hero-carousel-card {
+    width: 135px;
+    min-height: 74px;
+    padding: 0.65rem 0.75rem;
+    border-radius: 10px;
+  }
+
+  .carousel-card-badge-row {
+    margin-bottom: 0.35rem;
+  }
+
+  .carousel-card-num {
+    font-size: 0.76rem;
+  }
+
+  .carousel-card-title {
+    font-size: 0.75rem;
+    line-height: 1.25;
+  }
+
+  .hero-carousel-dots {
+    margin-top: 0.65rem;
+    gap: 0.35rem;
+  }
+
+  .hero-carousel-dot {
+    width: 6px;
+    height: 4px;
+  }
+
+  .hero-carousel-dot.active {
+    width: 18px;
+  }
 }
 
 /* --- Chapter Footer Pagination Bar --- */
@@ -14494,49 +15782,54 @@ ul {
   }
 
   /* --- Navigation & Touch Targets --- */
-  /* Horizontal Chapter Stepper Ribbon */
-  .chapter-ribbon-bar {
-    position: sticky;
-    top: 0;
-    z-index: 30;
-    padding: 0.55rem 0;
-    background: rgba(253, 251, 247, 0.98);
-    backdrop-filter: blur(12px);
-    box-shadow: 0 4px 18px rgba(92, 6, 24, 0.06);
+  /* Editorial Chapter & Subchapter Navigation Bars */
+  .chapter-editorial-nav.chapter-ribbon-bar {
+    padding: 0.1rem 0;
+    background: rgba(250, 246, 239, 0.98);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 8px rgba(92, 6, 24, 0.03);
   }
 
-  .chapter-ribbon-scroll {
-    padding: 0.4rem 0.6rem;
-    gap: 0.5rem;
+  .subchapter-editorial-nav.subchapter-segmented-nav {
+    padding: 0.1rem 0;
+    background: rgba(244, 239, 230, 0.98);
+    backdrop-filter: blur(10px);
+  }
+
+  .chapter-editorial-track.chapter-ribbon-scroll,
+  .subchapter-editorial-track.subchapter-tabs-track {
+    padding: 0 0.5rem;
+    gap: 0.25rem;
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
-    mask-image: linear-gradient(to right, transparent, black 12px, black calc(100% - 12px), transparent);
-    -webkit-mask-image: linear-gradient(to right, transparent, black 12px, black calc(100% - 12px), transparent);
+    mask-image: linear-gradient(to right, transparent, black 14px, black calc(100% - 18px), transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 14px, black calc(100% - 18px), transparent);
   }
 
-  .chapter-ribbon-scroll::-webkit-scrollbar {
-    display: none;
+  .editorial-chapter-item.ribbon-item {
+    min-height: 40px;
+    padding: 0.45rem 0.65rem;
+    border-radius: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
   }
 
-  .ribbon-item {
-    min-height: 44px;
-    /* Touch target 44px min */
-    padding: 0.55rem 1.1rem;
-    border-radius: 999px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    font-size: 0.86rem;
+  .editorial-chapter-item .chapter-item-name.ribbon-title {
+    font-size: 0.82rem;
   }
 
-  .ribbon-num {
-    font-size: 0.76rem;
+  .editorial-subchapter-item.subchapter-nav-tab {
+    min-height: 40px;
+    padding: 0.45rem 0.75rem;
+    border-radius: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
   }
 
-  .ribbon-title {
-    font-size: 0.86rem;
-    font-weight: 600;
+  .editorial-subchapter-item .subchapter-item-title.subchapter-tab-text {
+    font-size: 0.92rem;
   }
 
   /* Floating Back Button */
@@ -15200,7 +16493,6 @@ ul {
   /* Cards & Navigation adjustments */
   .saint-profile-card.parchment-card,
   .origins-foundation-spread,
-  .journey-preview-card,
   .museum-artifact-showcase-grid,
   .museum-fullwidth-quote-banner {
     padding: 1.2rem 1rem;
@@ -15218,3 +16510,808 @@ ul {
     font-size: 0.85rem;
   }
 }
+
+/* ==========================================================================
+   CHAPTER DIRECTORY & PALKHI EXPLORER ENHANCEMENTS
+   ========================================================================== */
+
+/* Directory Grid on Chapter 04 */
+.chapter-directory-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.2rem;
+  margin-top: 2.4rem;
+}
+
+.chapter-directory-card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-ivory);
+  border: 1px solid rgba(212, 175, 55, 0.32);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 10px 28px rgba(92, 6, 24, 0.06);
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+  text-decoration: none;
+}
+
+.chapter-directory-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--color-gold);
+  box-shadow: 0 18px 40px rgba(92, 6, 24, 0.14);
+}
+
+.chapter-directory-card .preview-card-media {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+  background: #FFF7EC;
+}
+
+.chapter-directory-card .preview-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.6s ease;
+}
+
+.chapter-directory-card:hover .preview-card-img {
+  transform: scale(1.05);
+}
+
+.chapter-directory-card .preview-card-body {
+  padding: 1.8rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* Sections Included Sub-block */
+.preview-sections-list {
+  background: rgba(250, 246, 239, 0.75);
+  border: 1px solid rgba(212, 175, 55, 0.22);
+  border-radius: 10px;
+  padding: 0.9rem 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+.sections-list-label {
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-maroon);
+  margin-bottom: 0.45rem;
+}
+
+.section-bullet-item {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-size: 0.88rem;
+  color: #3D2B1F;
+  line-height: 1.45;
+  margin-top: 0.25rem;
+}
+
+.bullet-ornament {
+  color: var(--color-saffron);
+  font-size: 0.62rem;
+  flex-shrink: 0;
+}
+
+/* Chapter 03: Compact Palkhi Explorer Call-to-Action */
+.chapter-palkhi-explorer-cta {
+  margin: 3rem auto 1.5rem auto;
+  max-width: 820px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.palkhi-explorer-cta-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  background: linear-gradient(135deg, rgba(255, 253, 248, 0.98), rgba(250, 246, 239, 0.95));
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-left: 4px solid var(--color-maroon);
+  border-radius: 12px;
+  padding: 1.4rem 1.8rem;
+  box-shadow: 0 4px 18px rgba(91, 14, 22, 0.05);
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.palkhi-explorer-cta-inner:hover {
+  border-color: rgba(212, 175, 55, 0.55);
+  box-shadow: 0 6px 24px rgba(91, 14, 22, 0.09);
+}
+
+.palkhi-explorer-text-group {
+  flex: 1;
+  min-width: 0;
+}
+
+.palkhi-explorer-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-heading);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-saffron);
+  margin-bottom: 0.25rem;
+}
+
+.palkhi-explorer-ornament {
+  font-size: 0.65rem;
+}
+
+.palkhi-explorer-heading {
+  font-family: 'Cinzel', serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-maroon);
+  margin: 0 0 0.25rem 0;
+  line-height: 1.3;
+}
+
+.palkhi-explorer-desc {
+  font-size: 0.88rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.palkhi-explorer-btn-wrap {
+  flex-shrink: 0;
+}
+
+.btn-palkhi-explorer {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  background: var(--color-maroon);
+  color: #FFFDF8;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  padding: 0.75rem 1.4rem;
+  min-height: 48px;
+  border-radius: 999px;
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.btn-palkhi-explorer:hover {
+  background: #7A141E;
+  border-color: var(--color-gold);
+  color: #FFE082;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(91, 14, 22, 0.22);
+}
+
+.btn-palkhi-explorer i {
+  transition: transform 0.25s ease;
+}
+
+.btn-palkhi-explorer:hover i {
+  transform: translateX(4px);
+}
+
+/* ==========================================================================
+   MOBILE & TABLET RESPONSIVENESS (360px - 1024px)
+   ========================================================================== */
+
+@media (max-width: 1024px) {
+  .chapter-directory-grid {
+    gap: 1.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .chapter-directory-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .chapter-directory-card .preview-card-media {
+    height: 200px;
+  }
+
+  .chapter-directory-card .preview-card-body {
+    padding: 1.4rem;
+  }
+
+  .chapter-directory-card .preview-chap-title {
+    font-size: 1.3rem;
+  }
+
+  .palkhi-explorer-cta-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1.25rem 1.2rem;
+    gap: 1.2rem;
+  }
+
+  .palkhi-explorer-btn-wrap {
+    width: 100%;
+  }
+
+  .btn-palkhi-explorer {
+    width: 100%;
+    min-height: 48px;
+  }
+}
+
+@media (max-width: 480px) {
+  .chapter-directory-card .preview-card-media {
+    height: 180px;
+  }
+
+  .chapter-directory-card .preview-card-body {
+    padding: 1.2rem 1rem;
+  }
+
+  .chapter-directory-card .preview-chap-title {
+    font-size: 1.2rem;
+  }
+
+  .chapter-directory-card .preview-chap-desc {
+    font-size: 0.88rem;
+  }
+
+  .preview-sections-list {
+    padding: 0.75rem 0.85rem;
+  }
+
+  .section-bullet-item {
+    font-size: 0.82rem;
+  }
+
+  .palkhi-explorer-heading {
+    font-size: 1.15rem;
+  }
+
+  .palkhi-explorer-desc {
+    font-size: 0.84rem;
+  }
+}
+
+/* ==========================================================================
+   CHAPTER 02: REDESIGNED INTERACTIVE SACRED JOURNEY TIMELINE & MODAL
+   ========================================================================== */
+
+.shiva-timeline-guide {
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-style: italic;
+  color: var(--color-text-muted);
+  margin: 0.4rem 0 0 0;
+}
+
+.shiva-timeline-wrapper {
+  width: 100%;
+  position: relative;
+  margin-top: 1.5rem;
+}
+
+.shiva-timeline-track {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  position: relative;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0.5rem 0 1rem 0;
+}
+
+.shiva-timeline-axis {
+  position: absolute;
+  top: 48px;
+  left: 65px;
+  right: 65px;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(212, 175, 55, 0.25), #D4AF37 15%, #D4AF37 85%, rgba(212, 175, 55, 0.25));
+  z-index: 1;
+  pointer-events: none;
+}
+
+.shiva-milestone-node {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 180px;
+  background: none;
+  border: none;
+  padding: 0.5rem 0.35rem;
+  cursor: pointer;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
+  border-radius: 12px;
+  user-select: none;
+}
+
+.shiva-milestone-node:hover,
+.shiva-milestone-node:focus-visible {
+  transform: translateY(-5px);
+}
+
+.shiva-node-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 0.35rem;
+}
+
+.shiva-node-step {
+  font-family: var(--font-heading);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--color-saffron);
+  line-height: 1;
+  margin-bottom: 0.2rem;
+}
+
+.shiva-node-diamond {
+  color: #D4AF37;
+  font-size: 0.65rem;
+  line-height: 1;
+  text-shadow: 0 0 6px rgba(212, 175, 55, 0.5);
+  transition: transform 0.3s ease;
+}
+
+.shiva-milestone-node:hover .shiva-node-diamond {
+  transform: scale(1.3);
+}
+
+.shiva-node-avatar-frame {
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  margin: 0.35rem 0 0.85rem 0;
+  box-shadow: 0 8px 22px rgba(92, 6, 24, 0.14);
+  background: #FAF3E8;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.shiva-milestone-node:hover .shiva-node-avatar-frame {
+  transform: scale(1.08);
+  box-shadow: 0 12px 28px rgba(212, 175, 55, 0.4);
+}
+
+.shiva-node-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.shiva-node-gold-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2.2px solid #D4AF37;
+  pointer-events: none;
+  transition: border-color 0.3s ease;
+}
+
+.shiva-milestone-node:hover .shiva-node-gold-ring {
+  border-color: #FFE082;
+}
+
+.shiva-node-glow {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.5) 0%, transparent 70%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.shiva-milestone-node:hover .shiva-node-glow {
+  opacity: 1;
+}
+
+.shiva-node-text-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.shiva-node-title {
+  font-family: 'Cinzel', serif;
+  font-size: 0.96rem;
+  font-weight: 700;
+  color: var(--color-maroon);
+  margin: 0 0 0.35rem 0;
+  line-height: 1.25;
+  transition: color 0.25s ease;
+}
+
+.shiva-milestone-node:hover .shiva-node-title {
+  color: #B45309;
+}
+
+.shiva-node-short-text {
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  line-height: 1.45;
+  margin: 0 0 0.65rem 0;
+  text-align: center;
+}
+
+.shiva-node-click-cue {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-heading);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-maroon);
+  background: rgba(212, 175, 55, 0.15);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  transition: all 0.25s ease;
+}
+
+.shiva-node-click-cue i {
+  font-size: 0.65rem;
+}
+
+.shiva-milestone-node:hover .shiva-node-click-cue {
+  background: var(--color-maroon);
+  color: #FFE082;
+  border-color: #D4AF37;
+  transform: translateY(-1px);
+}
+
+/* Tablet Layout (Between 769px and 1024px) */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .shiva-milestone-node {
+    width: 155px;
+  }
+  .shiva-node-avatar-frame {
+    width: 68px;
+    height: 68px;
+  }
+  .shiva-timeline-axis {
+    top: 45px;
+    left: 55px;
+    right: 55px;
+  }
+}
+
+/* Mobile Layout (<= 768px): Refined Vertical Timeline */
+@media (max-width: 768px) {
+  .shiva-timeline-track {
+    flex-direction: column;
+    gap: 1.6rem;
+    padding-left: 2.8rem;
+    align-items: stretch;
+    position: relative;
+    max-width: 100%;
+    margin-top: 1.5rem;
+  }
+
+  .shiva-timeline-axis {
+    left: 17px;
+    top: 12px;
+    bottom: 12px;
+    width: 2px;
+    height: auto;
+    background: linear-gradient(180deg, #D4AF37 0%, rgba(212, 175, 55, 0.35) 100%);
+  }
+
+  .shiva-milestone-node {
+    flex-direction: row;
+    align-items: flex-start;
+    text-align: left;
+    width: 100%;
+    max-width: 100%;
+    padding: 0.5rem 0;
+    gap: 1rem;
+    position: relative;
+  }
+
+  .shiva-milestone-node:hover,
+  .shiva-milestone-node:focus-visible {
+    transform: translateX(4px);
+  }
+
+  .shiva-node-indicator {
+    position: absolute;
+    left: -2.8rem;
+    top: 18px;
+    margin-bottom: 0;
+    width: 34px;
+    align-items: center;
+  }
+
+  .shiva-node-avatar-frame {
+    width: 64px;
+    height: 64px;
+    min-width: 64px;
+    margin: 0;
+    flex-shrink: 0;
+  }
+
+  .shiva-node-text-wrap {
+    align-items: flex-start;
+    text-align: left;
+    flex: 1;
+  }
+
+  .shiva-node-short-text {
+    text-align: left;
+    margin-bottom: 0.45rem;
+  }
+
+  .shiva-node-click-cue {
+    align-self: flex-start;
+  }
+}
+
+/* --- Interactive Milestone Modal Window --- */
+.shiva-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 2, 7, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  animation: modalFadeIn 0.25s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.shiva-modal-card {
+  position: relative;
+  background: #FFFDF8;
+  border: 1.5px solid #D4AF37;
+  border-radius: 18px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5), 0 0 30px rgba(212, 175, 55, 0.2);
+  max-width: 820px;
+  width: 100%;
+  max-height: calc(100dvh - 40px);
+  max-height: calc(100vh - 40px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: modalScaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modalScaleUp {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.shiva-modal-close-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 20;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(92, 6, 24, 0.94);
+  border: 1.5px solid #D4AF37;
+  color: #FFE082;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.35);
+}
+
+.shiva-modal-close-btn:hover {
+  background: #7A141E;
+  transform: scale(1.08);
+  color: #FFF;
+  border-color: #FFF;
+}
+
+.shiva-modal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  max-height: calc(100dvh - 40px);
+  max-height: calc(100vh - 40px);
+  min-height: 0;
+  overflow: hidden;
+  flex: 1 1 auto;
+}
+
+.shiva-modal-image-pane {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  background: #2D020B;
+  overflow: hidden;
+  display: flex;
+  align-items: stretch;
+}
+
+.shiva-modal-featured-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.shiva-modal-img-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(45, 2, 11, 0.82) 100%);
+  pointer-events: none;
+}
+
+.shiva-modal-pill-tag {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  z-index: 2;
+  background: rgba(92, 6, 24, 0.92);
+  border: 1px solid rgba(212, 175, 55, 0.65);
+  color: #FFE082;
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 0.25rem 0.8rem;
+  border-radius: 999px;
+  backdrop-filter: blur(4px);
+}
+
+.shiva-modal-body-pane {
+  padding: 2.2rem 2.2rem 2rem 2.2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  max-height: calc(100dvh - 40px);
+  max-height: calc(100vh - 40px);
+}
+
+/* Custom scrollbars for modal */
+.shiva-modal-body-pane::-webkit-scrollbar,
+.shiva-modal-grid::-webkit-scrollbar {
+  width: 6px;
+}
+.shiva-modal-body-pane::-webkit-scrollbar-track,
+.shiva-modal-grid::-webkit-scrollbar-track {
+  background: rgba(212, 175, 55, 0.08);
+}
+.shiva-modal-body-pane::-webkit-scrollbar-thumb,
+.shiva-modal-grid::-webkit-scrollbar-thumb {
+  background: rgba(91, 14, 22, 0.4);
+  border-radius: 4px;
+}
+.shiva-modal-body-pane::-webkit-scrollbar-thumb:hover,
+.shiva-modal-grid::-webkit-scrollbar-thumb:hover {
+  background: rgba(91, 14, 22, 0.75);
+}
+
+.shiva-modal-title {
+  font-family: 'Cinzel Decorative', 'Cinzel', serif;
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--color-maroon);
+  margin: 0.35rem 0 0.4rem 0;
+  line-height: 1.25;
+}
+
+.shiva-modal-desc {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #3D2B1F;
+  margin: 0 0 1.5rem 0;
+  font-family: 'Crimson Pro', Georgia, serif;
+}
+
+.shiva-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: auto;
+  padding-top: 0.5rem;
+}
+
+.btn-shiva-modal-dismiss {
+  background: var(--color-maroon);
+  color: #FFFDF8;
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  padding: 0.65rem 1.4rem;
+  border-radius: 999px;
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-shiva-modal-dismiss:hover {
+  background: #7A141E;
+  border-color: var(--color-gold);
+  color: #FFE082;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(91, 14, 22, 0.2);
+}
+
+@media (max-width: 768px) {
+  .shiva-modal-backdrop {
+    padding: 0.75rem;
+  }
+
+  .shiva-modal-card {
+    max-height: calc(100dvh - 24px);
+    max-height: calc(100vh - 24px);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .shiva-modal-grid {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    max-height: calc(100dvh - 24px);
+    max-height: calc(100vh - 24px);
+  }
+
+  .shiva-modal-image-pane {
+    height: 210px;
+    min-height: 210px;
+    flex-shrink: 0;
+  }
+
+  .shiva-modal-body-pane {
+    padding: 1.5rem 1.25rem;
+    overflow-y: visible;
+    max-height: none;
+  }
+
+  .shiva-modal-title {
+    font-size: 1.25rem;
+  }
+
+  .shiva-modal-desc {
+    font-size: 0.95rem;
+    margin-bottom: 1.2rem;
+  }
+}
+
+

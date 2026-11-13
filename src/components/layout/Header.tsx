@@ -254,9 +254,9 @@ export const HeaderComponent: React.FC<HeaderProps> = ({ activeSection, onOpenMo
 
             <li>
               <a 
-                href="#palkhi-route" 
-                className={`nav-link ${currentPath === '/' && activeSection === 'palkhi-route' ? 'active' : ''}`} 
-                onClick={(e) => handleNavClick(e, 'palkhi-route')}
+                href="/#palkhi" 
+                className={`nav-link ${currentPath === '/' && (activeSection === 'palkhi' || activeSection === 'palkhis' || activeSection === 'palkhi-route') ? 'active' : ''}`} 
+                onClick={(e) => handleNavClick(e, 'palkhi')}
                 onMouseEnter={() => prefetchRoute('/palkhis')}
               >
                 Palkhis

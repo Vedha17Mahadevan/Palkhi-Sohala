@@ -70,14 +70,6 @@ export const OriginsSection: React.FC = () => {
       </div>
 
       <div className="tradition-container">
-        
-        {/* Section Header */}
-        <div className="origins-header-block text-center">
-          <span className="chapter-badge-pill">Chapter 01 • Origins of the Wari</span>
-          <h2 className="tradition-section-heading centered">The Tradition of the Pandharpur Wari</h2>
-          <div className="divider-split-gold center small"></div>
-        </div>
-
         {/* 1. Historical Foundation: Unified Spread Component */}
         <div className="origins-foundation-spread">
           <div className="foundation-spread-corner tl">❦</div>
@@ -116,7 +108,7 @@ export const OriginsSection: React.FC = () => {
         {/* Decorative Divider: Section Transition */}
         <div className="origins-decorative-separator" aria-hidden="true">
           <span className="separator-line"></span>
-          <span className="separator-motif">❖ ॥ पंढरीची वारी ॥ ❖</span>
+          <span className="separator-motif">❖</span>
           <span className="separator-line"></span>
         </div>
 
@@ -278,13 +270,6 @@ export const OriginsSection: React.FC = () => {
                   </div>
                 </div>
               ))}
-            </div>
-          </div>
-
-          {/* Closing Saffron Pill */}
-          <div className="legacy-closing-wrap text-center">
-            <div className="legacy-saffron-pill">
-              <span className="pill-sacred-text">॥ ज्ञानोबा माउली तुकाराम ॥</span>
             </div>
           </div>
         </div>

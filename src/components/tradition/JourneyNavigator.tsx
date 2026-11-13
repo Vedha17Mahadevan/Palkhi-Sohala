@@ -35,7 +35,7 @@ export const JourneyNavigator: React.FC<JourneyNavigatorProps> = ({
   };
 
   const isIntro = currentPath === '/tradition';
-  const currentChapter = CHAPTERS_DATA.find(c => c.path === currentPath);
+  const currentChapter = CHAPTERS_DATA.find(c => currentPath === c.path || currentPath.startsWith(c.path + '/'));
 
   return (
     <>
@@ -102,7 +102,7 @@ export const JourneyNavigator: React.FC<JourneyNavigatorProps> = ({
 
               {/* Dedicated Chapters */}
               {CHAPTERS_DATA.map((chap) => {
-                const isActive = currentPath === chap.path;
+                const isActive = currentPath === chap.path || currentPath.startsWith(chap.path + '/');
                 return (
                   <button
                     key={chap.id}

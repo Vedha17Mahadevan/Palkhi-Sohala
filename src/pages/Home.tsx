@@ -22,20 +22,44 @@ export const Home: React.FC<HomeProps> = React.memo(({ onSelectPalkhi, setActive
   const { isLandingActive, navigateTo, pendingScrollId, clearPendingScroll } = useRouter();
   const featuredPalkhis = PALKHI_DATA.slice(0, 10);
 
-  // Handle cross-page or direct scroll to target section (e.g. #about-wari)
+  // Handle cross-page or direct scroll to target section (e.g. #palkhi or #about-wari)
   useEffect(() => {
     if (!isLandingActive) return;
 
-    if (pendingScrollId) {
-      const scrollId = pendingScrollId;
-      clearPendingScroll();
+    // Check either pendingScrollId from context or the actual window.location.hash
+    const hashTarget = window.location.hash ? window.location.hash.replace('#', '') : null;
+    const scrollTarget = pendingScrollId || hashTarget;
 
-      const timer = window.setTimeout(() => {
-        smoothScrollToSection(scrollId, 750);
-      }, 120);
+    if (!scrollTarget) return;
 
-      return () => window.clearTimeout(timer);
-    }
+    let isCancelled = false;
+
+    const executeScroll = () => {
+      if (isCancelled) return false;
+      return smoothScrollToSection(scrollTarget, 750);
+    };
+
+    // Staged execution to guarantee section is mounted and layout heights have calculated
+    const timer1 = window.setTimeout(() => {
+      executeScroll();
+    }, 80);
+
+    const timer2 = window.setTimeout(() => {
+      executeScroll();
+    }, 280);
+
+    const timer3 = window.setTimeout(() => {
+      if (executeScroll()) {
+        clearPendingScroll();
+      }
+    }, 600);
+
+    return () => {
+      isCancelled = true;
+      window.clearTimeout(timer1);
+      window.clearTimeout(timer2);
+      window.clearTimeout(timer3);
+    };
   }, [isLandingActive, pendingScrollId, clearPendingScroll]);
 
   // Scroll handler for Active Nav Link and Reveal Animation triggers
@@ -110,8 +134,10 @@ export const Home: React.FC<HomeProps> = React.memo(({ onSelectPalkhi, setActive
       {/* Digital Museum Tradition Exhibition Hero */}
       <MuseumTraditionHero />
 
-      {/* Explore All Palkhis Section */}
-      <section id="palkhi-route" className="palkhi-directory-section">
+      {/* Explore All Palkhis Section - Primary ID: palkhi, with compatible anchor aliases */}
+      <section id="palkhi" className="palkhi-directory-section">
+        <div id="palkhis" style={{ position: 'relative', top: '-10px' }} aria-hidden="true"></div>
+        <div id="palkhi-route" style={{ position: 'relative', top: '-10px' }} aria-hidden="true"></div>
         <div className="section-container directory-tight-container">
           <div className="section-header-center directory-header-center">
             <span className="section-tag reveal">Divine Journeys</span>

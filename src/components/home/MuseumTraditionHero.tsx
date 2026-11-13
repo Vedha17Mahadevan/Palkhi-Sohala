@@ -50,9 +50,9 @@ export const MuseumTraditionHero: React.FC = React.memo(() => {
                   className="museum-btn-primary" 
                   onClick={() => navigateTo('/tradition')}
                   onMouseEnter={() => prefetchRoute('/tradition')}
-                  aria-label="Explore the Exhibition"
+                  aria-label="Explore the Culture"
                 >
-                  <span>Explore the Exhibition</span>
+                  <span>Explore the Culture</span>
                   <i className="fa-solid fa-arrow-right-long"></i>
                 </button>
               </div>

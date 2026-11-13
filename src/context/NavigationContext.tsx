@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 
 interface NavigationContextType {
   currentPath: string;
@@ -28,18 +28,18 @@ export const NavigationProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   const [isSplashFadingOut, setIsSplashFadingOut] = useState(false);
   const [isLandingActive, setIsLandingActive] = useState(isDirectPage);
 
-  const dismissSplash = () => {
+  const dismissSplash = useCallback(() => {
     setIsSplashFadingOut(true);
     setIsLandingActive(true);
     document.body.style.overflow = 'auto';
     setTimeout(() => {
       setIsSplashActive(false);
     }, 400);
-  };
+  }, []);
 
-  const clearPendingScroll = () => {
+  const clearPendingScroll = useCallback(() => {
     setPendingScrollId(null);
-  };
+  }, []);
 
   // popstate routing listener
   useEffect(() => {
@@ -59,7 +59,7 @@ export const NavigationProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     return () => window.removeEventListener('popstate', onPopState);
   }, []);
 
-  const navigateTo = (path: string, scrollToId?: string) => {
+  const navigateTo = useCallback((path: string, scrollToId?: string) => {
     const normalized = normalizePath(path);
     const fullUrl = scrollToId ? `${normalized}#${scrollToId}` : normalized;
     window.history.pushState({}, '', fullUrl);
@@ -73,7 +73,7 @@ export const NavigationProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     setIsSplashActive(false);
     setIsLandingActive(true);
     document.body.style.overflow = 'auto';
-  };
+  }, []);
 
   // Splash Screen Logic
   useEffect(() => {

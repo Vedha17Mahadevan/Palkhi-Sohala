@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { NavigationProvider, useRouter } from './context/NavigationContext';
 import Splash from './components/common/Splash';
 import Header from './components/layout/Header';
@@ -15,6 +15,21 @@ function AppContent() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [selectedPalkhi, setSelectedPalkhi] = useState<Palkhi | null>(null);
   const [activeSection, setActiveSection] = useState('home');
+  const [isBackToTopVisible, setIsBackToTopVisible] = useState(false);
+
+  // Unified scroll listener for the Floating Back to Top Button
+  // Active across Homepage, Directory, and all Wari Tradition chapter pages
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+      setIsBackToTopVisible(scrollY > 280);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [currentPath]);
 
   return (
     <>
@@ -34,6 +49,7 @@ function AppContent() {
         <MobileMenu 
           isOpen={isMobileMenuOpen} 
           onClose={() => setIsMobileMenuOpen(false)} 
+          activeSection={activeSection}
         />
 
         {/* Main Content Viewport with lightweight 250ms transition */}
@@ -56,16 +72,17 @@ function AppContent() {
           )}
         </main>
 
-        {/* Floating Back to Top Button */}
+        {/* Floating Back to Top Button (Unified across Homepage, Directory, and all Tradition Chapters) */}
         <button
-          className="btn-back-to-top-float"
+          className={`btn-back-to-top-float ${isBackToTopVisible ? 'visible' : ''}`}
           onClick={(e) => {
             e.preventDefault();
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
           aria-label="Go to Top"
+          title="Scroll to Top"
         >
-          <i className="fa-solid fa-arrow-up"></i>
+          <i className="fa-solid fa-arrow-up" aria-hidden="true"></i>
         </button>
 
         {/* Main Footer */}
