@@ -1,5 +1,6 @@
 import React from 'react';
-import { getCloudinaryUrl } from '../../config/cloudinary';
+import { getCloudinaryUrl, getCloudinarySrcSet } from '../../config/cloudinary';
+import Icon from '../common/Icon';
 
 export const Footer: React.FC = () => {
   return (
@@ -7,7 +8,9 @@ export const Footer: React.FC = () => {
       <div className="footer-container">
         <div className="footer-brand">
           <img
-            src={getCloudinaryUrl('RKSSTGM_text_white', { width: 300 })}
+            src={getCloudinaryUrl('RKSSTGM_text_white', { width: 300, dpr: false })}
+            srcSet={getCloudinarySrcSet('RKSSTGM_text_white', [300, 580])}
+            sizes="300px"
             alt="RadhaKrishna Satsangam Logo"
             className="footer-logo"
             loading="lazy"
@@ -24,14 +27,14 @@ export const Footer: React.FC = () => {
               title="Visit RadhaKrishna Satsangam Official Website"
             >
               <span>RadhaKrishna Satsangam Website</span>
-              <i className="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+              <Icon name="arrow-up-right-from-square" />
             </a>
           </div>
           <div className="social-links">
-            <a href="https://www.youtube.com/@GurujeeGopalavallidasar" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i className="fa-brands fa-youtube"></i></a>
-            <a href="https://www.facebook.com/gopalavalli.dasan/#" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><i className="fa-brands fa-facebook"></i></a>
-            <a href="https://www.instagram.com/gurujee_gopalavallidasar?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i className="fa-brands fa-instagram"></i></a>
-            <a href="https://api.whatsapp.com/send/?phone=917010888236&text&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i className="fa-brands fa-whatsapp"></i></a>
+            <a href="https://www.youtube.com/@GurujeeGopalavallidasar" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><Icon name="youtube" /></a>
+            <a href="https://www.facebook.com/gopalavalli.dasan/#" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><Icon name="facebook" /></a>
+            <a href="https://www.instagram.com/gurujee_gopalavallidasar?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><Icon name="instagram" /></a>
+            <a href="https://api.whatsapp.com/send/?phone=917010888236&text&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><Icon name="whatsapp" /></a>
           </div>
         </div>
 

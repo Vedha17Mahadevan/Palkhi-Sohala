@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect, useCallback, useMemo } from 'react'
 import { useRouter } from '../../context/NavigationContext';
 import { prefetchRoute } from '../../utils/prefetchUtils';
 import { ALL_WARI_DESTINATIONS, DestinationItem } from './chaptersData';
+import Icon from '../common/Icon';
 
 interface ChapterHeroCarouselProps {
   currentPath: string;
@@ -116,7 +117,7 @@ export const ChapterHeroCarousel: React.FC<ChapterHeroCarouselProps> = ({ curren
           aria-label="Scroll to previous chapters"
           title="Previous Chapters"
         >
-          <i className="fa-solid fa-chevron-left" aria-hidden="true"></i>
+          <Icon name="chevron-left" />
         </button>
 
         {/* Horizontal Carousel Track */}
@@ -162,7 +163,7 @@ export const ChapterHeroCarousel: React.FC<ChapterHeroCarouselProps> = ({ curren
           aria-label="Scroll to next chapters"
           title="Next Chapters"
         >
-          <i className="fa-solid fa-chevron-right" aria-hidden="true"></i>
+          <Icon name="chevron-right" />
         </button>
       </div>
 

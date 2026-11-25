@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Palkhi } from '../../types';
 import { compactPalkhiName, saintInitials } from '../../utils/palkhiHelpers';
-import { getCloudinaryUrl } from '../../config/cloudinary';
+import { getCloudinaryUrl, getCloudinarySrcSet } from '../../config/cloudinary';
+import Icon from '../common/Icon';
 
 interface PalkhiCardProps {
   palkhi: Palkhi;
@@ -36,7 +37,9 @@ export const PalkhiCard: React.FC<PalkhiCardProps> = React.memo(({ palkhi, onSel
         <div className="palkhi-media-frame">
           {hasPalkhiPhoto && (
             <img
-              src={getCloudinaryUrl(palkhi.palkhiImage, { width: 750 })}
+              src={getCloudinaryUrl(palkhi.palkhiImage, { width: 480, dpr: false })}
+              srcSet={getCloudinarySrcSet(palkhi.palkhiImage, [360, 560, 750])}
+              sizes="(max-width: 768px) 90vw, 320px"
               alt={`${compactPalkhiName(palkhi.name)} — ${palkhi.origin} Palkhi procession`}
               className="palkhi-media-photo"
               loading="lazy"
@@ -49,7 +52,7 @@ export const PalkhiCard: React.FC<PalkhiCardProps> = React.memo(({ palkhi, onSel
           <div className="palkhi-media-inner">
             <div className="palkhi-media-ornament">
               <span className="palkhi-media-chip">
-                <i className="fa-solid fa-location-dot"></i>
+                <Icon name="location-dot" />
                 {palkhi.origin}
               </span>
             </div>
@@ -59,7 +62,9 @@ export const PalkhiCard: React.FC<PalkhiCardProps> = React.memo(({ palkhi, onSel
         <div className="saint-portrait saint-portrait-card">
           {hasSaintPhoto ? (
             <img
-              src={getCloudinaryUrl(palkhi.saintImage, { width: 300 })}
+              src={getCloudinaryUrl(palkhi.saintImage, { width: 144, dpr: false })}
+              srcSet={getCloudinarySrcSet(palkhi.saintImage, [96, 160, 240])}
+              sizes="72px"
               alt={`Portrait of ${palkhi.saint}`}
               className="saint-portrait-img"
               loading="lazy"
@@ -79,12 +84,12 @@ export const PalkhiCard: React.FC<PalkhiCardProps> = React.memo(({ palkhi, onSel
         <h3 className="palkhi-card-title">{compactPalkhiName(palkhi.name)}</h3>
 
         <div className="palkhi-card-line card-line-route">
-          <i className="fa-solid fa-route"></i>
+          <Icon name="route" />
           <span>{palkhi.origin} <em className="arrow">→</em> {palkhi.destination}</span>
         </div>
 
         <div className="palkhi-card-line card-line-duration">
-          <i className="fa-solid fa-clock"></i>
+          <Icon name="clock" />
           <span>{palkhi.durationDays} Days</span>
         </div>
 
@@ -98,7 +103,7 @@ export const PalkhiCard: React.FC<PalkhiCardProps> = React.memo(({ palkhi, onSel
           }}
         >
           View Details
-          <i className="fa-solid fa-arrow-right"></i>
+          <Icon name="arrow-right" />
         </button>
       </div>
     </article>

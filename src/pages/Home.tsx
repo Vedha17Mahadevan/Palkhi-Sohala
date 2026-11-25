@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import rawPalkhiData from '../../palkhis.json';
 import { Palkhi } from '../types';
 import { useRouter } from '../context/NavigationContext';
@@ -10,6 +10,7 @@ import PalkhiGrid from '../components/palkhi/PalkhiGrid';
 import PlaylistGrid from '../components/gallery/PlaylistGrid';
 import MuseumTraditionHero from '../components/home/MuseumTraditionHero';
 import { prefetchRoute } from '../utils/prefetchUtils';
+import Icon from '../components/common/Icon';
 
 const PALKHI_DATA = rawPalkhiData as Palkhi[];
 
@@ -21,6 +22,8 @@ interface HomeProps {
 export const Home: React.FC<HomeProps> = React.memo(({ onSelectPalkhi, setActiveSection }) => {
   const { isLandingActive, navigateTo, pendingScrollId, clearPendingScroll } = useRouter();
   const featuredPalkhis = PALKHI_DATA.slice(0, 10);
+  const lastActiveSectionRef = useRef('home');
+  const lastScrolledRef = useRef(false);
 
   // Handle cross-page or direct scroll to target section (e.g. #palkhi or #about-wari)
   useEffect(() => {
@@ -62,67 +65,85 @@ export const Home: React.FC<HomeProps> = React.memo(({ onSelectPalkhi, setActive
     };
   }, [isLandingActive, pendingScrollId, clearPendingScroll]);
 
-  // Scroll handler for Active Nav Link and Reveal Animation triggers
+  // IntersectionObserver for reveal-on-scroll animations (avoids layout thrashing)
   useEffect(() => {
     if (!isLandingActive) return;
 
-    const handleScroll = () => {
-      // Header shadow class on scroll
-      const header = document.querySelector('.main-header') as HTMLElement;
+    const revealElements = document.querySelectorAll('.reveal');
+    if (revealElements.length === 0) return;
+
+    if (!('IntersectionObserver' in window)) {
+      revealElements.forEach((el) => el.classList.add('revealed'));
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { rootMargin: '0px 0px -12% 0px', threshold: 0.01 }
+    );
+
+    revealElements.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [isLandingActive]);
+
+  // rAF-throttled passive scroll listener for Active Nav Link and Header scrolled state
+  useEffect(() => {
+    if (!isLandingActive) return;
+
+    const header = document.querySelector('.main-header') as HTMLElement | null;
+    const sections = Array.from(document.querySelectorAll('main section[id]')) as HTMLElement[];
+    let rafId: number | null = null;
+
+    const updateOnScroll = () => {
+      rafId = null;
+      const scrollY = window.scrollY;
+
       if (header) {
-        if (window.scrollY > 50) {
-          header.style.boxShadow = '0 10px 30px rgba(92, 6, 24, 0.05)';
-        } else {
-          header.style.boxShadow = 'none';
+        const isScrolled = scrollY > 50;
+        if (isScrolled !== lastScrolledRef.current) {
+          lastScrolledRef.current = isScrolled;
+          header.classList.toggle('scrolled', isScrolled);
         }
       }
 
-      // Highlight navigation link relative to scroll position
-      const sections = document.querySelectorAll('section');
       let current = 'home';
-      sections.forEach(section => {
+      for (let i = 0; i < sections.length; i++) {
+        const section = sections[i];
         const sectionTop = section.offsetTop;
         const sectionHeight = section.clientHeight;
-        if (window.scrollY >= (sectionTop - sectionHeight / 3)) {
+        if (scrollY >= sectionTop - sectionHeight / 3) {
           current = section.getAttribute('id') || 'home';
         }
-      });
-      setActiveSection(current);
+      }
 
-      // Trigger reveal-on-scroll animations
-      const revealElements = document.querySelectorAll('.reveal');
-      const triggerBottom = window.innerHeight * 0.85;
-      revealElements.forEach(el => {
-        const elTop = el.getBoundingClientRect().top;
-        if (elTop < triggerBottom) {
-          (el as HTMLElement).style.opacity = '1';
-          (el as HTMLElement).style.transform = 'translateY(0)';
-        }
-      });
-
-      // Toggle back to top button visibility
-      const backToTopBtn = document.querySelector('.btn-back-to-top-float') as HTMLElement;
-      if (backToTopBtn) {
-        if (window.scrollY > 300) {
-          backToTopBtn.classList.add('visible');
-        } else {
-          backToTopBtn.classList.remove('visible');
-        }
+      if (current !== lastActiveSectionRef.current) {
+        lastActiveSectionRef.current = current;
+        setActiveSection(current);
       }
     };
 
-    // Set initial values for reveal animation nodes
-    const revealElements = document.querySelectorAll('.reveal');
-    revealElements.forEach(el => {
-      (el as HTMLElement).style.opacity = '0';
-      (el as HTMLElement).style.transform = 'translateY(30px)';
-      (el as HTMLElement).style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-    });
+    const handleScroll = () => {
+      if (rafId === null) {
+        rafId = window.requestAnimationFrame(updateOnScroll);
+      }
+    };
 
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Trigger once on mount to capture above-the-fold reveals
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    updateOnScroll();
 
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (rafId !== null) {
+        window.cancelAnimationFrame(rafId);
+      }
+    };
   }, [isLandingActive, setActiveSection]);
 
   return (
@@ -162,7 +183,7 @@ export const Home: React.FC<HomeProps> = React.memo(({ onSelectPalkhi, setActive
               aria-label={`View All ${PALKHI_DATA.length} Palkhis`}
             >
               <span className="btn-view-all-text">View All {PALKHI_DATA.length} Palkhis</span>
-              <i className="fa-solid fa-arrow-right-long" aria-hidden="true"></i>
+              <Icon name="arrow-right-long" />
             </button>
           </div>
         </div>

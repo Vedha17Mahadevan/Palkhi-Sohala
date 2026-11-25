@@ -1,7 +1,10 @@
 import React from 'react';
+import { getCloudinaryUrl, getCloudinarySrcSet } from '../../../config/cloudinary';
 
-const dindiImg = '/images/Chapter/Dindi.png';
-const dailyRhythmImg = '/images/Chapter/Daily Rhythm.png';
+const dindiImg = getCloudinaryUrl('Dindi', { width: 900, dpr: false });
+const dindiSrcSet = getCloudinarySrcSet('Dindi', [480, 800, 1200]);
+const dailyRhythmImg = getCloudinaryUrl('Daily_Rhythm', { width: 900, dpr: false });
+const dailyRhythmSrcSet = getCloudinarySrcSet('Daily_Rhythm', [480, 800, 1200]);
 
 export const SubchapterDindi: React.FC = () => {
   return (
@@ -53,6 +56,8 @@ export const SubchapterDindi: React.FC = () => {
               <div className="foundation-image-blend-wrapper">
                 <img 
                   src={dindiImg} 
+                  srcSet={dindiSrcSet}
+                  sizes="(max-width: 768px) 92vw, 800px"
                   alt="Organised Dindi procession walking together in disciplined formation with saffron flags" 
                   className="foundation-blend-img"
                   loading="lazy"
@@ -159,6 +164,8 @@ export const SubchapterDindi: React.FC = () => {
             <div className="foundation-image-blend-wrapper">
               <img 
                 src={dailyRhythmImg} 
+                srcSet={dailyRhythmSrcSet}
+                sizes="(max-width: 768px) 92vw, 800px"
                 alt="Six-panel photographic grid depicting the daily rhythm and life of Warkaris" 
                 className="foundation-blend-img fit-contain"
                 loading="lazy"

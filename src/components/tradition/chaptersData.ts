@@ -1,3 +1,5 @@
+import { getCloudinaryUrl } from '../../config/cloudinary';
+
 export interface ChapterItem {
   id: string;
   slug: string;
@@ -95,7 +97,7 @@ export const CHAPTERS_DATA: ChapterItem[] = [
     title: 'Origins of the Wari',
     subtitle: 'The Tradition of the Pandharpur Wari',
     shortDesc: 'The ancient tradition of undertaking the pilgrimage to Pandharpur on foot as early as the 13th century.',
-    image: 'https://res.cloudinary.com/ayj5m59a/image/upload/v1790917680/Sunset_Pilgrimage_to_the_Temple.png',
+    image: getCloudinaryUrl('Sunset_Pilgrimage_to_the_Temple', { width: 700, dpr: false }),
   },
   {
     id: 'lord-shiva',
@@ -105,7 +107,7 @@ export const CHAPTERS_DATA: ChapterItem[] = [
     title: 'Lord Shiva – The First Warkari',
     subtitle: 'The First Warkari',
     shortDesc: 'According to ancient legends and the beliefs of the Warkari tradition, Lord Shiva is regarded as the first Warkari.',
-    image: 'https://res.cloudinary.com/ayj5m59a/image/upload/v1790917679/Shiva_s_Golden-Hour_Pilgrimage.png',
+    image: getCloudinaryUrl('Shiva_s_Golden-Hour_Pilgrimage', { width: 700, dpr: false }),
   },
   {
     id: 'palkhi',
@@ -115,7 +117,7 @@ export const CHAPTERS_DATA: ChapterItem[] = [
     title: 'The Sacred Palkhi Tradition',
     subtitle: 'The Journey of the Sacred Padukas to Pandharpur',
     shortDesc: 'The historical evolution of the organized palanquin procession carrying the sacred Padukas.',
-    image: '/images/palkhi.jpg',
+    image: getCloudinaryUrl('palkhi', { width: 700, dpr: false }),
   },
   {
     id: 'rituals',
@@ -125,7 +127,7 @@ export const CHAPTERS_DATA: ChapterItem[] = [
     title: 'Rituals and Sacred Moments of Wari',
     subtitle: 'Gole Ringan, Ubhe Ringan & the Pious Sprint of Dhava',
     shortDesc: 'Experience the sacred horse gallop of Ringan and the ecstatic devotional sprint of Dhava at Baji Raoachi Vihir.',
-    image: '/images/Chapter/Ringan.png',
+    image: getCloudinaryUrl('Ringan', { width: 700, dpr: false }),
   },
   {
     id: 'dindi-life',
@@ -135,7 +137,7 @@ export const CHAPTERS_DATA: ChapterItem[] = [
     title: 'The Life and Organisation of a Dindi',
     subtitle: 'Disciplined Fellowship & the Daily Rhythm of the Pilgrim Road',
     shortDesc: 'Discover the inner governance of the Dindi and the inspiring dawn-to-dusk daily routine of a marching Warkari.',
-    image: '/images/Chapter/Dindi.png',
+    image: getCloudinaryUrl('Dindi', { width: 700, dpr: false }),
   },
   {
     id: 'devotional-practices',
@@ -145,7 +147,7 @@ export const CHAPTERS_DATA: ChapterItem[] = [
     title: 'Devotional Practices and Sacred Symbols',
     subtitle: 'Haripath, Kirtan and the Living Emblems of Faith',
     shortDesc: 'Immerse in the twilight recitation of Haripath, traditional Kirtan discourses, and emblems like Tulsi and Bhagva Pataka.',
-    image: '/images/Chapter/tulsi.png',
+    image: getCloudinaryUrl('tulsi', { width: 700, dpr: false }),
   },
   {
     id: 'arrival-and-seva',
@@ -155,6 +157,6 @@ export const CHAPTERS_DATA: ChapterItem[] = [
     title: 'Arrival at Pandharpur and the Spirit of Seva',
     subtitle: 'The Holy Chandrabhaga Snan & Unconditional Community Seva',
     shortDesc: 'The purifying holy dip in the Chandrabhaga river and the boundless roadside hospitality of selfless community Seva.',
-    image: '/images/Chapter/pilgrims.png',
+    image: getCloudinaryUrl('pilgrims', { width: 700, dpr: false }),
   },
 ];

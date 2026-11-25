@@ -2,8 +2,10 @@ import React from 'react';
 import { useRouter } from '../../context/NavigationContext';
 import MuseumPlaceholder from '../../components/tradition/MuseumPlaceholder';
 import { CHAPTERS_DATA } from '../../components/tradition/chaptersData';
+import { getCloudinaryUrl } from '../../config/cloudinary';
+import Icon from '../../components/common/Icon';
 
-const sunsetPilgrimageImg = 'https://res.cloudinary.com/ayj5m59a/image/upload/v1790917680/Sunset_Pilgrimage_to_the_Temple.png';
+const sunsetPilgrimageImg = getCloudinaryUrl('Sunset_Pilgrimage_to_the_Temple', { width: 800, dpr: false });
 
 export const TraditionOverview: React.FC = () => {
   const { navigateTo } = useRouter();
@@ -42,7 +44,7 @@ export const TraditionOverview: React.FC = () => {
                   onClick={() => handleNavigate('/tradition/origins')}
                 >
                   <span>Begin the Journey • Chapter 01</span>
-                  <i className="fa-solid fa-arrow-right-long"></i>
+                  <Icon name="arrow-right-long" />
                 </button>
               </div>
             </div>
@@ -110,7 +112,7 @@ export const TraditionOverview: React.FC = () => {
                   <div className="preview-card-footer">
                     <span className="preview-link-text">Explore Chapter</span>
                     <div className="preview-arrow-circle">
-                      <i className="fa-solid fa-arrow-right"></i>
+                      <Icon name="arrow-right" />
                     </div>
                   </div>
                 </div>

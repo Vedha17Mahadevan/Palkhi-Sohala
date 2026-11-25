@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
+import { getCloudinaryUrl } from '../../config/cloudinary';
+import Icon from '../common/Icon';
 
-const shivaPilgrimageImg = 'https://res.cloudinary.com/ayj5m59a/image/upload/v1790917679/Shiva_s_Golden-Hour_Pilgrimage.png';
-const sunsetPilgrimageImg = 'https://res.cloudinary.com/ayj5m59a/image/upload/v1790917680/Sunset_Pilgrimage_to_the_Temple.png';
+const shivaPilgrimageImg = getCloudinaryUrl('Shiva_s_Golden-Hour_Pilgrimage', { width: 800, dpr: false });
+const sunsetPilgrimageImg = getCloudinaryUrl('Sunset_Pilgrimage_to_the_Temple', { width: 600, dpr: false });
 
 // Dedicated images for Lord Shiva's journey milestones
-const mountKailashImg = 'https://res.cloudinary.com/ayj5m59a/image/upload/v1790933676/Mount_Kailash.png';
-const longingImg = 'https://res.cloudinary.com/ayj5m59a/image/upload/v1790933967/longing.png';
-const firstWariImg = 'https://res.cloudinary.com/ayj5m59a/image/upload/v1790933676/First_wari.png';
+const mountKailashImg = getCloudinaryUrl('Mount_Kailash', { width: 600, dpr: false });
+const longingImg = getCloudinaryUrl('longing', { width: 600, dpr: false });
+const firstWariImg = getCloudinaryUrl('First_wari', { width: 600, dpr: false });
 
 interface ShivaMilestone {
   id: string;
@@ -246,7 +248,7 @@ export const ShivaWarkariStory: React.FC = () => {
                     <p className="shiva-node-short-text">{milestone.shortText}</p>
                     <span className="shiva-node-click-cue">
                       <span>Explore</span>
-                      <i className="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+                      <Icon name="arrow-up-right-from-square" />
                     </span>
                   </div>
                 </div>
@@ -284,7 +286,7 @@ export const ShivaWarkariStory: React.FC = () => {
               onClick={() => setActiveMilestone(null)}
               aria-label="Close milestone details"
             >
-              <i className="fa-solid fa-xmark" aria-hidden="true"></i>
+              <Icon name="xmark" />
             </button>
 
             <div className="shiva-modal-grid">

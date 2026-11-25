@@ -1,10 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { getCloudinaryUrl } from '../config/cloudinary';
 import { Palkhi } from '../types';
 import { useRouter } from '../context/NavigationContext';
 import { usePalkhiFilters } from '../hooks/usePalkhiFilters';
 import FilterBar from '../components/palkhi/FilterBar';
 import PalkhiGrid from '../components/palkhi/PalkhiGrid';
+import Icon from '../components/common/Icon';
+import '../styles/directory.css';
 
 interface DirectoryProps {
   onSelectPalkhi: (palkhi: Palkhi) => void;
@@ -27,25 +29,6 @@ export const Directory: React.FC<DirectoryProps> = React.memo(({ onSelectPalkhi 
     resetFilters
   } = usePalkhiFilters();
 
-  // Scroll handler to toggle back to top button visibility in directory page
-  useEffect(() => {
-    const handleScroll = () => {
-      const backToTopBtn = document.querySelector('.btn-back-to-top-float') as HTMLElement;
-      if (backToTopBtn) {
-        if (window.scrollY > 300) {
-          backToTopBtn.classList.add('visible');
-        } else {
-          backToTopBtn.classList.remove('visible');
-        }
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    handleScroll();
-
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
     <section className="palkhis-directory-page-section">
       {/* Immersive Hero Banner with Direct Floating Glass Back Navigation */}
@@ -58,7 +41,7 @@ export const Directory: React.FC<DirectoryProps> = React.memo(({ onSelectPalkhi 
           onClick={() => navigateTo('/', 'palkhi')}
           aria-label="Back to Home"
         >
-          <i className="fa-solid fa-arrow-left-long back-arrow-icon" aria-hidden="true"></i>
+          <Icon name="arrow-left-long" className="back-arrow-icon" />
           <span>Back to Home</span>
         </button>
 
@@ -70,7 +53,7 @@ export const Directory: React.FC<DirectoryProps> = React.memo(({ onSelectPalkhi 
           
           {/* Centered Search Bar */}
           <div className="directory-hero-search-box-wrap">
-            <i className="fa-solid fa-magnifying-glass search-box-icon"></i>
+            <Icon name="magnifying-glass" className="search-box-icon" />
             <input
               type="text"
               className="directory-hero-search-input"
@@ -80,7 +63,7 @@ export const Directory: React.FC<DirectoryProps> = React.memo(({ onSelectPalkhi 
             />
             {searchQuery && (
               <button className="btn-clear-search" onClick={() => setSearchQuery('')}>
-                <i className="fa-solid fa-xmark"></i>
+                <Icon name="xmark" />
               </button>
             )}
           </div>
@@ -104,7 +87,7 @@ export const Directory: React.FC<DirectoryProps> = React.memo(({ onSelectPalkhi 
         {sortedPalkhis.length === 0 ? (
           <div className="palkhi-empty-state">
             <div className="empty-state-icon">
-              <i className="fa-solid fa-route"></i>
+              <Icon name="route" />
             </div>
             <h3>No Palkhis Found</h3>
             <p>No Palkhis found. Try changing your search or filters.</p>

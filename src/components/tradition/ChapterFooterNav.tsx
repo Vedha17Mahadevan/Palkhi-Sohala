@@ -2,6 +2,7 @@ import React from 'react';
 import { useRouter } from '../../context/NavigationContext';
 import { CHAPTERS_DATA, ChapterItem } from './chaptersData';
 import { prefetchRoute } from '../../utils/prefetchUtils';
+import Icon from '../common/Icon';
 
 interface ChapterFooterNavProps {
   currentSlug: string;
@@ -35,7 +36,7 @@ export const ChapterFooterNav: React.FC<ChapterFooterNavProps> = ({ currentSlug 
                 title={`Go to Chapter ${prevChapter.number}: ${prevChapter.title}`}
               >
                 <div className="pagination-arrow-circle">
-                  <i className="fa-solid fa-arrow-left" aria-hidden="true"></i>
+                  <Icon name="arrow-left" />
                 </div>
                 <div className="pagination-text-group text-left">
                   <span className="pagination-sub">Chapter {prevChapter.number}</span>
@@ -50,7 +51,7 @@ export const ChapterFooterNav: React.FC<ChapterFooterNavProps> = ({ currentSlug 
                 title="Return to Tradition Overview"
               >
                 <div className="pagination-arrow-circle">
-                  <i className="fa-solid fa-arrow-left" aria-hidden="true"></i>
+                  <Icon name="arrow-left" />
                 </div>
                 <div className="pagination-text-group text-left">
                   <span className="pagination-sub">Wari Beginning</span>
@@ -68,7 +69,7 @@ export const ChapterFooterNav: React.FC<ChapterFooterNavProps> = ({ currentSlug 
               onMouseEnter={() => prefetchRoute('/tradition')}
               title="Return to Tradition Landing Page"
             >
-              <i className="fa-solid fa-book-open" aria-hidden="true"></i>
+              <Icon name="book-open" />
               <span>All Chapters</span>
             </button>
           </div>
@@ -87,7 +88,7 @@ export const ChapterFooterNav: React.FC<ChapterFooterNavProps> = ({ currentSlug 
                   <h4 className="pagination-title">{nextChapter.title}</h4>
                 </div>
                 <div className="pagination-arrow-circle">
-                  <i className="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                  <Icon name="arrow-right" />
                 </div>
               </button>
             ) : (
@@ -102,7 +103,7 @@ export const ChapterFooterNav: React.FC<ChapterFooterNavProps> = ({ currentSlug 
                   <h4 className="pagination-title">Return to Overview</h4>
                 </div>
                 <div className="pagination-arrow-circle">
-                  <i className="fa-solid fa-rotate-left" aria-hidden="true"></i>
+                  <Icon name="rotate-left" />
                 </div>
               </button>
             )}

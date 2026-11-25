@@ -40,61 +40,47 @@ export const preloadImage = (url: string, priority: 'high' | 'low' = 'low'): voi
 };
 
 /**
- * Critical hero images and first-screen assets per route
+ * Critical hero images and first-screen assets per route (optimized via Cloudinary)
  */
 export const ROUTE_HERO_ASSETS: Record<string, string[]> = {
-  '/': [
-    getCloudinaryUrl('kids left', { width: 900 }),
-    getCloudinaryUrl('modern_wari', { width: 1200 }),
-    getCloudinaryUrl('palkhi', { width: 1200 }),
-  ],
   '/palkhis': [
-    getCloudinaryUrl('palkhi', { width: 1400 }),
+    getCloudinaryUrl('palkhi', { width: 1000, dpr: false }),
   ],
   '/tradition': [
-    'https://res.cloudinary.com/ayj5m59a/image/upload/v1790917679/tradition.png',
+    getCloudinaryUrl('Sunset_Pilgrimage_to_the_Temple', { width: 800, dpr: false }),
   ],
   '/tradition/origins': [
-    'https://res.cloudinary.com/ayj5m59a/image/upload/v1790933967/longing.png',
-    'https://res.cloudinary.com/ayj5m59a/image/upload/v1790917680/Sunset_Pilgrimage_to_the_Temple.png',
+    getCloudinaryUrl('Sunset_Pilgrimage_to_the_Temple', { width: 800, dpr: false }),
   ],
   '/tradition/lord-shiva': [
-    'https://res.cloudinary.com/ayj5m59a/image/upload/v1790917679/Shiva_s_Golden-Hour_Pilgrimage.png',
+    getCloudinaryUrl('Shiva_s_Golden-Hour_Pilgrimage', { width: 800, dpr: false }),
   ],
   '/tradition/palkhi': [
-    'https://res.cloudinary.com/ayj5m59a/image/upload/v1790936481/From_Two_Palkhis_to_Pandharpur.png',
+    getCloudinaryUrl('From_Two_Palkhis_to_Pandharpur', { width: 800, dpr: false }),
   ],
   '/tradition/rituals': [
-    '/images/Chapter/Ringan.png',
-    '/images/Chapter/Dhava.png',
+    getCloudinaryUrl('Ringan', { width: 800, dpr: false }),
   ],
   '/tradition/dindi-life': [
-    '/images/Chapter/Dindi.png',
-    '/images/Chapter/Daily Rhythm.png',
+    getCloudinaryUrl('Dindi', { width: 800, dpr: false }),
   ],
   '/tradition/devotional-practices': [
-    '/images/Chapter/Kirtan.png',
-    '/images/Chapter/tulsi.png',
+    getCloudinaryUrl('Kirtan', { width: 800, dpr: false }),
   ],
   '/tradition/arrival-and-seva': [
-    '/images/Chapter/pilgrims.png',
-    '/images/Chapter/seva.png',
+    getCloudinaryUrl('pilgrims', { width: 800, dpr: false }),
   ],
   '/tradition/living-traditions/rituals': [
-    '/images/Chapter/Ringan.png',
-    '/images/Chapter/Dhava.png',
+    getCloudinaryUrl('Ringan', { width: 800, dpr: false }),
   ],
   '/tradition/living-traditions/dindi-life': [
-    '/images/Chapter/Dindi.png',
-    '/images/Chapter/Daily Rhythm.png',
+    getCloudinaryUrl('Dindi', { width: 800, dpr: false }),
   ],
   '/tradition/living-traditions/devotional-practices': [
-    '/images/Chapter/Kirtan.png',
-    '/images/Chapter/tulsi.png',
+    getCloudinaryUrl('Kirtan', { width: 800, dpr: false }),
   ],
   '/tradition/living-traditions/arrival-and-seva': [
-    '/images/Chapter/pilgrims.png',
-    '/images/Chapter/seva.png',
+    getCloudinaryUrl('pilgrims', { width: 800, dpr: false }),
   ]
 };
 

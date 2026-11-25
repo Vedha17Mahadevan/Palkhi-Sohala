@@ -7,11 +7,12 @@ export interface CloudinaryUrlOptions {
   crop?: string;
   quality?: string;
   format?: string;
+  dpr?: boolean;
 }
 
 /**
  * Generates an optimized Cloudinary image URL.
- * Automatically applies f_auto, q_auto, and dpr_auto.
+ * Automatically applies f_auto, q_auto, and optional dpr_auto.
  * Strips folder prefixes like 'images/' and extensions like '.webp' to extract the public ID.
  */
 export const getCloudinaryUrl = (publicId: string, options: CloudinaryUrlOptions = {}): string => {
@@ -44,8 +45,11 @@ export const getCloudinaryUrl = (publicId: string, options: CloudinaryUrlOptions
   const transformations: string[] = [
     options.format ? `f_${options.format}` : 'f_auto',
     options.quality ? `q_${options.quality}` : 'q_auto',
-    'dpr_auto'
   ];
+
+  if (options.dpr !== false) {
+    transformations.push('dpr_auto');
+  }
 
   if (options.width) {
     transformations.push(`w_${options.width}`);
@@ -59,4 +63,18 @@ export const getCloudinaryUrl = (publicId: string, options: CloudinaryUrlOptions
 
   const transformationString = transformations.join(',');
   return `${BASE_URL}/${transformationString}/${cleanId}`;
+};
+
+/**
+ * Generates a responsive srcSet string for Cloudinary images using exact width descriptors.
+ */
+export const getCloudinarySrcSet = (
+  publicId: string,
+  widths: number[],
+  options: Omit<CloudinaryUrlOptions, 'width' | 'dpr'> = {}
+): string => {
+  if (!publicId || widths.length === 0) return '';
+  return widths
+    .map((w) => `${getCloudinaryUrl(publicId, { ...options, width: w, dpr: false })} ${w}w`)
+    .join(', ');
 };

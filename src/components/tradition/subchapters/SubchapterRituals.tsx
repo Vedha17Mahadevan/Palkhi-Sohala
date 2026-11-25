@@ -1,7 +1,10 @@
 import React from 'react';
+import { getCloudinaryUrl, getCloudinarySrcSet } from '../../../config/cloudinary';
 
-const ringanImg = '/images/Chapter/Ringan.png';
-const dhavaImg = '/images/Chapter/Dhava.png';
+const ringanImg = getCloudinaryUrl('Ringan', { width: 900, dpr: false });
+const ringanSrcSet = getCloudinarySrcSet('Ringan', [480, 800, 1200]);
+const dhavaImg = getCloudinaryUrl('Dhava', { width: 900, dpr: false });
+const dhavaSrcSet = getCloudinarySrcSet('Dhava', [480, 800, 1200]);
 
 export const SubchapterRituals: React.FC = () => {
   return (
@@ -53,6 +56,8 @@ export const SubchapterRituals: React.FC = () => {
               <div className="foundation-image-blend-wrapper">
                 <img 
                   src={ringanImg} 
+                  srcSet={ringanSrcSet}
+                  sizes="(max-width: 768px) 92vw, 800px"
                   alt="Sacred horse galloping in the Ringan ritual surrounded by concentric formations of Warkaris" 
                   className="foundation-blend-img"
                   loading="lazy"
@@ -149,6 +154,8 @@ export const SubchapterRituals: React.FC = () => {
               <div className="foundation-image-blend-wrapper">
                 <img 
                   src={dhavaImg} 
+                  srcSet={dhavaSrcSet}
+                  sizes="(max-width: 768px) 92vw, 800px"
                   alt="Warkaris joyfully sprinting during the Dhava tradition with saffron flags towards Pandharpur" 
                   className="foundation-blend-img"
                   loading="lazy"

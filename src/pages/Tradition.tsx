@@ -1,17 +1,18 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, lazy, Suspense } from 'react';
 import { useRouter } from '../context/NavigationContext';
 import ChapterHeroCarousel from '../components/tradition/ChapterHeroCarousel';
 import ChapterFooterNav from '../components/tradition/ChapterFooterNav';
 import { CHAPTERS_DATA } from '../components/tradition/chaptersData';
-import TraditionOverview from './tradition/TraditionOverview';
-import OriginsSection from '../components/tradition/OriginsSection';
-import ShivaWarkariStory from '../components/tradition/ShivaWarkariStory';
-import BirthOfPalkhiSection from '../components/tradition/BirthOfPalkhiSection';
-import SubchapterRituals from '../components/tradition/subchapters/SubchapterRituals';
-import SubchapterDindi from '../components/tradition/subchapters/SubchapterDindi';
-import SubchapterDevotions from '../components/tradition/subchapters/SubchapterDevotions';
-import SubchapterArrivalSeva from '../components/tradition/subchapters/SubchapterArrivalSeva';
-import { prefetchAllRoutes } from '../utils/prefetchUtils';
+import '../styles/tradition.css';
+
+const TraditionOverview = lazy(() => import('./tradition/TraditionOverview'));
+const OriginsSection = lazy(() => import('../components/tradition/OriginsSection'));
+const ShivaWarkariStory = lazy(() => import('../components/tradition/ShivaWarkariStory'));
+const BirthOfPalkhiSection = lazy(() => import('../components/tradition/BirthOfPalkhiSection'));
+const SubchapterRituals = lazy(() => import('../components/tradition/subchapters/SubchapterRituals'));
+const SubchapterDindi = lazy(() => import('../components/tradition/subchapters/SubchapterDindi'));
+const SubchapterDevotions = lazy(() => import('../components/tradition/subchapters/SubchapterDevotions'));
+const SubchapterArrivalSeva = lazy(() => import('../components/tradition/subchapters/SubchapterArrivalSeva'));
 
 const CHAPTER_SECTIONS: Record<string, React.ReactNode> = {
   origins: <OriginsSection />,
@@ -47,10 +48,6 @@ const resolveChapterSlug = (path: string): string => {
 
 export const Tradition: React.FC = () => {
   const { currentPath, navigateTo } = useRouter();
-
-  useEffect(() => {
-    prefetchAllRoutes();
-  }, []);
 
   const isOverview = currentPath === '/tradition';
 
@@ -125,11 +122,13 @@ export const Tradition: React.FC = () => {
 
         {/* Main Content Area (begins directly with first meaningful section) */}
         <main className="chapter-content-transition-wrap" key={currentPath}>
-          {isOverview ? (
-            <TraditionOverview />
-          ) : (
-            CHAPTER_SECTIONS[currentDestination.slug]
-          )}
+          <Suspense fallback={null}>
+            {isOverview ? (
+              <TraditionOverview />
+            ) : (
+              CHAPTER_SECTIONS[currentDestination.slug]
+            )}
+          </Suspense>
         </main>
 
         {/* Bottom Previous / Next Chapter Navigation (active on chapters 01-07) */}

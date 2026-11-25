@@ -1,11 +1,12 @@
 import React from 'react';
+import { getCloudinaryUrl } from '../../config/cloudinary';
 
-const sunsetPilgrimageImg = 'https://res.cloudinary.com/ayj5m59a/image/upload/v1790917680/Sunset_Pilgrimage_to_the_Temple.png';
+const sunsetPilgrimageImg = getCloudinaryUrl('Sunset_Pilgrimage_to_the_Temple', { width: 800, dpr: false });
 const dnyaneshwarImg = '/images/saints/dnyaneshwar.jpg';
 const tukaramImg = '/images/saints/tukaram.jpeg';
 const eknathImg = '/images/saints/eknath.jpg';
 const pundalikImg = '/images/saints/pundalik.webp';
-const modernWariImg = 'https://res.cloudinary.com/ayj5m59a/image/upload/v1790917678/modern_wari.webp';
+const modernWariImg = getCloudinaryUrl('modern_wari', { width: 400, dpr: false });
 
 interface Milestone {
   id: string;

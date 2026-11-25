@@ -1,4 +1,5 @@
 import React from 'react';
+import Icon from '../common/Icon';
 
 interface MuseumPlaceholderProps {
   aspectRatio?: string;
@@ -28,16 +29,16 @@ export const MuseumPlaceholder: React.FC<MuseumPlaceholderProps> = ({
   if (imageSrc) {
     return (
       <div className={`museum-artwork-card ${className}`}>
-        <div 
-          className="museum-artwork-frame" 
+        <div
+          className="museum-artwork-frame"
           style={{ width, height, aspectRatio: height ? undefined : aspectRatio }}
         >
-          <img 
-            src={imageSrc} 
-            alt={imageAlt || title} 
+          <img
+            src={imageSrc}
+            alt={imageAlt || title}
             className="museum-artwork-img"
             loading="lazy"
-            decoding="async" 
+            decoding="async"
           />
           <div className="museum-artwork-glow"></div>
         </div>
@@ -53,7 +54,7 @@ export const MuseumPlaceholder: React.FC<MuseumPlaceholderProps> = ({
   }
 
   return (
-    <div 
+    <div
       className={`museum-placeholder-box ${className}`}
       style={{ width, height, aspectRatio: height ? undefined : aspectRatio }}
     >
@@ -62,9 +63,9 @@ export const MuseumPlaceholder: React.FC<MuseumPlaceholderProps> = ({
         <div className="museum-corner-ornament tr">❖</div>
         <div className="museum-corner-ornament bl">❖</div>
         <div className="museum-corner-ornament br">❖</div>
-        
+
         <div className="museum-placeholder-icon-wrap">
-          <i className={icon}></i>
+          <Icon name={icon} />
         </div>
         <div className="museum-placeholder-title">{title}</div>
         <div className="museum-placeholder-subtitle">{subtitle}</div>

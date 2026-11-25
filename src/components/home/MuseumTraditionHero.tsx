@@ -1,6 +1,8 @@
 import React from 'react';
 import { useRouter } from '../../context/NavigationContext';
 import { prefetchRoute } from '../../utils/prefetchUtils';
+import { getCloudinaryUrl, getCloudinarySrcSet } from '../../config/cloudinary';
+import Icon from '../common/Icon';
 
 export const MuseumTraditionHero: React.FC = React.memo(() => {
   const { navigateTo } = useRouter();
@@ -53,7 +55,7 @@ export const MuseumTraditionHero: React.FC = React.memo(() => {
                   aria-label="Explore the Culture"
                 >
                   <span>Explore the Culture</span>
-                  <i className="fa-solid fa-arrow-right-long"></i>
+                  <Icon name="arrow-right-long" />
                 </button>
               </div>
             </div>
@@ -62,7 +64,9 @@ export const MuseumTraditionHero: React.FC = React.memo(() => {
             <div className="museum-visual-panel">
               <div className="museum-image-frame">
                 <img 
-                  src="https://res.cloudinary.com/ayj5m59a/image/upload/v1790917679/tradition.png" 
+                  src={getCloudinaryUrl('tradition', { width: 800, dpr: false })} 
+                  srcSet={getCloudinarySrcSet('tradition', [480, 800, 1200])}
+                  sizes="(max-width: 900px) 92vw, 58vw"
                   alt="Pandharpur Wari Tradition Digital Exhibition artwork" 
                   className="museum-hero-image"
                   loading="lazy"

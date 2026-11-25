@@ -2,7 +2,8 @@ import React from 'react';
 import rawPlaylistData from '../../../playlists.json';
 import { Playlist } from '../../types';
 import PlaylistCard from './PlaylistCard';
-import { getCloudinaryUrl } from '../../config/cloudinary';
+import { getCloudinaryUrl, getCloudinarySrcSet } from '../../config/cloudinary';
+import Icon from '../common/Icon';
 
 const PLAYLIST_DATA = rawPlaylistData as Playlist[];
 
@@ -44,7 +45,7 @@ export const PlaylistGrid: React.FC = () => {
           <aside className="archives-right-col reveal">
             <div className="promo-panel">
               <div className="promo-temple-icon">
-                <i className="fa-solid fa-gopuram"></i>
+                <Icon name="gopuram" />
               </div>
               <div className="divider-split-gold small center"></div>
               <p className="promo-text">
@@ -53,7 +54,9 @@ export const PlaylistGrid: React.FC = () => {
 
               <div className="phone-showcase">
                 <img
-                  src={getCloudinaryUrl('mob mockup', { width: 480 })}
+                  src={getCloudinaryUrl('mob mockup', { width: 480, dpr: false })}
+                  srcSet={getCloudinarySrcSet('mob mockup', [240, 480])}
+                  sizes="240px"
                   alt="Watch RadhaKrishna Satsangam devotional videos on YouTube mobile"
                   className="phone-mockup-img"
                   loading="lazy"
@@ -70,7 +73,7 @@ export const PlaylistGrid: React.FC = () => {
                 rel="noopener noreferrer"
                 className="btn-channel btn-channel-secondary"
               >
-                <i className="fa-brands fa-youtube"></i>
+                <Icon name="youtube" />
                 Visit YouTube Channel
               </a>
             </div>

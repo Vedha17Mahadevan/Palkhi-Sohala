@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Palkhi } from '../../types';
 import { compactPalkhiName } from '../../utils/palkhiHelpers';
 import { SaintAvatarPlaceholder } from './PalkhiCard';
-import { getCloudinaryUrl } from '../../config/cloudinary';
+import { getCloudinaryUrl, getCloudinarySrcSet } from '../../config/cloudinary';
+import Icon from '../common/Icon';
+import '../../styles/palkhi-modal.css';
 
 interface PalkhiModalProps {
   palkhi: Palkhi;
@@ -44,7 +46,7 @@ export const PalkhiModal: React.FC<PalkhiModalProps> = ({ palkhi, onClose }) => 
           onClick={onClose}
           aria-label="Close modal"
         >
-          <i className="fa-solid fa-xmark"></i>
+          <Icon name="xmark" />
         </button>
 
         <div className="palkhi-modal-inner">
@@ -55,7 +57,9 @@ export const PalkhiModal: React.FC<PalkhiModalProps> = ({ palkhi, onClose }) => 
               <div className="modal-palkhi-photo-wrap">
                 {palkhi.palkhiImage && !palkhiImageFailed ? (
                   <img
-                    src={getCloudinaryUrl(palkhi.palkhiImage, { width: 750 })}
+                    src={getCloudinaryUrl(palkhi.palkhiImage, { width: 750, dpr: false })}
+                    srcSet={getCloudinarySrcSet(palkhi.palkhiImage, [480, 750])}
+                    sizes="(max-width: 768px) 92vw, 480px"
                     alt={`${compactPalkhiName(palkhi.name)} sacred Palkhi procession`}
                     className="modal-palkhi-photo"
                     loading="lazy"
@@ -66,7 +70,7 @@ export const PalkhiModal: React.FC<PalkhiModalProps> = ({ palkhi, onClose }) => 
                   />
                 ) : (
                   <div className="modal-palkhi-photo-placeholder">
-                    <i className="fa-solid fa-chariot"></i>
+                    <Icon name="chariot" />
                     <span>{compactPalkhiName(palkhi.name)}</span>
                   </div>
                 )}
@@ -76,7 +80,9 @@ export const PalkhiModal: React.FC<PalkhiModalProps> = ({ palkhi, onClose }) => 
               <div className="saint-portrait saint-portrait-modal">
                 {palkhi.saintImage && !saintImageFailed ? (
                   <img
-                    src={getCloudinaryUrl(palkhi.saintImage, { width: 300 })}
+                    src={getCloudinaryUrl(palkhi.saintImage, { width: 250, dpr: false })}
+                    srcSet={getCloudinarySrcSet(palkhi.saintImage, [150, 250])}
+                    sizes="124px"
                     alt={`Portrait of ${palkhi.saint}`}
                     className="saint-portrait-img"
                     loading="lazy"
@@ -107,50 +113,50 @@ export const PalkhiModal: React.FC<PalkhiModalProps> = ({ palkhi, onClose }) => 
           <div className="palkhi-modal-info-col">
             <div className="palkhi-modal-fields">
               <div className="info-field">
-                <span className="info-label"><i className="fa-solid fa-user-tie"></i> Saint</span>
+                <span className="info-label"><Icon name="user-tie" /> Saint</span>
                 <span className="info-value">{palkhi.saint}</span>
               </div>
               <div className="info-field-row">
                 <div className="info-field">
-                  <span className="info-label"><i className="fa-solid fa-location-dot"></i> Origin</span>
+                  <span className="info-label"><Icon name="location-dot" /> Origin</span>
                   <span className="info-value">{palkhi.origin}</span>
                 </div>
                 <div className="info-field">
-                  <span className="info-label"><i className="fa-solid fa-city"></i> District</span>
+                  <span className="info-label"><Icon name="city" /> District</span>
                   <span className="info-value">{palkhi.district}</span>
                 </div>
               </div>
               <div className="info-field-row">
                 <div className="info-field">
-                  <span className="info-label"><i className="fa-solid fa-flag-checkered"></i> Destination</span>
+                  <span className="info-label"><Icon name="flag-checkered" /> Destination</span>
                   <span className="info-value">{palkhi.destination}</span>
                 </div>
                 <div className="info-field">
-                  <span className="info-label"><i className="fa-solid fa-route"></i> Distance</span>
+                  <span className="info-label"><Icon name="route" /> Distance</span>
                   <span className="info-value">Approx. {palkhi.distanceKm} km</span>
                 </div>
               </div>
               <div className="info-field-row">
                 <div className="info-field">
-                  <span className="info-label"><i className="fa-solid fa-clock"></i> Duration</span>
+                  <span className="info-label"><Icon name="clock" /> Duration</span>
                   <span className="info-value">{palkhi.durationDays} Days</span>
                 </div>
                 <div className="info-field">
-                  <span className="info-label"><i className="fa-solid fa-layer-group"></i> Category</span>
+                  <span className="info-label"><Icon name="layer-group" /> Category</span>
                   <span className="info-value">{palkhi.category}</span>
                 </div>
               </div>
               <div className="info-field">
-                <span className="info-label"><i className="fa-solid fa-calendar-days"></i> Traditional Departure</span>
+                <span className="info-label"><Icon name="calendar-days" /> Traditional Departure</span>
                 <span className="info-value">{palkhi.traditionalDeparture}</span>
               </div>
               <div className="info-field">
-                <span className="info-label"><i className="fa-solid fa-route"></i> Indicative Route</span>
+                <span className="info-label"><Icon name="route" /> Indicative Route</span>
                 <span className="info-value route-text">{palkhi.indicativeRoute}</span>
               </div>
               {palkhi.historicalNote && (
                 <div className="info-field historical-note">
-                  <span className="info-label"><i className="fa-solid fa-book-open"></i> Historical &amp; Cultural Note</span>
+                  <span className="info-label"><Icon name="book-open" /> Historical &amp; Cultural Note</span>
                   <p className="info-note-text">{palkhi.historicalNote}</p>
                 </div>
               )}
@@ -161,7 +167,7 @@ export const PalkhiModal: React.FC<PalkhiModalProps> = ({ palkhi, onClose }) => 
                 className="btn-modal-close"
                 onClick={onClose}
               >
-                <i className="fa-solid fa-xmark"></i> Close
+                <Icon name="xmark" /> Close
               </button>
             </div>
           </div>
