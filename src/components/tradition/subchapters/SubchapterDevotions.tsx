@@ -1,7 +1,10 @@
 import React from 'react';
+import { getCloudinaryUrl, getCloudinarySrcSet } from '../../../config/cloudinary';
 
-const kirtanImg = '/images/Chapter/Kirtan.png';
-const tulsiImg = '/images/Chapter/tulsi.png';
+const kirtanImg = getCloudinaryUrl('Kirtan', { width: 900, dpr: false });
+const kirtanSrcSet = getCloudinarySrcSet('Kirtan', [480, 800, 1200]);
+const tulsiImg = getCloudinaryUrl('tulsi', { width: 900, dpr: false });
+const tulsiSrcSet = getCloudinarySrcSet('tulsi', [480, 800, 1200]);
 
 export const SubchapterDevotions: React.FC = () => {
   return (
@@ -53,6 +56,8 @@ export const SubchapterDevotions: React.FC = () => {
               <div className="foundation-image-blend-wrapper">
                 <img 
                   src={kirtanImg} 
+                  srcSet={kirtanSrcSet}
+                  sizes="(max-width: 768px) 92vw, 800px"
                   alt="Kirtankar leading devotional singing accompanied by Warkaris participating in collective chanting" 
                   className="foundation-blend-img"
                   loading="lazy"
@@ -157,6 +162,8 @@ export const SubchapterDevotions: React.FC = () => {
               <div className="foundation-image-blend-wrapper">
                 <img 
                   src={tulsiImg} 
+                  srcSet={tulsiSrcSet}
+                  sizes="(max-width: 768px) 92vw, 800px"
                   alt="Warkari women gracefully balancing Tulsi Vrindavans upon their heads accompanied by devotees with saffron flags" 
                   className="foundation-blend-img"
                   loading="lazy"

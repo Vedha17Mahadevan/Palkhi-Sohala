@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { getCloudinaryUrl } from '../../config/cloudinary';
+import { getCloudinaryUrl, getCloudinarySrcSet } from '../../config/cloudinary';
 import { useRouter } from '../../context/NavigationContext';
 import { CHAPTERS_DATA } from '../tradition/chaptersData';
 import { smoothScrollToSection } from '../../utils/scrollUtils';
-import { prefetchAllRoutes, prefetchRoute } from '../../utils/prefetchUtils';
+import { prefetchRoute } from '../../utils/prefetchUtils';
+import Icon from '../common/Icon';
 
 interface HeaderProps {
   activeSection: string;
@@ -17,11 +18,6 @@ export const HeaderComponent: React.FC<HeaderProps> = ({ activeSection, onOpenMo
   const triggerRef = useRef<HTMLAnchorElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const hoverTimeoutRef = useRef<number | null>(null);
-
-  // Prefetch all main routes & chapter hero images on idle background
-  useEffect(() => {
-    prefetchAllRoutes();
-  }, []);
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -141,7 +137,9 @@ export const HeaderComponent: React.FC<HeaderProps> = ({ activeSection, onOpenMo
       <div className="header-container">
         <div className="header-logo load-delay-0" onClick={() => navigateTo('/')} style={{ cursor: 'pointer' }}>
           <img
-            src={getCloudinaryUrl('RKsstgm_logo', { width: 100 })}
+            src={getCloudinaryUrl('RKsstgm_logo', { width: 100, dpr: false })}
+            srcSet={getCloudinarySrcSet('RKsstgm_logo', [84, 120])}
+            sizes="(max-width: 768px) 42px, 50px"
             alt="Radhakrishna Satsangam Logo"
             className="header-logo-img"
             width={50}
@@ -160,7 +158,6 @@ export const HeaderComponent: React.FC<HeaderProps> = ({ activeSection, onOpenMo
                 href="#home" 
                 className={`nav-link ${currentPath === '/' && activeSection === 'home' ? 'active' : ''}`} 
                 onClick={(e) => handleNavClick(e, 'home')}
-                onMouseEnter={() => prefetchRoute('/')}
               >
                 Home
               </a>
@@ -198,7 +195,7 @@ export const HeaderComponent: React.FC<HeaderProps> = ({ activeSection, onOpenMo
                   title="Toggle Chapters menu"
                   aria-hidden="true"
                 >
-                  <i className={`fa-solid fa-chevron-down nav-dropdown-chevron ${isDropdownOpen ? 'rotate' : ''}`}></i>
+                  <Icon name="chevron-down" className={`nav-dropdown-chevron ${isDropdownOpen ? 'rotate' : ''}`} />
                 </span>
               </a>
 
@@ -268,7 +265,6 @@ export const HeaderComponent: React.FC<HeaderProps> = ({ activeSection, onOpenMo
                 href="#gallery" 
                 className={`nav-link ${currentPath === '/' && activeSection === 'gallery' ? 'active' : ''}`} 
                 onClick={(e) => handleNavClick(e, 'gallery')}
-                onMouseEnter={() => prefetchRoute('/')}
               >
                 Archives
               </a>
@@ -281,7 +277,7 @@ export const HeaderComponent: React.FC<HeaderProps> = ({ activeSection, onOpenMo
         </div>
 
         <button className="mobile-menu-btn" onClick={onOpenMobileMenu} aria-label="Open Navigation">
-          <i className="fa-solid fa-bars"></i>
+          <Icon name="bars" />
         </button>
       </div>
     </header>

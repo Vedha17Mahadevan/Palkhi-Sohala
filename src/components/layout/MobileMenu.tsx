@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useRouter } from '../../context/NavigationContext';
 import { CHAPTERS_DATA } from '../tradition/chaptersData';
 import { smoothScrollToSection } from '../../utils/scrollUtils';
+import Icon from '../common/Icon';
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -49,7 +50,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, activeS
   return (
     <div className={`mobile-nav-overlay ${isOpen ? 'active' : ''}`} aria-hidden={!isOpen}>
       <button className="mobile-menu-close" onClick={onClose} aria-label="Close Navigation">
-        <i className="fa-solid fa-xmark"></i>
+        <Icon name="xmark" />
       </button>
 
       <nav className="mobile-nav">
@@ -82,7 +83,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose, activeS
                 aria-expanded={isWariExpanded}
                 aria-label="Toggle Wari Tradition Chapters list"
               >
-                <i className={`fa-solid fa-chevron-down accordion-chevron ${isWariExpanded ? 'rotate' : ''}`} aria-hidden="true"></i>
+                <Icon name="chevron-down" className={`accordion-chevron ${isWariExpanded ? 'rotate' : ''}`} />
               </button>
             </div>
 

@@ -1,7 +1,10 @@
 import React from 'react';
+import { getCloudinaryUrl, getCloudinarySrcSet } from '../../../config/cloudinary';
 
-const chandrabhagaImg = '/images/Chapter/pilgrims.png';
-const sevaImg = '/images/Chapter/seva.png';
+const chandrabhagaImg = getCloudinaryUrl('pilgrims', { width: 900, dpr: false });
+const chandrabhagaSrcSet = getCloudinarySrcSet('pilgrims', [480, 800, 1200]);
+const sevaImg = getCloudinaryUrl('seva', { width: 900, dpr: false });
+const sevaSrcSet = getCloudinarySrcSet('seva', [480, 800, 1200]);
 
 export const SubchapterArrivalSeva: React.FC = () => {
   return (
@@ -53,6 +56,8 @@ export const SubchapterArrivalSeva: React.FC = () => {
               <div className="foundation-image-blend-wrapper">
                 <img 
                   src={chandrabhagaImg} 
+                  srcSet={chandrabhagaSrcSet}
+                  sizes="(max-width: 768px) 92vw, 800px"
                   alt="Warkari pilgrims taking a sacred bath in the Chandrabhaga River with Pandharpur temple surroundings" 
                   className="foundation-blend-img"
                   loading="lazy"
@@ -127,6 +132,8 @@ export const SubchapterArrivalSeva: React.FC = () => {
               <div className="foundation-image-blend-wrapper">
                 <img 
                   src={sevaImg} 
+                  srcSet={sevaSrcSet}
+                  sizes="(max-width: 768px) 92vw, 800px"
                   alt="Four-panel collage showing selfless community seva including Annadanam, Jal Seva, foot care, and community shelter" 
                   className="foundation-blend-img fit-contain"
                   loading="lazy"

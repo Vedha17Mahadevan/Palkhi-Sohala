@@ -1,6 +1,7 @@
 import React from 'react';
-import { getCloudinaryUrl } from '../../config/cloudinary';
+import { getCloudinaryUrl, getCloudinarySrcSet } from '../../config/cloudinary';
 import { useRouter } from '../../context/NavigationContext';
+import Icon from '../common/Icon';
 
 export const PalkhiTradition: React.FC = () => {
   const { navigateTo } = useRouter();
@@ -40,7 +41,7 @@ export const PalkhiTradition: React.FC = () => {
                   aria-label="Explore the History of Palkhi Tradition"
                 >
                   <span>Explore the History</span>
-                  <i className="fa-solid fa-arrow-right-long"></i>
+                  <Icon name="arrow-right-long" />
                 </button>
               </div>
             </div>
@@ -48,7 +49,9 @@ export const PalkhiTradition: React.FC = () => {
             {/* Right Column: Temple Artwork */}
             <div className="palkhi-image-col">
               <img
-                src={getCloudinaryUrl('temple right', { width: 900 })}
+                src={getCloudinaryUrl('temple right', { width: 600, dpr: false })}
+                srcSet={getCloudinarySrcSet('temple right', [400, 600, 900])}
+                sizes="(max-width: 768px) 280px, (max-width: 1200px) 32vw, 480px"
                 alt="Pandharpur Vitthal Temple spiritual illustration"
                 className="about-kids-artwork"
                 loading="lazy"

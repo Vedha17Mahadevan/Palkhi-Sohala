@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { getCloudinaryUrl } from '../../config/cloudinary';
+import { getCloudinaryUrl, getCloudinarySrcSet } from '../../config/cloudinary';
 import { useRouter } from '../../context/NavigationContext';
+import Icon from '../common/Icon';
 
 export const WarkariTradition: React.FC = () => {
   const { navigateTo } = useRouter();
@@ -40,7 +41,9 @@ export const WarkariTradition: React.FC = () => {
             {/* Left Column: Kids Artwork */}
             <div className="about-left-column">
               <img
-                src={getCloudinaryUrl('kids left', { width: 900 })}
+                src={getCloudinaryUrl('kids left', { width: 600, dpr: false })}
+                srcSet={getCloudinarySrcSet('kids left', [400, 600, 900])}
+                sizes="(max-width: 768px) 280px, (max-width: 1200px) 32vw, 480px"
                 alt="Warkari children walking in traditional pilgrimage attire"
                 className="about-kids-artwork"
                 loading="lazy"
@@ -83,7 +86,7 @@ export const WarkariTradition: React.FC = () => {
                   aria-label="Explore the History of Warkari Tradition"
                 >
                   <span>Explore the History</span>
-                  <i className="fa-solid fa-arrow-right-long"></i>
+                  <Icon name="arrow-right-long" />
                 </button>
               </div>
             </div>

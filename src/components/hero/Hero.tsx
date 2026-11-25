@@ -1,5 +1,5 @@
 import React from 'react';
-import { getCloudinaryUrl } from '../../config/cloudinary';
+import { getCloudinaryUrl, getCloudinarySrcSet } from '../../config/cloudinary';
 
 export const Hero: React.FC = React.memo(() => {
   const handleScrollClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
@@ -29,7 +29,9 @@ export const Hero: React.FC = React.memo(() => {
       
       {/* Desktop-only HTML image to ensure 100% of the artwork is visible without cropping */}
       <img
-        src={getCloudinaryUrl('vk1', { width: 1400 })}
+        src={getCloudinaryUrl('vk1', { width: 1400, dpr: false })}
+        srcSet={getCloudinarySrcSet('vk1', [800, 1200, 1400, 1600])}
+        sizes="100vw"
         className="hero-image-render desktop-only"
         alt="Ashadhi Ekadashi Lord Vitthal and Rakhumai divine darshan"
         width={1672}

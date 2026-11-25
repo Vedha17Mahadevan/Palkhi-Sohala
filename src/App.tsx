@@ -1,14 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { NavigationProvider, useRouter } from './context/NavigationContext';
 import Splash from './components/common/Splash';
 import Header from './components/layout/Header';
 import MobileMenu from './components/layout/MobileMenu';
 import Footer from './components/layout/Footer';
 import Home from './pages/Home';
-import Directory from './pages/Directory';
-import Tradition from './pages/Tradition';
-import PalkhiModal from './components/palkhi/PalkhiModal';
+import Icon from './components/common/Icon';
 import { Palkhi } from './types';
+
+const Directory = lazy(() => import('./pages/Directory'));
+const Tradition = lazy(() => import('./pages/Tradition'));
+const PalkhiModal = lazy(() => import('./components/palkhi/PalkhiModal'));
 
 function AppContent() {
   const { currentPath, isSplashActive, isSplashFadingOut, isLandingActive, dismissSplash } = useRouter();
@@ -54,22 +56,24 @@ function AppContent() {
 
         {/* Main Content Viewport with lightweight 250ms transition */}
         <main className="app-main-viewport">
-          {currentPath === '/palkhis' ? (
-            <div className="app-route-transition-wrap" key="route-palkhis">
-              <Directory onSelectPalkhi={setSelectedPalkhi} />
-            </div>
-          ) : currentPath.startsWith('/tradition') ? (
-            <div className="app-route-transition-wrap" key="route-tradition">
-              <Tradition />
-            </div>
-          ) : (
-            <div className="app-route-transition-wrap" key="route-home">
-              <Home 
-                onSelectPalkhi={setSelectedPalkhi} 
-                setActiveSection={setActiveSection} 
-              />
-            </div>
-          )}
+          <Suspense fallback={null}>
+            {currentPath === '/palkhis' ? (
+              <div className="app-route-transition-wrap" key="route-palkhis">
+                <Directory onSelectPalkhi={setSelectedPalkhi} />
+              </div>
+            ) : currentPath.startsWith('/tradition') ? (
+              <div className="app-route-transition-wrap" key="route-tradition">
+                <Tradition />
+              </div>
+            ) : (
+              <div className="app-route-transition-wrap" key="route-home">
+                <Home 
+                  onSelectPalkhi={setSelectedPalkhi} 
+                  setActiveSection={setActiveSection} 
+                />
+              </div>
+            )}
+          </Suspense>
         </main>
 
         {/* Floating Back to Top Button (Unified across Homepage, Directory, and all Tradition Chapters) */}
@@ -82,7 +86,7 @@ function AppContent() {
           aria-label="Go to Top"
           title="Scroll to Top"
         >
-          <i className="fa-solid fa-arrow-up" aria-hidden="true"></i>
+          <Icon name="arrow-up" />
         </button>
 
         {/* Main Footer */}
@@ -92,10 +96,12 @@ function AppContent() {
 
       {/* Palkhi Details Modal Overlay */}
       {selectedPalkhi && (
-        <PalkhiModal 
-          palkhi={selectedPalkhi} 
-          onClose={() => setSelectedPalkhi(null)} 
-        />
+        <Suspense fallback={null}>
+          <PalkhiModal 
+            palkhi={selectedPalkhi} 
+            onClose={() => setSelectedPalkhi(null)} 
+          />
+        </Suspense>
       )}
     </>
   );

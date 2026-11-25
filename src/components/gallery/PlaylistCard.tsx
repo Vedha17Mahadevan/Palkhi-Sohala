@@ -1,6 +1,7 @@
 import React from 'react';
 import { Playlist } from '../../types';
-import { getCloudinaryUrl } from '../../config/cloudinary';
+import { getCloudinaryUrl, getCloudinarySrcSet } from '../../config/cloudinary';
+import Icon from '../common/Icon';
 
 interface PlaylistCardProps {
   playlist: Playlist;
@@ -19,7 +20,9 @@ export const PlaylistCard: React.FC<PlaylistCardProps> = ({ playlist }) => {
         {playlist.coverImage ? (
           <>
             <img
-              src={getCloudinaryUrl(playlist.coverImage, { width: 480 })}
+              src={getCloudinaryUrl(playlist.coverImage, { width: 480, dpr: false })}
+              srcSet={getCloudinarySrcSet(playlist.coverImage, [320, 480, 640])}
+              sizes="(max-width: 768px) 90vw, 320px"
               alt={`${playlist.title} devotional playlist cover`}
               className="video-cover-img"
               loading="lazy"
@@ -29,7 +32,7 @@ export const PlaylistCard: React.FC<PlaylistCardProps> = ({ playlist }) => {
             />
             <div className="video-cover-overlay"></div>
             <div className="video-youtube-badge">
-              <i className="fa-brands fa-youtube"></i>
+              <Icon name="youtube" />
             </div>
           </>
         ) : (
@@ -37,7 +40,7 @@ export const PlaylistCard: React.FC<PlaylistCardProps> = ({ playlist }) => {
             <div className="video-thumb-pattern"></div>
             <div className="video-thumb-overlay"></div>
             <div className="video-play-icon">
-              <i className="fa-brands fa-youtube"></i>
+              <Icon name="youtube" />
             </div>
           </>
         )}

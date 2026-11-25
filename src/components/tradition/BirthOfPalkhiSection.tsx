@@ -1,16 +1,18 @@
 import React from 'react';
 import { useRouter } from '../../context/NavigationContext';
 import { prefetchRoute } from '../../utils/prefetchUtils';
+import { getCloudinaryUrl } from '../../config/cloudinary';
+import Icon from '../common/Icon';
 
-const palkhiMainImg = '/images/palkhi.jpg';
+const palkhiMainImg = getCloudinaryUrl('palkhi', { width: 400, dpr: false });
 const dnyaneshwarImg = '/images/saints/dnyaneshwar.jpg';
 const tukaramImg = '/images/saints/tukaram.jpeg';
 const dnyaneshwarPalkhiImg = '/images/palkhis/dnyaneshwar.webp';
 const tukaramPalkhiImg = '/images/palkhis/tukaram.webp';
-const modernWariImg = 'https://res.cloudinary.com/ayj5m59a/image/upload/v1790917678/modern_wari.webp';
-const sunsetPilgrimageImg = 'https://res.cloudinary.com/ayj5m59a/image/upload/v1790917680/Sunset_Pilgrimage_to_the_Temple.png';
-const traditionImg = 'https://res.cloudinary.com/ayj5m59a/image/upload/v1790917679/tradition.png';
-const twoPalkhisImg = 'https://res.cloudinary.com/ayj5m59a/image/upload/v1790936481/From_Two_Palkhis_to_Pandharpur.png';
+const modernWariImg = getCloudinaryUrl('modern_wari', { width: 400, dpr: false });
+const sunsetPilgrimageImg = getCloudinaryUrl('Sunset_Pilgrimage_to_the_Temple', { width: 400, dpr: false });
+const traditionImg = getCloudinaryUrl('tradition', { width: 400, dpr: false });
+const twoPalkhisImg = getCloudinaryUrl('From_Two_Palkhis_to_Pandharpur', { width: 1000, dpr: false });
 
 interface Milestone {
   id: string;
@@ -79,7 +81,7 @@ export const BirthOfPalkhiSection: React.FC = () => {
   };
   return (
     <section id="palkhi-content" className="tradition-section tradition-origins-section chapter-origins-editorial">
-      
+
       {/* Subtle Faded Heritage Margin Watermarks (Opacity ~3%) */}
       <div className="editorial-margin-watermark left" aria-hidden="true">
         <span className="watermark-flower">❀</span>
@@ -109,9 +111,9 @@ export const BirthOfPalkhiSection: React.FC = () => {
 
               <div className="profile-card-top">
                 <div className="profile-avatar-frame">
-                  <img 
-                    src={dnyaneshwarImg} 
-                    alt="Sant Dnyaneshwar Maharaj" 
+                  <img
+                    src={dnyaneshwarImg}
+                    alt="Sant Dnyaneshwar Maharaj"
                     className="profile-avatar-img"
                     onError={(e) => {
                       (e.target as HTMLElement).style.display = 'none';
@@ -153,9 +155,9 @@ export const BirthOfPalkhiSection: React.FC = () => {
 
               <div className="profile-card-top">
                 <div className="profile-avatar-frame">
-                  <img 
-                    src={tukaramImg} 
-                    alt="Sant Tukaram Maharaj" 
+                  <img
+                    src={tukaramImg}
+                    alt="Sant Tukaram Maharaj"
                     className="profile-avatar-img"
                     onError={(e) => {
                       (e.target as HTMLElement).style.display = 'none';
@@ -201,9 +203,9 @@ export const BirthOfPalkhiSection: React.FC = () => {
 
         {/* Single-Column Visual Storytelling Panel: From Two Palkhis to Pandharpur Infographic */}
         <div className="palkhi-visual-storytelling-panel">
-          <img 
-            src={twoPalkhisImg} 
-            alt="From Two Palkhis to Pandharpur Infographic" 
+          <img
+            src={twoPalkhisImg}
+            alt="From Two Palkhis to Pandharpur Infographic"
             className="palkhi-infographic-img"
             loading="lazy"
             decoding="async"
@@ -252,9 +254,9 @@ export const BirthOfPalkhiSection: React.FC = () => {
                   {/* Circular Portrait with Gold Border */}
                   <div className="milestone-portrait-container shiva-milestone-portrait">
                     <div className="milestone-portrait-frame">
-                      <img 
-                        src={milestone.image} 
-                        alt={milestone.name} 
+                      <img
+                        src={milestone.image}
+                        alt={milestone.name}
                         className="milestone-portrait-img"
                         loading="lazy"
                         decoding="async"
@@ -290,15 +292,15 @@ export const BirthOfPalkhiSection: React.FC = () => {
                 </p>
               </div>
               <div className="palkhi-explorer-btn-wrap">
-                <button 
-                  type="button" 
+                <button
+                  type="button"
                   className="btn-palkhi-explorer"
                   onClick={() => handleNavigate('/palkhis')}
                   onMouseEnter={() => prefetchRoute('/palkhis')}
                   aria-label="Explore the Palkhis Directory"
                 >
                   <span>Explore Palkhis</span>
-                  <i className="fa-solid fa-arrow-right-long" aria-hidden="true"></i>
+                  <Icon name="arrow-right-long" />
                 </button>
               </div>
             </div>
